@@ -3,6 +3,7 @@
 	email = posva13@gmail.com
 [github]
 	user = posva
+	token = ./gh-token
 [credential]
 	helper = osxkeychain
 [push]
