@@ -52,8 +52,8 @@ if which zsh >/dev/null; then
     if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
         if [ ! "$(grep $(which zsh) /etc/shells)" ]; then
             sudo echo "$(which zsh)" >> /etc/shells
-            chsh -s $(which zsh)
         fi
+        chsh -s $(which zsh)
     fi
 else
     # If zsh isn't installed, get the platform of the current machine
