@@ -81,9 +81,12 @@ fi
 install_zsh
 
 # Install posva zsh theme
-echo "Installing zsh theme..."
-wget -q https://raw.github.com/posva/oh-my-zsh/6e611f2f45320eef572d13fc3c57391fd0beedb3/themes/posva.zsh-theme -O oh-my-zsh/themes/posva.zsh-theme
-echo "done"
+zsh_theme="oh-my-zsh/themes/posva.zsh-theme"
+if [ ! -f $zsh_theme ]; then
+    echo "Installing zsh theme..."
+    wget -q https://raw.github.com/posva/oh-my-zsh/6e611f2f45320eef572d13fc3c57391fd0beedb3/themes/posva.zsh-theme -O $zsh_theme
+    echo "done"
+fi
 
 echo "Creating backup vim directory..."
 mkdir -p vim/backup
