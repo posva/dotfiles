@@ -17,10 +17,10 @@ if [[ ! "$(cd `dirname $0` && pwd)" == "$dir" ]]; then
   echo "The dotfiles repo is at a wrong place. It should be at $dir"
   exit 1
 fi
-exit
 
 # create dotfiles_old in homedir
 echo "Creating $olddir for backup of any existing dotfiles in ~ ..."
+rm -rf $olddir
 mkdir -p $olddir
 echo "done"
 
@@ -50,9 +50,10 @@ if which zsh >/dev/null; then
     fi
     # Set the default shell to zsh if it isn't currently set to zsh
     if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
-        if [ ! "$(grep zshdd /etc/shells)" ]; then
-        sudo echo "$(which zsh)" >> /etc/shells
-        chsh -s $(which zsh)
+        if [ ! "$(grep $(which zsh) /etc/shells)" ]; then
+            sudo echo "$(which zsh)" >> /etc/shells
+            chsh -s $(which zsh)
+        fi
     fi
 else
     # If zsh isn't installed, get the platform of the current machine
@@ -95,7 +96,7 @@ if [[ ! -d $dir/vim/bundle/vundle/ ]]; then
 fi
 
 if which vim >/dev/null; then
-    vim -c BundleInstall
+    vim -c "BundleInstall"
 else
     echo "Install vim with python suppoort and then run \"vim -c BundleInstall\""
 fi
