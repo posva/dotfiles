@@ -1,0 +1,26 @@
+[user]
+	name = Eduardo San Martin Morote
+	email = posva13@gmail.com
+[github]
+	user = posva
+[credential]
+	helper = osxkeychain
+[push]
+	default = current
+[core]
+	editor = vim
+[color]
+	ui = auto
+[diff]
+	renames = true
+[alias]
+	co = checkout
+        br = branch
+        ci = commit
+        hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+        br = branch
+        st = status
+# auto set the pull and push rmeote
+        set-rem = "! git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)"
+        oneline = log --pretty=oneline --abbrev-commit --graph --decorate
+
