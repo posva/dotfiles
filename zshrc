@@ -57,5 +57,7 @@ colors
 
 alias gource="gource --user-image-dir ~/gource-img/ --multi-sampling --dont-stop"
 
+export TERM=xterm-256color
+
 # zsh-completion from brew
 fpath=(/usr/local/share/zsh-completions $fpath)
