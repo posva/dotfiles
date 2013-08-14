@@ -61,3 +61,4 @@ export TERM=xterm-256color
 
 # zsh-completion from brew
 fpath=(/usr/local/share/zsh-completions $fpath)
+alias watch="nocorrect watch"
