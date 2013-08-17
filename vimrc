@@ -5,6 +5,8 @@ set shiftwidth=2
 set softtabstop=2
 filetype plugin on
 filetype indent on
+set encoding=utf-8
+set fileencoding=utf-8
 
 "Can delete old text
 set backspace=indent,eol,start
