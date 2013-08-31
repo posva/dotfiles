@@ -10,6 +10,10 @@
 	default = current
 [core]
 	editor = vim
+        quotepath = off
+[i18n]
+        logoutputencoding = utf8
+        commitencoding = utf8
 [color]
 	ui = auto
 [diff]
