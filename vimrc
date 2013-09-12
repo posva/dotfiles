@@ -57,6 +57,7 @@ call vundle#rc()
 " required! 
 Bundle 'gmarik/vundle'
 Bundle "daylerees/colour-schemes", { "rtp": "vim-themes/" }
+Bundle "sickill/vim-monokai"
 Bundle 'airblade/vim-gitgutter'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle "MarcWeber/vim-addon-mw-utils"
@@ -107,7 +108,7 @@ iab _EPOCH       <C-R>=strftime("%s")<CR>
 
 " Java header
 inoremap \fn <C-R>=expand("%:t:r")<CR>
-map <C-H> <ESC>ggO/*<CR><C-R>=expand("%:t:r")<CR><CR><CR><C-R>=strftime("%a %b %d %Z %Y")<CR><CR>Copyright Eduardo San Martin Morote eduardo.san-martin-morote@ensimag.fr<CR>/<CR><ESC>
+"map <C-H> <ESC>ggO/**<ESC>:call FillLine("*", 81)<CR>A<CR> <C-R>=expand("%:t:r")<CR><ESC>:call FillLine(" ", 80)<CR>A*<CR><C-R>=strftime("%a %b %d %Z %Y")<CR><ESC>:call FillLine(" ", 80)<CR>A*<CR>Copyright Eduardo San Martin Morote<ESC>:call FillLine(" ", 80)<CR>A*<CR>eduardo.san-martin-morote@ensimag.fr<ESC>:call FillLine(" ", 80)<CR>A*<CR>http://posva.net<ESC>:call FillLine(" ", 80)<CR>A*<CR><ESC>:call FillLine("*", 80)<CR>A/<CR><ESC>
 
 "common c commands
 ab #d #define
@@ -182,6 +183,22 @@ func D2H(nr)
     endwhile
     return r
 endfunc
+
+" fill rest of line with characters
+function! FillLine( str, l )
+  " set tw to the desired total length
+  "let tw = 80
+  " strip trailing spaces first
+  .s/[[:space:]]*$//
+  " calculate total number of 'str's to insert
+  let reps = (a:l - col("$")) / len(a:str)
+  " insert them, if there's room, removing
+  " trailing spaces (though forcing
+  " there to be one)
+  if reps > 0
+    .s/$/\=(repeat(a:str, reps))/
+  endif
+endfunction
 
 " ===================================================================
 " " ASCII Table - | decimal value - name/char |
