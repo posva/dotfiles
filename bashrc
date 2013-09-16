@@ -125,6 +125,8 @@ alias g='git'
 alias ga='git add'
 alias gst='git status'
 alias gd='git diff'
+alias gp='git push'
+alias gl='git pull'
 
 PATH="$PATH:/home/sanmarte/partage/scripts/"
 
@@ -170,12 +172,9 @@ untgz() {
 TERM=xterm-256color
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$USER/partage/ext/lib
 
-#~/partage/fish/bin/fish
+# Git completions
+source ~/dotfiles/git-completion.bash
 
-#if [ $? = 0 ]
-#then
-#    exit
-#fi
 
 #[ -f $HOME/partage/bin/zsh ] && exec $HOME/partage/bin/zsh -l
 # Reset
