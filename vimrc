@@ -54,7 +54,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 "let Vundle manage Vundle
-" required! 
+" required!
 Bundle 'gmarik/vundle'
 Bundle "daylerees/colour-schemes", { "rtp": "vim-themes/" }
 Bundle "sickill/vim-monokai"
@@ -65,6 +65,7 @@ Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle 'honza/vim-snippets'
 Bundle 'ervandew/supertab'
+Bundle 'bling/vim-airline'
 " YCM have already this ^
 "Bundle 'Valloric/YouCompleteMe'
 "Bundle 'Rip-Rip/clang_complete'
@@ -76,6 +77,23 @@ Bundle 'vim-scripts/Vim-JDE'
 let g:clang_user_options='|| exit 0'
 let g:clang_complete_copen = 1
 let g:clang_complete_auto = 1
+
+" Folding
+set foldmethod=syntax
+noremap <F9> <C-O>za
+nnoremap <F9> za
+onoremap <F9> <C-C>za
+vnoremap <F9> zf
+"set foldlevelstart=1
+
+let javaScript_fold=1         " JavaScript
+let perl_fold=1               " Perl
+let php_folding=1             " PHP
+let r_syntax_folding=1        " R
+let ruby_fold=1               " Ruby
+let sh_fold_enabled=1         " sh
+let vimsyn_folding='af'       " Vim script
+let xml_syntax_folding=1      " XML
 
 colorscheme molokai
 "set background=dark
@@ -202,7 +220,7 @@ endfunction
 
 " ===================================================================
 " " ASCII Table - | decimal value - name/char |
-" " 
+" "
 " " |000 nul|001 soh|002 stx|003 etx|004 eot|005
 " enq|006 ack|007 bel|
 " " |008 bs |009 ht |010 nl |011 vt |012 np |013 cr
@@ -235,11 +253,11 @@ endfunction
 " |118  v |119  w |
 " " |120  x |121  y |122  z |123  { |124  | |125  }
 " |126  ~ |127 del|
-" " 
+" "
 " "
 " ===================================================================
 " " ASCII Table - | hex value - name/char |
-" " 
+" "
 " " | 00 nul| 01 soh| 02 stx| 03 etx| 04 eot| 05 enq|
 " 06 ack| 07 bel|
 " " | 08 bs | 09 ht | 0a nl | 0b vt | 0c np | 0d cr |
