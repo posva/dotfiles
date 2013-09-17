@@ -103,6 +103,15 @@ let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd ctermbg=234
 hi IndentGuidesEven ctermbg=235
 
+" Airline
+let g:airline_left_sep = ''
+set laststatus=2
+let g:airline_right_sep = ''
+let g:airline_detect_modified = 1
+let g:airline_detect_paste = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#empty_message = ''
+let g:airline#extensions#whitespace#checks = [ 'indent' ]
 
 "show parial pattern matches in real time
 set incsearch
