@@ -57,22 +57,23 @@ call vundle#rc()
 " required!
 Bundle 'gmarik/vundle'
 Bundle "daylerees/colour-schemes", { "rtp": "vim-themes/" }
-Bundle "sickill/vim-monokai"
+Bundle 'sickill/vim-monokai'
 Bundle 'airblade/vim-gitgutter'
-"Bundle 'nathanaelkane/vim-indent-guides'
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'ervandew/supertab'
 Bundle 'bling/vim-airline'
 " YCM have already this ^
+"
 "Bundle 'Valloric/YouCompleteMe'
 "Bundle 'Rip-Rip/clang_complete'
 " YCM have this too ^. It need to be installed then desactivated here and it
 " works without errors
 " Java
-Bundle 'vim-scripts/Vim-JDE'
+"Bundle 'vim-scripts/Vim-JDE'
 
 let g:clang_user_options='|| exit 0'
 let g:clang_complete_copen = 1
@@ -95,13 +96,23 @@ let sh_fold_enabled=1         " sh
 let vimsyn_folding='af'       " Vim script
 let xml_syntax_folding=1      " XML
 
+" Airline
+let g:airline_left_sep = ''
+set laststatus=2
+let g:airline_right_sep = ''
+let g:airline_detect_modified = 1
+let g:airline_detect_paste = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#empty_message = ''
+let g:airline#extensions#whitespace#checks = [ 'indent' ]
+
 colorscheme molokai
 "set background=dark
 
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd ctermbg=234
-hi IndentGuidesEven ctermbg=235
+"let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_auto_colors = 0
+"hi IndentGuidesOdd ctermbg=234
+"hi IndentGuidesEven ctermbg=235
 
 
 "show parial pattern matches in real time
@@ -293,4 +304,4 @@ endfunction
 " "
 " ===================================================================
 "
-" " vim:set ts=2 tw=80:
+" vim:set ts=2 tw=80:
