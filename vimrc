@@ -145,6 +145,7 @@ endfunction
 " cd ~/.vim/bundle/YouCompleteMe
 " ./install.sh --clang-completer
 "Bundle 'Valloric/YouCompleteMe'
+"Bundle ' ervandew/supertab'
 
 " Syntactic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
