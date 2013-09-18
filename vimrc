@@ -109,7 +109,7 @@ set hlsearch
 
 
 " Indent guide plugin
-Bundle 'nathanaelkane/vim-indent-guides'
+"Bundle 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd ctermbg=234
@@ -145,7 +145,7 @@ endfunction
 " cd ~/.vim/bundle/YouCompleteMe
 " ./install.sh --clang-completer
 "Bundle 'Valloric/YouCompleteMe'
-"Bundle ' ervandew/supertab'
+Bundle 'ervandew/supertab'
 
 " Syntactic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
