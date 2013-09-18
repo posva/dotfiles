@@ -1,10 +1,11 @@
-"set ai
-set nu
+
+set nu " Show number lines
+
+" Default indentation
 set expandtab
 set shiftwidth=2
 set softtabstop=2
-filetype plugin on
-filetype indent on
+
 set encoding=utf-8
 set fileencoding=utf-8
 
@@ -14,16 +15,15 @@ set backspace=indent,eol,start
 set langmenu=en_US.UTF-8    " sets the language of the menu (gvim)
 language en_US.UTF-8                 " sets the language of the messages / ui (vim)
 
-filetype on       " enable file type detection
-syntax on         " syntax highlighting
-
 set ignorecase  " Do case in sensitive matching with
 set smartcase   " be sensitive when there's a capital letter
 
 set smartindent   " smart code indentation
+
 set smarttab      " smart tabs
 " gg=G pour reindenter tout un fichier.
 
+" Specific config for files
 autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8
 autocmd BufRead,BufNewFile *.md setlocal syntax=markdown
 autocmd BufRead,BufNewFile *.cpp,*.hpp,*.js,*.php setlocal shiftwidth=4 softtabstop=4
@@ -35,8 +35,8 @@ function AsmSyntax()
     syntax match asmComment "\/\*\_.\{-}\*\/" "\/\/.*"
     syntax match asmComment "\/\/.*"
 endfunction
-"autocmd BufRead,BufNewFile *.s setlocal shiftwidth=4 softtabstop=4
 
+" Backup dir to keep your working dir clean
 set backupdir=~/.vim/backup
 set dir=~/.vim/backup
 
@@ -46,16 +46,16 @@ set scrolloff=5
 "vim reste polit quand il quitte
 set confirm
 
-"Sortir du mode edit avec kj
-inoremap kj <Esc>
-cnoremap kj <Esc>
+set nocompatible               " be iMproved
+filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-"let Vundle manage Vundle
-" required!
+" let Vundle manage Vundle
+" required! 
 Bundle 'gmarik/vundle'
+<<<<<<< HEAD
 Bundle "daylerees/colour-schemes", { "rtp": "vim-themes/" }
 Bundle 'sickill/vim-monokai'
 Bundle 'airblade/vim-gitgutter'
@@ -74,10 +74,11 @@ Bundle 'bling/vim-airline'
 " works without errors
 " Java
 "Bundle 'vim-scripts/Vim-JDE'
+=======
+>>>>>>> master
 
-let g:clang_user_options='|| exit 0'
-let g:clang_complete_copen = 1
-let g:clang_complete_auto = 1
+filetype plugin indent on     " required!
+syntax on         " syntax highlighting
 
 " Folding
 set foldmethod=syntax
@@ -109,109 +110,43 @@ let g:airline#extensions#whitespace#checks = [ 'indent' ]
 colorscheme molokai
 "set background=dark
 
+<<<<<<< HEAD
 "let g:indent_guides_enable_on_vim_startup = 1
 "let g:indent_guides_auto_colors = 0
 "hi IndentGuidesOdd ctermbg=234
 "hi IndentGuidesEven ctermbg=235
 
+=======
+" Airline iformation about the file in bottom line
+Bundle 'bling/vim-airline'
+let g:airline_left_sep = ''
+set laststatus=2
+let g:airline_right_sep = ''
+let g:airline_detect_modified = 1
+let g:airline_detect_paste = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#empty_message = ''
+let g:airline#extensions#whitespace#checks = [ 'indent' ]
+>>>>>>> master
 
 "show parial pattern matches in real time
 set incsearch
-"" I like highlighted search pattern
+" I like highlighted search pattern
 set hlsearch
 "display folders ( sympathie with the devil )
 "set foldcolumn=1
 
-"F9 -> F10 == spell checking with aspell
-"map <F9>  :w!<CR>:!aspell --lang=en -c %<CR>:e! %<CR>
-"map <F9>  :w!<CR>:!aspell --lang=fr -c %<CR>:e! %<CR>
 
-" ABBREVIATIATIONS (very necessary ;-)"
-iab _TIME        <C-R>=strftime("%X")<CR>
-iab _DATE        <C-R>=strftime("%a %b %d %T %Z %Y")<CR>
-iab _DATES       <C-R>=strftime("%b %d %Y")<CR>
-" ISO 8601 format
-iab _DATEN       <C-R>=strftime("%F")<CR>
-iab _DATEL       <C-R>=strftime("%a %b %d %Z %Y")<CR>
-iab _EPOCH       <C-R>=strftime("%s")<CR>
-
-" Java header
-inoremap \fn <C-R>=expand("%:t:r")<CR>
-"map <C-H> <ESC>ggO/**<ESC>:call FillLine("*", 81)<CR>A<CR> <C-R>=expand("%:t:r")<CR><ESC>:call FillLine(" ", 80)<CR>A*<CR><C-R>=strftime("%a %b %d %Z %Y")<CR><ESC>:call FillLine(" ", 80)<CR>A*<CR>Copyright Eduardo San Martin Morote<ESC>:call FillLine(" ", 80)<CR>A*<CR>eduardo.san-martin-morote@ensimag.fr<ESC>:call FillLine(" ", 80)<CR>A*<CR>http://posva.net<ESC>:call FillLine(" ", 80)<CR>A*<CR><ESC>:call FillLine("*", 80)<CR>A/<CR><ESC>
-
-"common c commands
-ab #d #define
-ab #i #include <.h><Esc>hhi<C-R>=DC()<CR>
-ab #b /*********************************************
-ab #e *********************************************/
-ab #l /*------------------------------------------*/
-
-"common typing mistakes
-ab teh the
-ab fro for
-
-
-"=========LATEX============
-
-"Remplace les caracteres accentues par leur equivalent latex
-command Accent %s/é/\\'{e}/ge | %s/è/\\`{e}/ge | %s/ê/\\^{e}/ge | %s/ë/\\"{e}/ge | %s/à/\\`{a}/ge | %s/â/\\^{a}/ge | %s/î/\\^{i}/ge | %s/ï/\\"{i}/ge | %s/ö/\\"{o}/ge | %s/ô/\\^{o}/ge | %s/ù/\\`{u}/ge | %s/û/\\^{u}/ge | %s/ü/\\"{u}/ge | %s/ç/\\c{c}/ge
-
-"Compile un Pdf et l'affiche
-command Pdf execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi && okular %:r.pdf &'
-
-"Compile un Pdf
-command Latex execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi'
-
-command Aliaslatex %s/\\image{\(.*\)}{\(.*\)}/\\begin{figure}\[!ht\]\r\\begin{center}\r    \\includegraphics\[width=\\textwidth\]{\1}\r    \\caption{\2}\r\\end{center}\r\\end{figure}/ge | %s/\\code/\\begin{lstlisting}/ge | %s/\\ncode/\\end{lstlisting}/ge | %s/=>/\$\\Rightarrow\$/gce | %s/=>/\\Rightarrow/gce | %s/->/\$\\rightarrow\$/gce | %s/->/\\rightarrow/gce | %s/<-/\$\\leftarrow\$/gce | %s/<-/\\leftarrow/gce | %s/<=/\$\\Leftarrow\$/gce | %s/<=/\\Leftarrow/gce
-
-
-
-"=============C===========
-
-command Compile w | !gcc -o %:r -Wall -Wextra -g -std=c99 *.c && ./%:r
-
-command Spaces %s/ \+$//g
-map <F5> I// <ESC>
-map <F4> O/*  */<ESC>hhi
-
-
-
-
-
-"limite la longueur d'une ligne : gqad
-"delete inner '' : di' da' cs'
-":tabe :vsplit
-"vim -p   vim -O
-"!echo % %r
-"set (no)paste : pas d'indentation pour le collage
-". : repete la derniere commande
-"mm : marqueurs
-"ctrl+i ctrl+o : se deplacer à la modif preced/suivante
-"gf : ouvre le fichier sous le curseur
-"W
-
-
+" Indent guide plugin
+Bundle 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0
+hi IndentGuidesOdd ctermbg=234
+hi IndentGuidesEven ctermbg=235
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 map <F3> o\begin{equation*}<ESC>o\begin{split}<ESC>o\end{split}<ESC>o\end{equation*}<ESC>kO
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FUNCTIONS
-"
-fun DC()
-    let c=nr2char(getchar())|return c=~'\s'?'':c
-endfun
-
-func D2H(nr)
-    let n = a:nr
-    let r = ""
-    while n
-        let r = '0123456789ABCDEF'[n % 16] . r
-        let n = n / 16
-    endwhile
-    return r
-endfunc
 
 " fill rest of line with characters
 function! FillLine( str, l )
@@ -229,6 +164,7 @@ function! FillLine( str, l )
   endif
 endfunction
 
+<<<<<<< HEAD
 " ===================================================================
 " " ASCII Table - | decimal value - name/char |
 " "
@@ -305,3 +241,41 @@ endfunction
 " ===================================================================
 "
 " vim:set ts=2 tw=80:
+=======
+" C/C++ completion with YCM
+" This plugin include these plugins:
+" clang_complete
+" AutoComplPop
+" Supertab
+" neocomplcache
+" REMEMBER TO COMPILE THIS PLUGIN!
+" cd ~/.vim/bundle/YouCompleteMe
+" ./install.sh --clang-completer
+Bundle 'Valloric/YouCompleteMe'
+
+" Syntactic plugin for compilation errors
+" REMEMBER TO CREATE THE FILE .ycm_extra_config.py
+Bundle 'scrooloose/syntastic'
+
+
+" git addtitions and deletions
+Bundle 'airblade/vim-gitgutter'
+
+" Java IDE
+Bundle 'vim-scripts/Vim-JDE'
+
+" NERD Tree
+Bundle 'scrooloose/nerdtree'
+"Open NerdTree with Ctrl+N
+map <C-N> :NERDTreeToggle<CR>
+" Autoclose vim when only NerdTree is open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" Open Nerdtree when nothing is opened
+autocmd vimenter * if !argc() | NERDTree | endif
+
+" Don't use arrows!
+nnoremap   <Up>     <NOP>
+nnoremap   <Down>   <NOP>
+nnoremap   <Left>   <NOP>
+nnoremap   <Right>  <NOP>
+>>>>>>> master
