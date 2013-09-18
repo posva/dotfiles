@@ -144,7 +144,7 @@ endfunction
 " REMEMBER TO COMPILE THIS PLUGIN!
 " cd ~/.vim/bundle/YouCompleteMe
 " ./install.sh --clang-completer
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
 
 " Syntactic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
