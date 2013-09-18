@@ -145,7 +145,8 @@ Bundle 'scrooloose/syntastic'
 Bundle 'airblade/vim-gitgutter'
 
 " Java IDE
-Bundle 'vim-scripts/Vim-JDE'
+"Bundle 'vim-scripts/Vim-JDE'
+Bundle 'vim-scripts/javacomplete'
 
 " NERD Tree
 Bundle 'scrooloose/nerdtree'
@@ -156,8 +157,30 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " Open Nerdtree when nothing is opened
 autocmd vimenter * if !argc() | NERDTree | endif
 
-" Don't use arrows!
-nnoremap   <Up>     <NOP>
-nnoremap   <Down>   <NOP>
-nnoremap   <Left>   <NOP>
-nnoremap   <Right>  <NOP>
+" Snippets!
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "garbas/vim-snipmate"
+Bundle 'honza/vim-snippets'
+
+" Utility commands
+command Spaces %s/ \+$//g
+map <F5> I// <ESC>
+map <F4> O/*  */<ESC>hhi
+
+iab _TIME        <C-R>=strftime("%X")<CR>
+iab _DATE        <C-R>=strftime("%a %b %d %T %Z %Y")<CR>
+iab _DATES       <C-R>=strftime("%b %d %Y")<CR>
+" ISO 8601 format
+iab _DATEN       <C-R>=strftime("%F")<CR>
+iab _DATEL       <C-R>=strftime("%a %b %d %Z %Y")<CR>
+iab _EPOCH       <C-R>=strftime("%s")<CR>
+
+ab #d #define
+ab #i #include <.h><Esc>hhi<C-R>=DC()<CR>
+ab #b /*********************************************
+ab #e *********************************************/
+ab #l /*------------------------------------------*/
+
+"common typing mistakes
+ab teh the
+ab fro for
