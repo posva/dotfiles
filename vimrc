@@ -144,6 +144,7 @@ Bundle 'scrooloose/syntastic'
 
 " git addtitions and deletions
 Bundle 'airblade/vim-gitgutter'
+let g:gitgutter_realtime = 0
 
 " Java IDE
 "Bundle 'vim-scripts/Vim-JDE'
