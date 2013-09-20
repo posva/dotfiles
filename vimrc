@@ -186,3 +186,24 @@ ab #l /*------------------------------------------*/
 "common typing mistakes
 ab teh the
 ab fro for
+
+" LATEX
+command Accent %s/é/\\'{e}/ge | %s/è/\\`{e}/ge | %s/ê/\\^{e}/ge | %s/ë/\\"{e}/ge | %s/à/\\`{a}/ge | %s/â/\\^{a}/ge | %s/î/\\^{i}/ge | %s/ï/\\"{i}/ge | %s/ö/\\"{o}/ge | %s/ô/\\^{o}/ge | %s/ù/\\`{u}/ge | %s/û/\\^{u}/ge | %s/ü/\\"{u}/ge | %s/ç/\\c{c}/ge
+
+command Pdf execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi && okular %:r.pdf &'
+command Latex execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi'  
+
+" FUNCTIONS
+fun DC()
+    let c=nr2char(getchar())|return c=~'\s'?'':c
+endfun
+
+func D2H(nr)
+    let n = a:nr
+    let r = ""
+    while n
+        let r = '0123456789ABCDEF'[n % 16] . r
+        let n = n / 16
+    endwhile
+    return r
+endfunc 
