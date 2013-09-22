@@ -128,11 +128,11 @@ alias gd='git diff'
 alias gp='git push'
 alias gl='git pull'
 
-PATH="$PATH:/home/sanmarte/partage/scripts/"
+PATH="$PATH:$HOME/partage/scripts/"
 
 function name()
 {
-  echo $(cat /etc/passwd | grep "$1" | sed -e 's/.*[0-9]://g' -e 's/:.*//g')
+  grep -i "$1" /etc/passwd | cut -d: -f5 | sort
 }
 
 function rights()
