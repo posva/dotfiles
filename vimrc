@@ -170,9 +170,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 autocmd vimenter * if !argc() | NERDTree | endif
 
 " Snippets!
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "garbas/vim-snipmate"
-Bundle 'honza/vim-snippets'
+"Bundle 'MarcWeber/vim-addon-mw-utils'
+"Bundle 'garbas/vim-snipmate'
+"Bundle 'honza/vim-snippets'
 
 " SQL
 Bundle 'vim-scripts/dbext.vim'
