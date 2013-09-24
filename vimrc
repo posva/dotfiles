@@ -164,6 +164,9 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "garbas/vim-snipmate"
 Bundle 'honza/vim-snippets'
 
+" SQL
+Bundle 'vim-scripts/dbext.vim'
+
 " Utility commands
 command Spaces %s/ \+$//g
 map <F5> I// <ESC>
