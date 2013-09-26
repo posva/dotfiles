@@ -167,6 +167,9 @@ Bundle 'honza/vim-snippets'
 " Markdown
 Bundle 'plasticboy/vim-markdown'
 
+" SQL
+Bundle 'vim-scripts/dbext.vim'
+
 " Utility commands
 command Spaces %s/ \+$//g
 map <F5> I// <ESC>
