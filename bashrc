@@ -118,7 +118,7 @@ fi
 
 alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
 alias tele="ssh -X sanmarte@telesun.imag.fr"
-alias exp='env LD_LIBRARY_PATH=/home/sanmarte/partage/expect5.45 /home/sanmarte/partage/expect5.45/expect'
+alias exp='env LD_LIBRARY_PATH=${HOME}/expect5.45 ${HOME}/expect5.45/expect'
 alias walle='cat ~/partage/wall-e.txt'
 alias term='source set-term'
 alias g='git'
@@ -128,7 +128,7 @@ alias gd='git diff'
 alias gp='git push'
 alias gl='git pull'
 
-PATH="$PATH:$HOME/partage/scripts/"
+PATH="$PATH:$HOME/scripts/:$HOME/local-extra/"
 
 function name()
 {
@@ -174,6 +174,8 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$USER/partage/ext/lib
 
 # Git completions
 source ~/dotfiles/git-completion.bash
+# UTF-8 for logs
+export LANG="en_US.UTF-8"
 
 
 #[ -f $HOME/partage/bin/zsh ] && exec $HOME/partage/bin/zsh -l
@@ -276,3 +278,16 @@ fi) '$BPurple$PathShort$Color_Off'\$ "; \
             # @2 - Prompt when not in GIT repo
 echo " '$Purple$PathShort$Color_Off'\$ "; \
 fi)'
+
+# Extra usr/local
+EXTRA_LOCAL="~/local-extra"
+export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:${EXTRA_LOCAL}/include"
+export LIBRARY_PATH="${LIBRARY_PATH}:${EXTRA_LOCAL}/lib"
+export LD_LIBRARY_PATH="${EXTRA_LOCAL}/lib:${LD_LIBRARY_PATH}"
+export PKG_CONFIG_PATH="$=${EXTRA_LOCAL}/lib/pkconfig"
+
+# Oracle
+export ORACLE_HOME=/opt/oracle
+export LD_LIBRARY_PATH=$ORACLE_HOME:$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+export PATH=$ORACLE_HOME:$PATH
+export TNS_ADMIN=$ORACLE_HOME
