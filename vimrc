@@ -150,6 +150,7 @@ Bundle 'ervandew/supertab'
 " Syntactic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
 Bundle 'scrooloose/syntastic'
+let g:syntastic_java_javac_classpath='bin'
 
 
 " git addtitions and deletions
@@ -176,6 +177,8 @@ autocmd vimenter * if !argc() | NERDTree | endif
 
 " SQL
 Bundle 'vim-scripts/dbext.vim'
+
+source ~/dotfiles/db.vim
 
 " Utility commands
 command Spaces %s/ \+$//g
