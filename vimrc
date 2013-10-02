@@ -140,7 +140,7 @@ Bundle 'Valloric/YouCompleteMe'
 " Syntactic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
 Bundle 'scrooloose/syntastic'
-
+let g:syntastic_java_javac_classpath='bin'
 
 " git addtitions and deletions
 Bundle 'airblade/vim-gitgutter'
