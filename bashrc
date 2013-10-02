@@ -174,6 +174,8 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$USER/partage/ext/lib
 
 # Git completions
 source ~/dotfiles/git-completion.bash
+# UTF-8 for logs
+export LANG="en_US.UTF-8"
 
 
 #[ -f $HOME/partage/bin/zsh ] && exec $HOME/partage/bin/zsh -l
