@@ -152,7 +152,6 @@ Bundle 'ervandew/supertab'
 Bundle 'scrooloose/syntastic'
 let g:syntastic_java_javac_classpath='bin'
 
-
 " git addtitions and deletions
 Bundle 'airblade/vim-gitgutter'
 let g:gitgutter_realtime = 0
