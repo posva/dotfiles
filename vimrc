@@ -25,7 +25,7 @@ set smarttab      " smart tabs
 
 " Specific config for files
 autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8
-autocmd BufRead,BufNewFile *.md setlocal syntax=markdown
+autocmd BufRead,BufNewFile *.md setlocal syntax=markdown filetype=markdown
 autocmd BufRead,BufNewFile *.cpp,*.hpp,*.js,*.php setlocal shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.html,*.css, setlocal shiftwidth=2 softtabstop=2
 autocmd FileType make     set noexpandtab shiftwidth=8
@@ -163,6 +163,9 @@ autocmd vimenter * if !argc() | NERDTree | endif
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "garbas/vim-snipmate"
 Bundle 'honza/vim-snippets'
+
+" Markdown
+Bundle 'plasticboy/vim-markdown'
 
 " SQL
 Bundle 'vim-scripts/dbext.vim'
