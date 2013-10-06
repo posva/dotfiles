@@ -151,7 +151,7 @@ Bundle 'ervandew/supertab'
 " Syntactic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
 Bundle 'scrooloose/syntastic'
-let g:syntastic_java_javac_classpath='bin'
+let g:syntastic_java_javac_classpath="bin\n/usr/share/java/junit4.jar\n/Applications/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar\n/usr/local/eclipse-3.2.6/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar"
 
 " git addtitions and deletions
 Bundle 'airblade/vim-gitgutter'
