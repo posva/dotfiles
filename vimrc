@@ -26,6 +26,7 @@ set smarttab      " smart tabs
 " Specific config for files
 autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8
 autocmd BufRead,BufNewFile *.md setlocal syntax=markdown filetype=markdown
+autocmd BufRead,BufNewFile *.java setlocal shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.cpp,*.hpp,*.js,*.php setlocal shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.html,*.css, setlocal shiftwidth=2 softtabstop=2
 autocmd FileType make     set noexpandtab shiftwidth=8
