@@ -26,6 +26,7 @@ set smarttab      " smart tabs
 " Specific config for files
 autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8
 autocmd BufRead,BufNewFile *.md setlocal syntax=markdown filetype=markdown
+autocmd BufRead,BufNewFile *.java setlocal shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.cpp,*.hpp,*.js,*.php setlocal shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.html,*.css, setlocal shiftwidth=2 softtabstop=2
 autocmd FileType make     set noexpandtab shiftwidth=8
@@ -140,7 +141,7 @@ Bundle 'Valloric/YouCompleteMe'
 " Syntactic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
 Bundle 'scrooloose/syntastic'
-let g:syntastic_java_javac_classpath='bin'
+let g:syntastic_java_javac_classpath="src\n/usr/share/java/junit4.jar\n/Applications/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar\n/usr/local/eclipse-3.2.6/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar"
 
 " git addtitions and deletions
 Bundle 'airblade/vim-gitgutter'
