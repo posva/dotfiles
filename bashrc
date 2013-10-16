@@ -132,7 +132,7 @@ PATH="$HOME/local-extra/bin:$PATH:$HOME/scripts/"
 
 function name()
 {
-  grep -i "$1" /etc/passwd | cut -d: -f5 | sort
+  grep -i "$1" /etc/passwd | cut -d: -f5,1 | sort
 }
 
 function rights()
@@ -280,14 +280,16 @@ echo " '$Purple$PathShort$Color_Off'\$ "; \
 fi)'
 
 # Extra usr/local
+
 EXTRA_LOCAL="~/local-extra"
-export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:${EXTRA_LOCAL}/include"
-export LIBRARY_PATH="${LIBRARY_PATH}:${EXTRA_LOCAL}/lib"
-export LD_LIBRARY_PATH="${EXTRA_LOCAL}/lib:${LD_LIBRARY_PATH}"
-export PKG_CONFIG_PATH="$=${EXTRA_LOCAL}/lib/pkconfig"
+export CPLUS_INCLUDE_PATH="${EXTRA_LOCAL}/include"
+export LIBRARY_PATH="${EXTRA_LOCAL}/lib"
+export LD_LIBRARY_PATH="${EXTRA_LOCAL}/lib"
+#export LD_PRELOAD=${EXTRA_LOCAL}/lib/libc-2.14.so
+export PKG_CONFIG_PATH="${EXTRA_LOCAL}/lib/pkgconfig"
 
 # Oracle
 export ORACLE_HOME=/opt/oracle
-export LD_LIBRARY_PATH=$ORACLE_HOME:$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$ORACLE_HOME:$ORACLE_HOME/lib:${LD_LIBRARY_PATH}
 export PATH=$ORACLE_HOME:$PATH
 export TNS_ADMIN=$ORACLE_HOME
