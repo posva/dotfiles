@@ -1,0 +1,90 @@
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
+alias tele="ssh sanmarte@telesun.imag.fr"
+alias telex="ssh -Y sanmarte@telesun.imag.fr"
+alias du="du -h"
+
+# gource pictures
+alias gource="gource --user-image-dir ~/gource-img/ --multi-sampling --dont-stop"
+
+alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
+alias tele="ssh -X sanmarte@telesun.imag.fr"
+alias exp='env LD_LIBRARY_PATH=${HOME}/expect5.45 ${HOME}/expect5.45/expect'
+alias walle='cat ~/partage/wall-e.txt'
+alias term='source set-term'
+
+# git OP
+alias g=git
+alias ga='git add'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gcl='git config --list'
+alias gclean='git reset --hard && git clean -dfx'
+alias gcm='git checkout master'
+alias gcmsg='git commit -m'
+alias gco='git checkout'
+alias gcount='git shortlog -sn'
+alias gcp='git cherry-pick'
+alias gd='git diff'
+alias gf='git ls-files | grep'
+alias gg='git gui citool'
+alias gga='git gui citool --amend'
+alias ggpnp='git pull origin $(current_branch) && git push origin $(current_branch)'
+alias ggpull='git pull origin $(current_branch)'
+alias ggpur='git pull --rebase origin $(current_branch)'
+alias ggpush='git push origin $(current_branch)'
+alias git-svn-dcommit-push='git svn dcommit && git push github master:svntrunk'
+alias gk='gitk --all --branches'
+alias gl='git pull'
+alias glg='git log --stat --max-count=5'
+alias glgg='git log --graph --max-count=5'
+alias glgga='git log --graph --decorate --all'
+alias glo='git log --oneline'
+alias glp=_git_log_prettily
+alias gm='git merge'
+alias gmt='git mergetool --no-prompt'
+alias gp='git push'
+alias gpoat='git push origin --all && git push origin --tags'
+alias gr='git remote'
+alias grba='git rebase --abort'
+alias grbc='git rebase --continue'
+alias grbi='git rebase -i'
+alias grh='git reset HEAD'
+alias grhh='git reset HEAD --hard'
+alias grmv='git remote rename'
+alias grrm='git remote remove'
+alias grset='git remote set-url'
+alias grt='cd $(git rev-parse --show-toplevel || echo ".")'
+alias grup='git remote update'
+alias grv='git remote -v'
+alias gsd='git svn dcommit'
+alias gsr='git svn rebase'
+alias gss='git status -s'
+alias gst='git status'
+alias gsts='git stash show --text'
+alias gup='git pull --rebase'
+alias gwc='git whatchanged -p --abbrev-commit --pretty=medium'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# cd aliases
+#alias -='cd -'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias 1='cd -'
+alias 2='cd -2'
+alias 3='cd -3'
+alias 4='cd -4'
+alias 5='cd -5'
+alias 6='cd -6'
+alias 7='cd -7'
+alias 8='cd -8'
+alias 9='cd -9'
+
