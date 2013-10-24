@@ -23,6 +23,10 @@ set smartindent   " smart code indentation
 set smarttab      " smart tabs
 " gg=G pour reindenter tout un fichier.
 
+" make command
+set makeprg=make
+
+
 " Specific config for files
 autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8
 autocmd BufRead,BufNewFile *.md setlocal syntax=markdown filetype=markdown

@@ -31,61 +31,73 @@ echo "done"
 
 # move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
 for file in $files; do
-    echo "Moving any existing dotfiles from ~ to $olddir"
-    if [ -f ~/.$file -o -d ~/.$file ]; then
-        echo "moved $file"
-        mv -f ~/.$file $olddir
-    fi
-    echo "Creating symlink to $file in home directory."
-    ln -s $dir/$file ~/.$file
+  echo "Moving any existing dotfiles from ~ to $olddir"
+  if [ -f ~/.$file -o -d ~/.$file ]; then
+    echo "moved $file"
+    mv -f ~/.$file $olddir
+  fi
+  echo "Creating symlink to $file in home directory."
+  ln -s $dir/$file ~/.$file
 done
 
 function install_zsh {
 # Test to see if zshell is installed.  If it is:
 if which zsh >/dev/null; then
-    # Clone my oh-my-zsh repository from GitHub only if it isn't already present
-    if [[ ! -d $dir/oh-my-zsh/ ]]; then
-        echo "Cloning oh-my-zsh"
-        git clone https://github.com/robbyrussell/oh-my-zsh.git
+  # Clone my oh-my-zsh repository from GitHub only if it isn't already present
+  if [[ ! -d $dir/oh-my-zsh/ ]]; then
+    echo "Cloning oh-my-zsh"
+    git clone https://github.com/robbyrussell/oh-my-zsh.git
+  fi
+  # Set the default shell to zsh if it isn't currently set to zsh
+  if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
+    if [ ! "$(grep $(which zsh) /etc/shells)" ]; then
+      sudo echo "$(which zsh)" >> /etc/shells
     fi
-    # Set the default shell to zsh if it isn't currently set to zsh
-    if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
-        if [ ! "$(grep $(which zsh) /etc/shells)" ]; then
-            sudo echo "$(which zsh)" >> /etc/shells
-        fi
-        chsh -s $(which zsh)
-    fi
+    chsh -s $(which zsh)
+  fi
 else
-    # If zsh isn't installed, get the platform of the current machine
-    platform=$(uname);
-    # If the platform is Linux, try an apt-get to install zsh and then recurse
-    if [[ $platform == 'Linux' ]]; then
-        sudo apt-get install zsh
-        install_zsh
-        # If the platform is OS X, tell the user to install zsh :)
-    elif [[ $platform == 'Darwin' ]]; then
-        if which brew >/dev/null; then
-            echo "Installing Homebrew(brew)..."
-            ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
-            echo "done"
-        fi
-        echo "Installing zsh..."
-        brew install zsh
-        echo "done"
-        install_zsh
-        exit
+  # If zsh isn't installed, get the platform of the current machine
+  platform=$(uname);
+  # If the platform is Linux, try an apt-get to install zsh and then recurse
+  if [[ $platform == 'Linux' ]]; then
+    sudo apt-get install zsh
+    if [ ! "$?" = 0 ]; then
+      echo "Couldn't install zsh. If you don't want me to install it, use -z to disable zsh installation"
+      exit 1
     fi
+    install_zsh
+    # If the platform is OS X, tell the user to install zsh :)
+  elif [[ $platform == 'Darwin' ]]; then
+    if which brew >/dev/null; then
+      echo "Installing Homebrew(brew)..."
+      ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+      echo "done"
+    fi
+    echo "Installing zsh..."
+    brew install zsh
+    echo "done"
+    install_zsh
+    exit
+  else
+    echo "What is your OS??? Install manually zsh"
+    exit 1
+  fi
 fi
 }
 
-install_zsh
+if [ ! "$1" = -z ]; then
+  install_zsh
+  if [ ! "$?" = 0 ]; then
+    exit "$?"
+  fi
 
-# Install posva zsh theme
-zsh_theme="oh-my-zsh/themes/posva.zsh-theme"
-if [ ! -f $zsh_theme ]; then
+  # Install posva zsh theme
+  zsh_theme="oh-my-zsh/themes/posva.zsh-theme"
+  if [ ! -f $zsh_theme ]; then
     echo "Installing zsh theme..."
     wget -q https://raw.github.com/posva/oh-my-zsh/6e611f2f45320eef572d13fc3c57391fd0beedb3/themes/posva.zsh-theme -O $zsh_theme
     echo "done"
+  fi
 fi
 
 echo "Creating backup vim directory..."
@@ -99,7 +111,7 @@ if [[ ! -d $dir/vim/bundle/vundle/ ]]; then
 fi
 
 if which vim >/dev/null; then
-    vim -c "BundleInstall"
+  vim -c "BundleInstall"
 else
-    echo "Install vim with python suppoort and then run \"vim -c BundleInstall\""
+  echo "Install vim with python suppoort and then run \"vim -c BundleInstall\""
 fi
