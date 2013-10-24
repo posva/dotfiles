@@ -128,7 +128,7 @@ alias gd='git diff'
 alias gp='git push'
 alias gl='git pull'
 
-PATH="$PATH:$HOME/scripts/:$HOME/local-extra/bin"
+PATH="/usr/local/php5/bin:$PATH:$HOME/scripts/:$HOME/local-extra/bin"
 
 function name()
 {
