@@ -26,6 +26,19 @@ set smarttab      " smart tabs
 " make command
 set makeprg=make
 
+"Stop acting dumb when pasting
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
+" Returns true if paste mode is enabled
+function! HasPaste()
+  if &paste
+    return 'PASTE MODE  '
+  end
+  return ''
+endfunction
+
 
 " Specific config for files
 autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8
