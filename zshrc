@@ -7,14 +7,6 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="posva"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
-alias tele="ssh sanmarte@telesun.imag.fr"
-alias telex="ssh -Y sanmarte@telesun.imag.fr"
-alias du="du -h"
-
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
 
@@ -55,7 +47,7 @@ export PATH=/usr/texbin:/usr/local/bin:/usr/local/git/bin:/usr/bin:/usr/sbin:/op
 autoload -U colors
 colors
 
-alias gource="gource --user-image-dir ~/gource-img/ --multi-sampling --dont-stop"
+source ~/dotfiles/aliases
 
 export TERM=xterm-256color
 
