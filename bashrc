@@ -86,11 +86,6 @@ if [ -x /usr/bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -115,20 +110,10 @@ fi
 ##################################################################
 ##################################################################
 
+# aliases
+source ~/dotfiles/aliases
 
-alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
-alias tele="ssh -X sanmarte@telesun.imag.fr"
-alias exp='env LD_LIBRARY_PATH=${HOME}/expect5.45 ${HOME}/expect5.45/expect'
-alias walle='cat ~/partage/wall-e.txt'
-alias term='source set-term'
-alias g='git'
-alias ga='git add'
-alias gst='git status'
-alias gd='git diff'
-alias gp='git push'
-alias gl='git pull'
-
-PATH="$PATH:$HOME/scripts/:$HOME/local-extra/bin"
+PATH="/usr/local/php5/bin:$PATH:$HOME/scripts/:$HOME/local-extra/bin"
 
 function name()
 {

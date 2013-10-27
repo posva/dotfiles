@@ -7,14 +7,6 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="posva"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
-alias tele="ssh sanmarte@telesun.imag.fr"
-alias telex="ssh -Y sanmarte@telesun.imag.fr"
-alias du="du -h"
-
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
 
@@ -49,13 +41,13 @@ plugins=(git git-extras git-remote-branch gitfast gitflow lol nyan osx brew enco
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/texbin:/usr/local/bin:/usr/local/git/bin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin:/Users/Edu/.rvm/bin:/usr/local/share/npm/bin
+export PATH=/usr/local/php5/bin:/usr/texbin:/usr/local/bin:/usr/local/git/bin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin:/Users/Edu/.rvm/bin:/usr/local/share/npm/bin
 #export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 
 autoload -U colors
 colors
 
-alias gource="gource --user-image-dir ~/gource-img/ --multi-sampling --dont-stop"
+source ~/dotfiles/aliases
 
 export TERM=xterm-256color
 
