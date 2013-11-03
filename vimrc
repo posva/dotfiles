@@ -31,6 +31,16 @@ nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
 
+" Disable arrow keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
 " Returns true if paste mode is enabled
 function! HasPaste()
   if &paste
@@ -177,6 +187,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " Open Nerdtree when nothing is opened
 autocmd vimenter * if !argc() | NERDTree | endif
 
+" NERD commenter
+Bundle 'scrooloose/nerdcommenter'
+map <F5> <leader>c<space>
+
 " Snippets!
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "garbas/vim-snipmate"
@@ -188,9 +202,11 @@ Bundle 'plasticboy/vim-markdown'
 " SQL
 Bundle 'vim-scripts/dbext.vim'
 
+" Surrounding, just awesome
+Bundle 'tpope/vim-surround'
+
 " Utility commands
 command Spaces %s/ \+$//g
-map <F5> I// <ESC>
 map <F4> O/*  */<ESC>hhi
 
 iab _TIME        <C-R>=strftime("%X")<CR>
