@@ -31,6 +31,16 @@ nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
 
+" Disable arrow keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
 " Returns true if paste mode is enabled
 function! HasPaste()
   if &paste
@@ -168,7 +178,7 @@ Bundle 'ervandew/supertab'
 " Syntactic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
 Bundle 'scrooloose/syntastic'
-let g:syntastic_java_javac_classpath="src\n/usr/share/java/junit4.jar\n/Applications/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar\n/usr/local/eclipse-3.2.6/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar"
+let g:syntastic_java_javac_classpath="src\nlib/gui.jar\n/usr/share/java/junit4.jar\n/Applications/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar\n/usr/local/eclipse-3.2.6/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar"
 
 " git addtitions and deletions
 Bundle 'airblade/vim-gitgutter'
@@ -187,6 +197,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " Open Nerdtree when nothing is opened
 autocmd vimenter * if !argc() | NERDTree | endif
 
+" NERD commenter
+Bundle 'scrooloose/nerdcommenter'
+map <F5> <leader>c<space>
+
 " Snippets!
 "Bundle 'MarcWeber/vim-addon-mw-utils'
 "Bundle 'garbas/vim-snipmate'
@@ -197,12 +211,13 @@ Bundle 'plasticboy/vim-markdown'
 
 " SQL
 Bundle 'vim-scripts/dbext.vim'
-
 source ~/dotfiles/db.vim
+
+" Surrounding, just awesome
+Bundle 'tpope/vim-surround'
 
 " Utility commands
 command Spaces %s/ \+$//g
-map <F5> I// <ESC>
 map <F4> O/*  */<ESC>hhi
 
 iab _TIME        <C-R>=strftime("%X")<CR>

@@ -41,7 +41,7 @@ plugins=(git git-extras git-remote-branch gitfast gitflow lol nyan osx brew enco
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/texbin:/usr/local/bin:/usr/local/git/bin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin:/Users/Edu/.rvm/bin:/usr/local/share/npm/bin
+export PATH=/usr/local/php5/bin:/usr/texbin:/usr/local/bin:/usr/local/git/bin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin:/Users/Edu/.rvm/bin:/usr/local/share/npm/bin
 #export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 
 autoload -U colors

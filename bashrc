@@ -113,7 +113,7 @@ fi
 # aliases
 source ~/dotfiles/aliases
 
-PATH="$HOME/local-extra/bin:$PATH:$HOME/scripts/"
+PATH="/usr/local/php5/bin:$PATH:$HOME/scripts/:$HOME/local-extra/bin"
 
 function name()
 {
