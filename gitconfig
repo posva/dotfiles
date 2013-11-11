@@ -23,7 +23,7 @@
         br = branch
         ci = commit
         hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-        lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+        lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %Cblue[%an]' --abbrev-commit --date=relative
         br = branch
         st = status
 # auto set the pull and push rmeote
