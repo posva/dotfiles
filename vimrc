@@ -205,6 +205,13 @@ Bundle 'vim-scripts/dbext.vim'
 " Surrounding, just awesome
 Bundle 'tpope/vim-surround'
 
+" Rainbow parantheses
+Bundle 'kien/rainbow_parentheses.vim'
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
 " Utility commands
 command Spaces %s/ \+$//g
 map <F4> O/*  */<ESC>hhi

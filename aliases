@@ -10,7 +10,6 @@ alias du="du -h"
 alias gource="gource --user-image-dir ~/gource-img/ --multi-sampling --dont-stop"
 
 alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
-alias tele="ssh -X sanmarte@telesun.imag.fr"
 alias exp='env LD_LIBRARY_PATH=${HOME}/expect5.45 ${HOME}/expect5.45/expect'
 alias walle='cat ~/partage/wall-e.txt'
 alias term='source set-term'
