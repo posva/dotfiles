@@ -87,3 +87,20 @@ alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
 
+# Update function
+function update_dotfiles() {
+  printf '\033[0;34m%s\033[0m\n' "Updating dotfiles"
+  cd ~/dotfiles
+  if git pull --rebase origin $(git rev-parse --abbrev-ref HEAD)
+  then
+    echo -e "\e[32m    .___      __    _____.__.__                 "
+    echo "  __| _/_____/  |__/ ____\__|  |   ____   ______"
+    echo " / __ |/  _ \   __\   __\|  |  | _/ __ \ /  ___/"
+    echo "/ /_/ (  <_> )  |  |  |  |  |  |_\  ___/ \___ \ "
+    echo "\____ |\____/|__|  |__|  |__|____/\___  >____  >"
+    echo "     \/                               \/     \/ "
+    echo -e "\e[34mdofiles updated and/or is at the current version.\e[0m"
+  else
+    echo -e "\e[31mThere was an error updating...\e[0m"
+  fi
+}
