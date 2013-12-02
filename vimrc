@@ -195,6 +195,9 @@ let g:gitgutter_realtime = 0
 "Bundle 'vim-scripts/Vim-JDE'
 Bundle 'vim-scripts/javacomplete'
 
+" Bash within vim
+Bundle 'basepi/vim-conque'
+
 " NERD Tree
 Bundle 'scrooloose/nerdtree'
 "Open NerdTree with Ctrl+N
