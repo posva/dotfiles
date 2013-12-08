@@ -10,6 +10,8 @@ dir=~/dotfiles               # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 files="bashrc vimrc vim zshrc gitconfig oh-my-zsh"    # list of files/folders to symlink in homedir
 
+platform=$(uname);
+
 ##########
 
 # Verification of the install dir
@@ -46,18 +48,21 @@ if which zsh >/dev/null; then
   # Clone my oh-my-zsh repository from GitHub only if it isn't already present
   if [[ ! -d $dir/oh-my-zsh/ ]]; then
     echo "Cloning oh-my-zsh"
-    git clone https://github.com/robbyrussell/oh-my-zsh.git
+    if ! git clone https://github.com/robbyrussell/oh-my-zsh.git; then
+      echo "Error cloning oh-my-zsh..."
+      exit 1
+    fi
   fi
   # Set the default shell to zsh if it isn't currently set to zsh
   if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
     if [ ! "$(grep $(which zsh) /etc/shells)" ]; then
-      sudo echo "$(which zsh)" >> /etc/shells
+      if [[ $platform == 'Linux' || $platform == 'Darwin' ]]; then
+        sudo echo "$(which zsh)" >> /etc/shells
+      fi
     fi
-    chsh -s $(which zsh)
+    sed -i "s/$USER\:\/bin\/bash/$USER\:\/bin\/zsh/g" /etc/passwd
   fi
 else
-  # If zsh isn't installed, get the platform of the current machine
-  platform=$(uname);
   # If the platform is Linux, try an apt-get to install zsh and then recurse
   if [[ $platform == 'Linux' ]]; then
     sudo apt-get install zsh
@@ -86,9 +91,8 @@ fi
 }
 
 if [ ! "$1" = -z ]; then
-  install_zsh
-  if [ ! "$?" = 0 ]; then
-    exit "$?"
+  if ! install_zsh ; then
+    exit 1
   fi
 
   # Install posva zsh theme
@@ -106,8 +110,12 @@ echo "done"
 
 if [[ ! -d $dir/vim/bundle/vundle/ ]]; then
   echo "Installing Vundle"
-  git clone https://github.com/gmarik/vundle.git vim/bundle/vundle
-  echo "done"
+  if git clone https://github.com/gmarik/vundle.git vim/bundle/vundle ; then
+    echo "done"
+  else
+    echo "Error doing git clone..."
+    exit 1
+  fi
 fi
 
 if which vim >/dev/null; then
