@@ -76,6 +76,7 @@ set confirm
 
 set nocompatible               " be iMproved
 filetype off                   " required!
+map Q <Nop> " No exmode
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -104,7 +105,11 @@ let sh_fold_enabled=1         " sh
 let vimsyn_folding='af'       " Vim script
 let xml_syntax_folding=1      " XML
 
-colorscheme molokai
+" More themes
+Bundle 'croaker/mustang-vim'
+Bundle 'fmoralesc/vim-vitamins'
+
+colorscheme vitamins
 "set background=dark
 
 " Airline iformation about the file in bottom line
@@ -222,10 +227,6 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
-
-" More themes
-Bundle 'croaker/mustang-vim'
-Bundle 'fmoralesc/vim-vitamins'
 
 " Utility commands
 command Spaces %s/ \+$//g
