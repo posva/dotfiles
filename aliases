@@ -105,4 +105,5 @@ function update_dotfiles() {
   else
     echo -e "\e[31mThere was an error updating...\e[0m"
   fi
+  cd -
 }

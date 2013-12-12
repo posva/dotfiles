@@ -76,6 +76,7 @@ set confirm
 
 set nocompatible               " be iMproved
 filetype off                   " required!
+map Q <Nop> " No exmode
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -104,17 +105,11 @@ let sh_fold_enabled=1         " sh
 let vimsyn_folding='af'       " Vim script
 let xml_syntax_folding=1      " XML
 
-" Airline
-let g:airline_left_sep = ''
-set laststatus=2
-let g:airline_right_sep = ''
-let g:airline_detect_modified = 1
-let g:airline_detect_paste = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#branch#empty_message = ''
-let g:airline#extensions#whitespace#checks = [ 'indent' ]
+" More themes
+Bundle 'croaker/mustang-vim'
+Bundle 'fmoralesc/vim-vitamins'
 
-colorscheme molokai
+colorscheme vitamins
 "set background=dark
 
 " Airline iformation about the file in bottom line
