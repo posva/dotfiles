@@ -223,6 +223,10 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
+" More themes
+Bundle 'croaker/mustang-vim'
+Bundle 'fmoralesc/vim-vitamins'
+
 " Utility commands
 command Spaces %s/ \+$//g
 map <F4> O/*  */<ESC>hhi
