@@ -130,6 +130,17 @@ set hlsearch
 "display folders ( sympathie with the devil )
 "set foldcolumn=1
 
+" Javascript
+Bundle 'marijnh/tern_for_vim'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'pangloss/vim-javascript'
+
+" Insert missing }])"' etc. Press <C-c> for new line
+Bundle 'Raimondi/delimitMate'
+imap <C-c> <CR><Esc>O
+
+" TagBar
+Bundle 'majutsushi/tagbar'
 
 " Indent guide plugin
 Bundle 'nathanaelkane/vim-indent-guides'
@@ -158,6 +169,16 @@ function! FillLine( str, l )
   endif
 endfunction
 
+" Snippets!
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle 'honza/vim-snippets'
+" Prevent YCM conflict
+imap ss <esc>a<Plug>snipMateNextOrTrigger
+smap ss <Plug>snipMateNextOrTrigger
+"let g:ycm_key_list_select_completion = []
+
 " C/C++ completion with YCM
 " This plugin include these plugins:
 " clang_complete
@@ -168,7 +189,7 @@ endfunction
 " cd ~/.vim/bundle/YouCompleteMe
 " ./install.sh --clang-completer
 Bundle 'Valloric/YouCompleteMe'
-"Bundle ' ervandew/supertab'
+"Bundle 'ervandew/supertab'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_register_as_syntastic_checker = 0
 
@@ -206,11 +227,6 @@ autocmd vimenter * if !argc() | NERDTree | endif
 " NERD commenter
 Bundle 'scrooloose/nerdcommenter'
 map <F5> <leader>c<space>
-
-" Snippets!
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "garbas/vim-snipmate"
-Bundle 'honza/vim-snippets'
 
 " Markdown
 Bundle 'plasticboy/vim-markdown'
