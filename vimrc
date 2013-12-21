@@ -51,7 +51,7 @@ endfunction
 
 
 " Specific config for files
-autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8
+autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8 ft=c
 autocmd BufRead,BufNewFile *.md setlocal syntax=markdown filetype=markdown
 autocmd BufRead,BufNewFile *.java setlocal shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.cpp,*.hpp,*.js,*.php setlocal shiftwidth=4 softtabstop=4
@@ -175,8 +175,8 @@ Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle 'honza/vim-snippets'
 " Prevent YCM conflict
-imap ss <esc>a<Plug>snipMateNextOrTrigger
-smap ss <Plug>snipMateNextOrTrigger
+imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
+smap <C-J> <Plug>snipMateNextOrTrigger
 "let g:ycm_key_list_select_completion = []
 
 " C/C++ completion with YCM
