@@ -51,7 +51,7 @@ endfunction
 
 
 " Specific config for files
-autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8
+autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8 ft=c
 autocmd BufRead,BufNewFile *.md setlocal syntax=markdown filetype=markdown
 autocmd BufRead,BufNewFile *.java setlocal shiftwidth=4 softtabstop=4
 autocmd BufRead,BufNewFile *.cpp,*.hpp,*.js,*.php setlocal shiftwidth=4 softtabstop=4
@@ -130,6 +130,17 @@ set hlsearch
 "display folders ( sympathie with the devil )
 "set foldcolumn=1
 
+" Javascript
+Bundle 'marijnh/tern_for_vim'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'pangloss/vim-javascript'
+
+" Insert missing }])"' etc. Press <C-c> for new line
+Bundle 'Raimondi/delimitMate'
+imap <C-c> <CR><Esc>O
+
+" TagBar
+Bundle 'majutsushi/tagbar'
 
 " Indent guide plugin
 "Bundle 'nathanaelkane/vim-indent-guides'
@@ -158,6 +169,16 @@ function! FillLine( str, l )
   endif
 endfunction
 
+" Snippets!
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle 'honza/vim-snippets'
+" Prevent YCM conflict
+imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
+smap <C-J> <Plug>snipMateNextOrTrigger
+"let g:ycm_key_list_select_completion = []
+
 " C/C++ completion with YCM
 " This plugin include these plugins:
 " clang_complete
@@ -170,6 +191,8 @@ endfunction
 
 "Bundle 'Valloric/YouCompleteMe'
 Bundle 'ervandew/supertab'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_register_as_syntastic_checker = 0
 
 " Syntastic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
@@ -205,11 +228,6 @@ autocmd vimenter * if !argc() | NERDTree | endif
 " NERD commenter
 Bundle 'scrooloose/nerdcommenter'
 map <F5> <leader>c<space>
-
-" Snippets!
-"Bundle 'MarcWeber/vim-addon-mw-utils'
-"Bundle 'garbas/vim-snipmate'
-"Bundle 'honza/vim-snippets'
 
 " Markdown
 Bundle 'plasticboy/vim-markdown'
