@@ -6,8 +6,14 @@ set expandtab
 set shiftwidth=2
 set softtabstop=2
 
+function CheckRo()
+  if ! (&readonly)
+    set fileencoding=utf-8
+  endif
+endfunction
+
+au BufReadPost * call CheckRo()
 set encoding=utf-8
-set fileencoding=utf-8
 
 "Can delete old text
 set backspace=indent,eol,start
