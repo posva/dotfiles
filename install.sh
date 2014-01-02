@@ -77,7 +77,7 @@ fi
 for file in $files; do
   info_msg -n "Moving $file to $olddir..."
   if [ -f ~/.$file -o -d ~/.$file ]; then
-    mv -f ~/.$file $olddir && good_msg "done"
+    mv -f ~/.$file $olddir && good_msg "done" || bad_msg "error"
   fi
   info_msg -n "Creating symlink to $file in home directory..."
   ln -s $dir/$file ~/.$file && good_msg "done" || bad_msg "error"
@@ -88,16 +88,15 @@ done
 
 # Install Homebrew only for OSX
 function install_brew {
-  if [[ ! "$OSX" ]]; then
-    exit
-  fi
-  if [[ ! -x `which brew` ]]; then
-    info_msg -n "Installing Homebrew(brew)..."
-    if ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" ; then
-      good_msg "done"
-    else
-      bad_msg "error"
-      exit 1
+  if [[ "$OSX" ]]; then
+    if [[ ! -x `which brew` ]]; then
+      info_msg -n "Installing Homebrew(brew)..."
+      if ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" ; then
+        good_msg "done"
+      else
+        bad_msg "error"
+        exit 1
+      fi
     fi
   fi
 }
@@ -127,8 +126,8 @@ if [[ -x `which zsh` ]]; then
     fi
   fi
   # Set the default shell to zsh if it isn't currently set to zsh
-  if [[ ! $(echo $SHELL) == `which zsh` ]]; then
-    if [ ! "$(grep `which zsh` /etc/shells)" ]; then
+  if [[ ! `echo $SHELL` == `which zsh` ]]; then
+    if [[ ! "$(grep `which zsh` /etc/shells)" ]]; then
       if [[ `uname` == 'Linux' || `uname` == 'Darwin' ]]; then
         sudo echo "`which zsh`" >> /etc/shells
       fi
@@ -185,7 +184,7 @@ function install_vim {
     fi
   fi
 
-  vim -c "BundleInstall"
+  vim +BundleInstall! +BundleClean +qall
 }
 
 ####### Go ahead, call the functions #######
