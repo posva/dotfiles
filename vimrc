@@ -198,6 +198,8 @@ Bundle 'Valloric/YouCompleteMe'
 "Bundle 'ervandew/supertab'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_register_as_syntastic_checker = 0
+" Disable preview scratch
+set completeopt=menu,menuone
 
 " Syntastic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
@@ -205,7 +207,8 @@ Bundle 'scrooloose/syntastic'
 let g:syntastic_java_javac_classpath="src\nlib/gui.jar\n/usr/share/java/junit4.jar\n/Applications/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar\n/usr/local/eclipse-3.2.6/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar"
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_include_dirs = [ 'src' ]
+let g:syntastic_cpp_include_dirs = [ 'src', '../src', '../include', 'include' ]
+let g:syntastic_c_include_dirs = [ 'src', '../src', '../include', 'include' ]
 let g:syntastic_cpp_compiler_options = ' -Wall -Wextra -O2 -std=c++11'
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1

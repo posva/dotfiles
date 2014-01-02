@@ -6,7 +6,7 @@ alias tele="ssh sanmarte@telesun.imag.fr"
 alias telex="ssh -Y sanmarte@telesun.imag.fr"
 alias du="du -h"
 
-alias catimg="~/catimg/catimg"
+#alias catimg="~/catimg/catimg"
 
 # gource pictures
 alias gource="gource --user-image-dir ~/gource-img/ --multi-sampling --dont-stop"
@@ -107,3 +107,10 @@ function update_dotfiles() {
   fi
   cd -
 }
+alias ccat="source-highlight --out-format=esc -o STDOUT -i"
+
+if [[ -x `which vimpager` ]]; then
+  export PAGER=`which vimpager`
+  alias less=$PAGER
+  alias zless=$PAGER 
+fi
