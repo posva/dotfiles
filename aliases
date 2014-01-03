@@ -107,10 +107,6 @@ function update_dotfiles() {
   fi
   cd -
 }
+
 alias ccat="source-highlight --out-format=esc -o STDOUT -i"
 
-if [[ -x `which vimpager` ]]; then
-  export PAGER=`which vimpager`
-  alias less=$PAGER
-  alias zless=$PAGER 
-fi

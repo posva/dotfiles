@@ -15,7 +15,7 @@ files="bashrc vimrc vim zshrc gitconfig oh-my-zsh"    # list of files/folders to
 # Get OS. Installing in windows is the same as in Linux
 # because I use Cygwin
 OSX=""
-INSTALL="sudo apt-get install"
+INSTALL="sudo apt-get install -y"
 if [[ "`uname`" = "Darwin" ]]; then
   OSX="YES"
   INSTALL="brew install"
@@ -161,14 +161,20 @@ function install_more {
 # Install vim and plugins
 function install_vim {
   if [[ ! -x `which vim` ]]; then
-    info_msg "Installing hg(Mercurial)"
-    ${INSTALL} mercurial || exit 1
-    info_msg "Cloning vim repo"
-    hg clone https://vim.googlecode.com/hg/ vim_src || exit 1
-    info_msg "Installing Vim with python and ruby support"
-    ./configure --prefix=/usr/local/ --enable-rubyinterp --enable-pythoninterp --with-features=huge || exit 1
-    make || exit 1
-    sudo make install || exit 1
+    if [[ "$OSX" ]]; then
+      brew install vim --with-lua
+    else
+      if [[ ! -x `which hg` ]]; then
+        info_msg "Installing hg(Mercurial)"
+        ${INSTALL} mercurial || exit 1
+      fi
+      info_msg "Cloning vim repo"
+      hg clone https://vim.googlecode.com/hg/ vim_src || exit 1
+      info_msg "Installing Vim with python and ruby support"
+      ./configure --prefix=/usr/local/ --enable-rubyinterp --enable-pythoninterp --with-features=huge || exit 1
+      make || exit 1
+      sudo make install || exit 1
+    fi
   fi
 
   # backup dir

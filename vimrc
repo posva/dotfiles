@@ -1,8 +1,11 @@
+" vimrc
+" Eduardo San Martin Morote
+" http://posva.net
 
 set nu " Show number lines
 
 " Default indentation
-set expandtab
+set expandtab " uses spaces by default
 set shiftwidth=2
 set softtabstop=2
 
@@ -15,18 +18,18 @@ endfunction
 au BufReadPost * call CheckRo()
 set encoding=utf-8
 
-"Can delete old text
+" Can delete previously edited text
 set backspace=indent,eol,start
 
-set langmenu=en_US.UTF-8    " sets the language of the menu (gvim)
-language en_US.UTF-8                 " sets the language of the messages / ui (vim)
+set langmenu=en_US.UTF-8 " sets the language of the menu (gvim)
+language en_US.UTF-8  " sets the language of the messages / ui (vim)
 
-set ignorecase  " Do case in sensitive matching with
-set smartcase   " be sensitive when there's a capital letter
+set ignorecase " Do case in sensitive matching with
+set smartcase " be sensitive when there's a capital letter
 
-set smartindent   " smart code indentation
+set smartindent " smart code indentation
 
-set smarttab      " smart tabs
+set smarttab " smart tabs
 " gg=G pour reindenter tout un fichier.
 
 " make command
@@ -88,7 +91,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
-" required! 
+" required!
 Bundle 'gmarik/vundle'
 
 filetype plugin indent on     " required!
@@ -279,7 +282,7 @@ ab fro for
 command Accent %s/é/\\'{e}/ge | %s/è/\\`{e}/ge | %s/ê/\\^{e}/ge | %s/ë/\\"{e}/ge | %s/à/\\`{a}/ge | %s/â/\\^{a}/ge | %s/î/\\^{i}/ge | %s/ï/\\"{i}/ge | %s/ö/\\"{o}/ge | %s/ô/\\^{o}/ge | %s/ù/\\`{u}/ge | %s/û/\\^{u}/ge | %s/ü/\\"{u}/ge | %s/ç/\\c{c}/ge
 
 command Pdf execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi && okular %:r.pdf &'
-command Latex execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi'  
+command Latex execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi'
 
 " FUNCTIONS
 fun DC()
@@ -294,4 +297,4 @@ func D2H(nr)
         let n = n / 16
     endwhile
     return r
-endfunc 
+endfunc
