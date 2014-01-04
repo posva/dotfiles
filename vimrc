@@ -610,8 +610,8 @@
   " }
 
   " NERD Tree {
-    "Open NerdTree with Ctrl+N
-    map <C-N> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+    "Open NerdTree with Ctrl+e
+    map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
     map <leader>e :NERDTreeFind<CR>
 
     let NERDTreeShowBookmarks=1
