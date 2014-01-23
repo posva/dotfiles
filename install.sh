@@ -168,10 +168,13 @@ function install_vim {
         info_msg "Installing hg(Mercurial)"
         ${INSTALL} mercurial || exit 1
       fi
-      info_msg "Cloning vim repo"
-      hg clone https://vim.googlecode.com/hg/ vim_src || exit 1
+      if [[ ! -d "vim_src" ]]; then
+          info_msg "Cloning vim repo"
+          hg clone https://vim.googlecode.com/hg/ vim_src || exit 1
+      fi
+      cd vim_src
       info_msg "Installing Vim with python and ruby support"
-      ./configure --prefix=/usr/local/ --enable-rubyinterp --enable-pythoninterp --with-features=huge || exit 1
+      ./configure --prefix=/usr/local/ --enable-rubyinterp --enable-pythoninterp --enable-luainterp --with-features=huge || exit 1
       make || exit 1
       sudo make install || exit 1
     fi
