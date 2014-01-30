@@ -197,10 +197,10 @@ smap <C-J> <Plug>snipMateNextOrTrigger
 " REMEMBER TO COMPILE THIS PLUGIN!
 " cd ~/.vim/bundle/YouCompleteMe
 " ./install.sh --clang-completer
-"Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
 "Bundle 'ervandew/supertab'
-"let g:ycm_confirm_extra_conf = 0
-"let g:ycm_register_as_syntastic_checker = 0
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_register_as_syntastic_checker = 0
 " Disable preview scratch
 set completeopt=menu,menuone
 
