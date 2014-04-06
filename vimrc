@@ -482,8 +482,8 @@
 
   map Q <Nop> " No exmode
 
-  " <Ctrl-l> redraws the screen and removes any search highlighting.
-  nnoremap <silent> <C-l> :nohl<CR><C-l>
+  " <leader>l redraws the screen and removes any search highlighting.
+  nnoremap <silent> <leader>l :nohl<CR><C-l>
 
   noremap <F9> <C-O>za
   nnoremap <F9> za
