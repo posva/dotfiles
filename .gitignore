@@ -3,3 +3,6 @@ vim/bundle
 vim/backup/
 gh-token
 vim_src
+vim/eclim
+vim/plugin
+vim/sessions
