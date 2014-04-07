@@ -200,9 +200,11 @@ let xml_syntax_folding=1      " XML
 
 " shell within vim {
   " Do make after installing this plugin
-  Bundle 'Shougo/vimproc.vim' 
-  Bundle 'Shougo/vimshell.vim'
-  nmap <leader>s :VimShell<CR>
+  if version >= 700
+    Bundle 'Shougo/vimproc.vim'
+    Bundle 'Shougo/vimshell.vim'
+    nmap <leader>s :VimShell<CR>
+  endif
 " }
 
 " Javascript {
