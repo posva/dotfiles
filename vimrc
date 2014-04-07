@@ -306,12 +306,15 @@ endif
   endif
 " }
 
-" Indent guide plugin
-Bundle 'nathanaelkane/vim-indent-guides'
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 0
-hi IndentGuidesOdd ctermbg=234
-hi IndentGuidesEven ctermbg=235
+" Indent guide plugin {
+  if exists('*matchadd')
+    Bundle 'nathanaelkane/vim-indent-guides'
+    let g:indent_guides_enable_on_vim_startup = 1
+    let g:indent_guides_auto_colors = 0
+    hi IndentGuidesOdd ctermbg=234
+    hi IndentGuidesEven ctermbg=235
+  endif
+" }
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
@@ -448,7 +451,9 @@ au Syntax * RainbowParenthesesLoadBraces
 " TODO neocomplcache
 
 " numbers: better line numbers {
-Bundle 'myusuf3/numbers.vim'
+if version >= 730
+  Bundle 'myusuf3/numbers.vim'
+endif
 "}
 
 " A plugin for automatically restoring file's cursor position and folding
