@@ -110,3 +110,5 @@ function update_dotfiles() {
 
 alias ccat="source-highlight --out-format=esc -o STDOUT -i"
 
+alias subl="~/sublime/sublime_text"
+
