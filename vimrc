@@ -200,7 +200,7 @@ let xml_syntax_folding=1      " XML
 
 " shell within vim {
   " Do make after installing this plugin
-  if version >= 700
+  if version >= 702
     Bundle 'Shougo/vimproc.vim'
     Bundle 'Shougo/vimshell.vim'
     nmap <leader>s :VimShell<CR>
@@ -238,7 +238,7 @@ Bundle 'Raimondi/delimitMate'
 imap <C-c> <CR><Esc>O
 
 " Autocompletion {
-if !has("lua")
+if !has("lua") && version >= 740
   Bundle 'Shougo/neocomplete.vim'
   " Config {
     let g:acp_enableAtStartup = 0
@@ -285,11 +285,9 @@ if !has("lua")
     inoremap <expr><C-y> neocomplete#close_popup()
   " }
 
-  if version >= 700
-    Bundle 'Shougo/neosnippet'
-    Bundle 'Shougo/neosnippet-snippets'
-    Bundle 'honza/vim-snippets'
-  endif
+  Bundle 'Shougo/neosnippet'
+  Bundle 'Shougo/neosnippet-snippets'
+  Bundle 'honza/vim-snippets'
 
 else
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
