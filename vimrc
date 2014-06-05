@@ -408,6 +408,7 @@ Bundle 'plasticboy/vim-markdown'
 
 " SQL
 Bundle 'vim-scripts/dbext.vim'
+source ~/dotfiles/db.vim
 
 " Surrounding, just awesome
 Bundle 'tpope/vim-surround'

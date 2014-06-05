@@ -277,5 +277,3 @@ export LD_LIBRARY_PATH=$ORACLE_HOME:$ORACLE_HOME/lib:$LD_LIBRARY_PATH
 export PATH=$ORACLE_HOME:$PATH
 export TNS_ADMIN=$ORACLE_HOME
 
-# Projet GL
-export PATH=~/global/bin:~/pgl/src/main/bin:~/pgl/src/test/script:~/pgl/src/test/script/launchers:$PATH
