@@ -1,6 +1,7 @@
 " vimrc
 " Eduardo San Martin Morote
 " http://posva.net
+" foldmethod=maker foldmarker={,}
 
 " General options {
 
@@ -233,12 +234,13 @@ let xml_syntax_folding=1      " XML
   let g:PIVAutoClose = 0
 " }
 
-" Insert missing }])"' etc. Press <C-c> for new line
-Bundle 'Raimondi/delimitMate'
+" Autoclose brackets, etc Press <C-c> for new line {
+Bundle 'spf13/vim-autoclose'
 imap <C-c> <CR><Esc>O
+" }
 
 " Autocompletion {
-if !has("lua") && version >= 740
+if has("lua") && version >= 740
   Bundle 'Shougo/neocomplete.vim'
   " Config {
     let g:acp_enableAtStartup = 0
@@ -319,22 +321,6 @@ endif
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 map <F3> o\begin{equation*}<ESC>o\begin{split}<ESC>o\end{split}<ESC>o\end{equation*}<ESC>kO
-
-" fill rest of line with characters
-function! FillLine( str, l )
-  " set tw to the desired total length
-  "let tw = 80
-  " strip trailing spaces first
-  .s/[[:space:]]*$//
-  " calculate total number of 'str's to insert
-  let reps = (a:l - col("$")) / len(a:str)
-  " insert them, if there's room, removing
-  " trailing spaces (though forcing
-  " there to be one)
-  if reps > 0
-    .s/$/\=(repeat(a:str, reps))/
-  endif
-endfunction
 
 " Omni completion  when you don't have neocompl {
 "  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -491,6 +477,22 @@ command Latex execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi'
 " }
 
 " FUNCTIONS {
+
+  " fill rest of line with characters
+  function! FillLine( str, l )
+    " set tw to the desired total length
+    "let tw = 80
+    " strip trailing spaces first
+    .s/[[:space:]]*$//
+    " calculate total number of 'str's to insert
+    let reps = (a:l - col("$")) / len(a:str)
+    " insert them, if there's room, removing
+    " trailing spaces (though forcing
+    " there to be one)
+    if reps > 0
+      .s/$/\=(repeat(a:str, reps))/
+    endif
+  endfunction
 
   fun DC()
       let c=nr2char(getchar())|return c=~'\s'?'':c
