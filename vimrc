@@ -150,9 +150,10 @@ let xml_syntax_folding=1      " XML
   " Nice theme are  monokai, mustang, vitamins, 256-..., peaksea,
   " ir_black, xoria256
 
-  let themes = ['monokai', 'mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black']
+  let themes = ['mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black']
 
   execute 'colorscheme '.themes[localtime() % len(themes)]
+  set background=dark
   unlet themes
 
 " }
@@ -394,7 +395,9 @@ Bundle 'plasticboy/vim-markdown'
 
 " SQL
 Bundle 'vim-scripts/dbext.vim'
-source ~/dotfiles/db.vim
+if (filereadable('db.vim'))
+  source ~/dotfiles/db.vim
+endif
 
 " Surrounding, just awesome
 Bundle 'tpope/vim-surround'
