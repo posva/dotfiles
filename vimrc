@@ -15,7 +15,7 @@
     set backspace=indent,eol,start
 
     set langmenu=en_US.UTF-8 " sets the language of the menu (gvim)
-    language en_US.UTF-8  " sets the language of the messages / ui (vim)
+    "language en_US.UTF-8  " sets the language of the messages / ui (vim)
 
     " "Give me some space" said the cursor
     set scrolloff=15
