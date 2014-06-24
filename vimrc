@@ -396,7 +396,9 @@ Bundle 'plasticboy/vim-markdown'
 
 " SQL
 Bundle 'vim-scripts/dbext.vim'
-source ~/dotfiles/db.vim
+if (filereadable("~/dotfiles/db.vim"))
+  source ~/dotfiles/db.vim
+endif
 
 " Surrounding, just awesome
 Bundle 'tpope/vim-surround'
