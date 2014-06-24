@@ -277,3 +277,7 @@ export LD_LIBRARY_PATH=$ORACLE_HOME:$ORACLE_HOME/lib:$LD_LIBRARY_PATH
 export PATH=$ORACLE_HOME:$PATH
 export TNS_ADMIN=$ORACLE_HOME
 
+
+export iOSOpenDevPath=/opt/iOSOpenDev
+export iOSOpenDevDevice=
+export PATH=/opt/iOSOpenDev/bin:$PATH
