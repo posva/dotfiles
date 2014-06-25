@@ -33,7 +33,7 @@ COMPLETION_WAITING_DOTS="true"
 # much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-export PATH=/usr/local/php5/bin:/usr/texbin:/usr/local/bin:/usr/local/git/bin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin:/Users/Edu/.rvm/bin:/usr/local/share/npm/bin
+export PATH=$HOME/.cabal/bin:/usr/local/php5/bin:/usr/texbin:/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/usr/bin:/usr/sbin:/opt/X11/bin:/bin:/sbin:/Users/Edu/.rvm/bin:/usr/local/share/npm/bin
 #export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
@@ -58,3 +58,7 @@ alias watch="nocorrect watch"
 
 # UTF-8 for logs
 export LANG="en_US.UTF-8"
+
+if [[ -f "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi

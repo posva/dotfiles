@@ -20,6 +20,8 @@
     " "Give me some space" said the cursor
     set scrolloff=15
 
+    set mouse=a " mouse is so usefull if well used
+
   " }
 
   " Indentation {
@@ -395,7 +397,7 @@ Bundle 'plasticboy/vim-markdown'
 
 " SQL
 Bundle 'vim-scripts/dbext.vim'
-if (filereadable('db.vim'))
+if (filereadable("~/dotfiles/db.vim"))
   source ~/dotfiles/db.vim
 endif
 
@@ -574,5 +576,11 @@ command Latex execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi'
     autocmd BufWinEnter * call ResCur()
   augroup END
 
+" }
+
+" Local config file {
+if filereadable(".vim-local.vim")
+  source .vim-local.vim
+endif
 " }
 
