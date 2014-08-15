@@ -112,12 +112,12 @@ endfunction
   set nocompatible
   filetype off
 
-  set rtp+=~/.vim/bundle/vundle/
-  call vundle#rc()
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
 " }
 
 " Vundle and main plugins {
-  Bundle 'gmarik/vundle'
+  Bundle 'gmarik/Vundle.vim'
   Bundle "MarcWeber/vim-addon-mw-utils"
   Bundle "tomtom/tlib_vim"
 
