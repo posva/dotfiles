@@ -192,7 +192,7 @@ let xml_syntax_folding=1      " XML
 
 " shell within vim {
   " Do make after installing this plugin
-  if version >= 702
+  if v:version >= 702
     Plugin 'Shougo/vimproc.vim'
     Plugin 'Shougo/vimshell.vim'
     nmap <leader>s :VimShell<CR>
@@ -231,7 +231,7 @@ imap <C-c> <CR><Esc>O
 " }
 
 " Autocompletion {
-if has("lua") && version >= 740
+if has("lua") && v:version >= 740
   Plugin 'Shougo/neocomplete.vim'
   " Config {
     let g:acp_enableAtStartup = 0
@@ -294,7 +294,7 @@ endif
 " }
 
 " TagBar {
-  if version >= 702
+  if v:version >= 702
     Plugin 'majutsushi/tagbar'
   endif
 " }
@@ -431,7 +431,7 @@ au Syntax * RainbowParenthesesLoadBraces
 " TODO neocomplcache
 
 " numbers: better line numbers {
-if version >= 730
+if v:version >= 730
   Plugin 'myusuf3/numbers.vim'
 endif
 "}
@@ -447,10 +447,10 @@ filetype plugin indent on    " required
 
 " Theme {
 
-  " Nice theme are  monokai, mustang, vitamins, 256-..., peaksea,
+  " Nice theme are mustang, vitamins, 256-..., peaksea,
   " ir_black, xoria256
 
-  let themes = ['monokai', 'mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black']
+  let themes = ['mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black']
 
   execute 'colorscheme '.themes[localtime() % len(themes)]
   unlet themes
