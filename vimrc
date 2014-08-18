@@ -180,14 +180,17 @@ let xml_syntax_folding=1      " XML
 
 " Airline iformation about the file in bottom line {
   Plugin 'bling/vim-airline'
-  let g:airline_left_sep = ''
+  " TODO when poweline isn't available
+  "let g:airline_left_sep = ''
+  "let g:airline_right_sep = ''
+  let g:airline_powerline_fonts = 1
   set laststatus=2
-  let g:airline_right_sep = ''
   let g:airline_detect_modified = 1
   let g:airline_detect_paste = 1
-  let g:airline#extensions#branch#enabled = 1
-  let g:airline#extensions#branch#empty_message = ''
-  let g:airline#extensions#whitespace#checks = [ 'indent' ]
+  let g:airline#extensions#tabline#enabled = 1
+  "let g:airline#extensions#branch#enabled = 1
+  "let g:airline#extensions#branch#empty_message = ''
+  "let g:airline#extensions#whitespace#checks = [ 'indent' ]
 " }
 
 " shell within vim {
@@ -296,6 +299,7 @@ endif
 " TagBar {
   if v:version >= 702
     Plugin 'majutsushi/tagbar'
+    nmap <F8> :TagbarToggle<CR>
   endif
 " }
 

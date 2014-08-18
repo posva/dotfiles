@@ -10,7 +10,7 @@
 
 dir=~/dotfiles               # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="bashrc vimrc vim zshrc gitconfig oh-my-zsh"    # list of files/folders to symlink in homedir
+files="bashrc vimrc vim zshrc gitconfig oh-my-zsh tmux.conf"    # list of files/folders to symlink in homedir
 
 # Get OS. Installing in windows is the same as in Linux
 # because I use Cygwin
