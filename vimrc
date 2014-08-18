@@ -8,9 +8,11 @@
   " Editing  & encoding {
     set nu " Show number lines
 
+    syntax on " syntax highlight
+
     au BufReadPost * call CheckRo()
     set encoding=utf-8
-    "
+
     " Can delete previously edited text
     set backspace=indent,eol,start
 
@@ -112,24 +114,20 @@ endfunction
   set nocompatible
   filetype off
 
-  set rtp+=~/.vim/bundle/vundle/
-  call vundle#rc()
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
 " }
 
 " Vundle and main plugins {
-  Bundle 'gmarik/vundle'
-  Bundle "MarcWeber/vim-addon-mw-utils"
-  Bundle "tomtom/tlib_vim"
-
-  " For vundle to work
-  filetype plugin indent on " required!
-  syntax on " syntax highlighting
+  Plugin 'gmarik/Vundle.vim'
+  Plugin 'MarcWeber/vim-addon-mw-utils'
+  Plugin 'tomtom/tlib_vim'
 
 " }
 
 " Mines {
-  Bundle 'posva/Rndm'
-  Bundle 'vim-scripts/Mines'
+  Plugin 'posva/Rndm'
+  Plugin 'vim-scripts/Mines'
 " }
 
 
@@ -143,25 +141,15 @@ let vimsyn_folding='af'       " Vim script
 let xml_syntax_folding=1      " XML
 
 " Colorschemes {
-  Bundle 'croaker/mustang-vim'
-  Bundle 'fmoralesc/vim-vitamins'
-  Bundle 'flazz/vim-colorschemes'
-  "Bundle 'altercation/vim-colors-solarized'
-  "Bundle 'spf13/vim-colors'
-
-  " Nice theme are  monokai, mustang, vitamins, 256-..., peaksea,
-  " ir_black, xoria256
-
-  let themes = ['mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black']
-
-  execute 'colorscheme '.themes[localtime() % len(themes)]
-  set background=dark
-  unlet themes
-
+  Plugin 'croaker/mustang-vim'
+  Plugin 'fmoralesc/vim-vitamins'
+  Plugin 'flazz/vim-colorschemes'
+  "Plugin 'altercation/vim-colors-solarized'
+  "Plugin 'spf13/vim-colors'
 " }
 
 " Align text with tabular {
-  Bundle 'godlygeek/tabular'
+  Plugin 'godlygeek/tabular'
   nmap <leader>a& :Tabularize /&<CR>
   vmap <leader>a& :Tabularize /&<CR>
   nmap <leader>a= :Tabularize /=<CR>
@@ -179,7 +167,7 @@ let xml_syntax_folding=1      " XML
 " }
 
 " Sessions are good {
-  Bundle 'vim-scripts/sessionman.vim'
+  Plugin 'vim-scripts/sessionman.vim'
   set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
   nmap <leader>sl :SessionList<CR>
   nmap <leader>ss :SessionSave<CR>
@@ -191,7 +179,7 @@ let xml_syntax_folding=1      " XML
 " }
 
 " Airline iformation about the file in bottom line {
-  Bundle 'bling/vim-airline'
+  Plugin 'bling/vim-airline'
   let g:airline_left_sep = ''
   set laststatus=2
   let g:airline_right_sep = ''
@@ -204,25 +192,25 @@ let xml_syntax_folding=1      " XML
 
 " shell within vim {
   " Do make after installing this plugin
-  if version >= 702
-    Bundle 'Shougo/vimproc.vim'
-    Bundle 'Shougo/vimshell.vim'
+  if v:version >= 702
+    Plugin 'Shougo/vimproc.vim'
+    Plugin 'Shougo/vimshell.vim'
     nmap <leader>s :VimShell<CR>
   endif
 " }
 
 " Javascript {
-  Bundle 'elzr/vim-json'
-  Bundle 'groenewege/vim-less'
-  Bundle 'pangloss/vim-javascript'
-  Bundle 'briancollins/vim-jst'
-  Bundle 'kchmck/vim-coffee-script'
+  Plugin 'elzr/vim-json'
+  Plugin 'groenewege/vim-less'
+  Plugin 'pangloss/vim-javascript'
+  Plugin 'briancollins/vim-jst'
+  Plugin 'kchmck/vim-coffee-script'
 " }
 
 " HTML {
-  Bundle 'amirh/HTML-AutoCloseTag'
-  Bundle 'hail2u/vim-css3-syntax'
-  Bundle 'tpope/vim-haml'
+  Plugin 'amirh/HTML-AutoCloseTag'
+  Plugin 'hail2u/vim-css3-syntax'
+  Plugin 'tpope/vim-haml'
 
   autocmd BufRead,BufNewFile *.html,*.css, setlocal shiftwidth=2 softtabstop=2
   " Make it so AutoCloseTag works for xml and xhtml files as well
@@ -231,20 +219,20 @@ let xml_syntax_folding=1      " XML
 " }
 
 " PHP {
-  Bundle 'spf13/PIV'
-  Bundle 'arnaud-lb/vim-php-namespace'
+  Plugin 'spf13/PIV'
+  Plugin 'arnaud-lb/vim-php-namespace'
   let g:DisableAutoPHPFolding = 0
   let g:PIVAutoClose = 0
 " }
 
 " Autoclose brackets, etc Press <C-c> for new line {
-Bundle 'spf13/vim-autoclose'
+Plugin 'spf13/vim-autoclose'
 imap <C-c> <CR><Esc>O
 " }
 
 " Autocompletion {
-if has("lua") && version >= 740
-  Bundle 'Shougo/neocomplete.vim'
+if has("lua") && v:version >= 740
+  Plugin 'Shougo/neocomplete.vim'
   " Config {
     let g:acp_enableAtStartup = 0
     let g:neocomplete#enable_at_startup = 1
@@ -290,9 +278,9 @@ if has("lua") && version >= 740
     inoremap <expr><C-y> neocomplete#close_popup()
   " }
 
-  Bundle 'Shougo/neosnippet'
-  Bundle 'Shougo/neosnippet-snippets'
-  Bundle 'honza/vim-snippets'
+  Plugin 'Shougo/neosnippet'
+  Plugin 'Shougo/neosnippet-snippets'
+  Plugin 'honza/vim-snippets'
 
 else
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -306,14 +294,14 @@ endif
 " }
 
 " TagBar {
-  if version >= 702
-    Bundle 'majutsushi/tagbar'
+  if v:version >= 702
+    Plugin 'majutsushi/tagbar'
   endif
 " }
 
 " Indent guide plugin {
   if exists('*matchadd')
-    Bundle 'nathanaelkane/vim-indent-guides'
+    Plugin 'nathanaelkane/vim-indent-guides'
     let g:indent_guides_enable_on_vim_startup = 1
     let g:indent_guides_auto_colors = 0
     hi IndentGuidesOdd ctermbg=234
@@ -349,8 +337,8 @@ map <F3> o\begin{equation*}<ESC>o\begin{split}<ESC>o\end{split}<ESC>o\end{equati
 " REMEMBER TO COMPILE THIS PLUGIN!
 " cd ~/.vim/bundle/YouCompleteMe
 " ./install.sh --clang-completer
-"Bundle 'Valloric/YouCompleteMe'
-"Bundle 'ervandew/supertab'
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'ervandew/supertab'
 "let g:ycm_confirm_extra_conf = 0
 "let g:ycm_register_as_syntastic_checker = 0
 " Disable preview scratch
@@ -358,7 +346,7 @@ set completeopt=menu,menuone
 
 " Syntastic plugin for compilation errors
 " REMEMBER TO CREATE THE FILE .ycm_extra_config.py
-Bundle 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 let g:syntastic_java_javac_classpath="src\nlib/gui.jar\n/usr/share/java/junit4.jar\n/Applications/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar\n/usr/local/eclipse-3.2.6/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar"
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_check_header = 1
@@ -369,18 +357,18 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 
 " git addtitions and deletions
-Bundle 'airblade/vim-gitgutter'
+Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_realtime = 0
 
 " Java IDE
-"Bundle 'vim-scripts/Vim-JDE'
-Bundle 'vim-scripts/javacomplete'
+"Plugin 'vim-scripts/Vim-JDE'
+Plugin 'vim-scripts/javacomplete'
 
 " Bash within vim
-Bundle 'basepi/vim-conque'
+Plugin 'basepi/vim-conque'
 
 " NERD Tree
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 "Open NerdTree with Ctrl+N
 map <C-N> :NERDTreeToggle<CR>
 " Autoclose vim when only NerdTree is open
@@ -389,30 +377,30 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " autocmd vimenter * if !argc() | NERDTree | endif
 
 " NERD commenter
-Bundle 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter'
 map <F5> <leader>c<space>
 
 " Markdown
-Bundle 'plasticboy/vim-markdown'
+Plugin 'plasticboy/vim-markdown'
 
 " SQL
-Bundle 'vim-scripts/dbext.vim'
+Plugin 'vim-scripts/dbext.vim'
 if (filereadable("~/dotfiles/db.vim"))
   source ~/dotfiles/db.vim
 endif
 
 " Surrounding, just awesome
-Bundle 'tpope/vim-surround'
+Plugin 'tpope/vim-surround'
 
 " Rainbow parantheses
-Bundle 'kien/rainbow_parentheses.vim'
+Plugin 'kien/rainbow_parentheses.vim'
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 "Ctrl-P open fast files {
-  Bundle 'kien/ctrlp.vim'
+  Plugin 'kien/ctrlp.vim'
   let g:ctrlp_working_path_mode = 'ra'
   nnoremap <silent> <D-t> :CtrlP<CR>
   nnoremap <silent> <D-r> :CtrlPMRU<CR>
@@ -443,13 +431,31 @@ au Syntax * RainbowParenthesesLoadBraces
 " TODO neocomplcache
 
 " numbers: better line numbers {
-if version >= 730
-  Bundle 'myusuf3/numbers.vim'
+if v:version >= 730
+  Plugin 'myusuf3/numbers.vim'
 endif
 "}
 
 " A plugin for automatically restoring file's cursor position and folding
-Bundle 'vim-scripts/restore_view.vim'
+Plugin 'vim-scripts/restore_view.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+
+" Theme {
+
+  " Nice theme are mustang, vitamins, 256-..., peaksea,
+  " ir_black, xoria256
+
+  let themes = ['mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black']
+
+  execute 'colorscheme '.themes[localtime() % len(themes)]
+  unlet themes
+
+" }
 
 " Utility commands {
 command Spaces %s/ \+$//g

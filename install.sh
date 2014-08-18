@@ -185,15 +185,15 @@ function install_vim {
   mkdir -p vim/backup && good_msg "done" || warning_msg "Manually create the dir ~/.vim/backup"
 
   # Plugins
-  if [[ ! -d $dir/vim/bundle/vundle/ ]]; then
+  if [[ ! -d $dir/vim/bundle/Vundle.vim/ ]]; then
     info_msg "Installing Vundle"
-    if ! git clone https://github.com/gmarik/vundle.git vim/bundle/vundle ; then
+    if ! git clone https://github.com/gmarik/Vundle.vim.git vim/bundle/Vundle.vim ; then
       bad_msg "Error doing git clone..."
       exit 1
     fi
   fi
 
-  vim +BundleInstall! +BundleClean +qall
+  vim +VundleInstall! +VundleClean +qall
 }
 
 ####### Go ahead, call the functions #######
