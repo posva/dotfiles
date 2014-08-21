@@ -462,7 +462,7 @@ filetype plugin indent on    " required
 " }
 
 " Utility commands {
-command Spaces %s/ \+$//g
+command Spaces %s/\s\+$\|\t\+$//g
 map <F4> O/*  */<ESC>hhi
 
 iab _TIME        <C-R>=strftime("%X")<CR>
@@ -479,16 +479,18 @@ ab #b /*********************************************
 ab #e *********************************************/
 ab #l /*------------------------------------------*/
 
-"common typing mistakes
+" common typing mistakes
 ab teh the
 ab fro for
+
+" Some remapping
+imap jj <ESC>
 " }
 
 " LATEX {
-command Accent %s/é/\\'{e}/ge | %s/è/\\`{e}/ge | %s/ê/\\^{e}/ge | %s/ë/\\"{e}/ge | %s/à/\\`{a}/ge | %s/â/\\^{a}/ge | %s/î/\\^{i}/ge | %s/ï/\\"{i}/ge | %s/ö/\\"{o}/ge | %s/ô/\\^{o}/ge | %s/ù/\\`{u}/ge | %s/û/\\^{u}/ge | %s/ü/\\"{u}/ge | %s/ç/\\c{c}/ge
 
-command Pdf execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi && okular %:r.pdf &'
-command Latex execute 'Accent' | w | execute '!latex % && dvipdf %:r.dvi'
+command Pdf w | execute '!latex % && dvipdf %:r.dvi && okular %:r.pdf &'
+command Latex w | execute '!latex % && dvipdf %:r.dvi'
 " }
 
 " FUNCTIONS {
