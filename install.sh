@@ -129,8 +129,8 @@ if [[ -x $(which zsh) ]]; then
   if [[ ! "$SHELL" == $(which zsh) ]]; then
     if [[ ! "$(grep "$(which zsh)" /etc/shells)" ]]; then
       if [[ $(uname) == 'Linux' || $(uname) == 'Darwin' ]]; then
-        which zsh | sudo tee -a /etc/shells
-        chsh -s $(which zsh) || warning_msg "Manually change it with chsh -s $(which zsh)"
+        #which zsh | sudo tee -a /etc/shells
+        chsh -s "$(which zsh)" || warning_msg "Manually change it with chsh -s $(which zsh)"
       fi
     fi
   fi
