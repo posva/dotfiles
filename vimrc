@@ -205,8 +205,8 @@ let xml_syntax_folding=1      " XML
 " Javascript {
   Plugin 'elzr/vim-json'
   Plugin 'groenewege/vim-less'
-  Plugin 'pangloss/vim-javascript'
-  Plugin 'briancollins/vim-jst'
+  Plugin 'pangloss/vim-javascript' " indentation and syntax support
+  Plugin 'briancollins/vim-jst' " indenting and highlighting jst/ejs
   Plugin 'kchmck/vim-coffee-script'
 " }
 
