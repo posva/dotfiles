@@ -18,6 +18,7 @@ DETACHED="\u27a6"
 CROSS="\u2718"
 LIGHTNING="\u26a1"
 GEAR="\u2699"
+POO="💩 " # only OS X
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,
@@ -54,7 +55,7 @@ prompt_context() {
   local user=$(whoami)
 
   if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CONNECTION" ]]; then
-    prompt_segment $PRIMARY_FG default " %(!.%{%F{yellow}%}.)$user@%m "
+    prompt_segment 234 245 " %(!.%{%F{yellow}%}.)$user@%m "
   fi
 }
 
@@ -67,10 +68,10 @@ prompt_git() {
   ref="$vcs_info_msg_0_"
   if [[ -n "$ref" ]]; then
     if is_dirty; then
-      color=yellow
+      color=178
       ref="${ref} $PLUSMINUS"
     else
-      color=green
+      color=118
       ref="${ref} "
     fi
     if [[ "${ref/.../}" == "$ref" ]]; then
@@ -85,7 +86,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue $PRIMARY_FG ' %~ '
+  prompt_segment 31 $fg_bold[$PRIMARY_FG] ' %c '
 }
 
 # Status:
@@ -140,7 +141,7 @@ prompt_agnoster_setup "$@"
 
 #ZSH_THEME_GIT_PROMPT_PREFIX="%{$FG[123]%}[%{$reset_color%}%{$fg[gray]%}\ue0a0%{$fg[gray]%}:%{$fg[white]%}"
 #ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}%{$FG[123]%}]%{$fg[white]%}"
-#ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[124]%} ✗%{$reset_color%}"
+#ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[124]%} ✗%{$reset_color%}" # 💩 
 #ZSH_THEME_GIT_PROMPT_CLEAN="%{$FG[082]%} ✓%{$reset_color%}"
  
 #ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$FG[226]%} ✭ " # ⓣ
