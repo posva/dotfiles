@@ -110,6 +110,8 @@ function update_dotfiles() {
 
 alias ccat="source-highlight --out-format=esc -o STDOUT -i"
 
+export EDITOR=vim
+
 if [[ -f ~/.atos-bashrc ]]; then
   source ~/.atos-bashrc
 fi
