@@ -11,7 +11,9 @@ CURRENT_BG='NONE'
 PRIMARY_FG=black
 
 # Characters
-SEGMENT_SEPARATOR="\ue0b0"
+SEGMENT_LSEP="\ue0b0"
+SEGMENT_RSEP="\ue0b2"
+SEGMENT_SEP="\ue0b0"
 PLUSMINUS="\u00b1"
 BRANCH="\ue0a0"
 DETACHED="\u27a6"
@@ -28,7 +30,7 @@ prompt_segment() {
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
   [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-    print -n "%{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%}"
+    print -n "%{$bg%F{$CURRENT_BG}%}$SEGMENT_LSEP%{$fg%}"
   else
     print -n "%{$bg%}%{$fg%}"
   fi
@@ -36,10 +38,15 @@ prompt_segment() {
   [[ -n $3 ]] && print -n $3
 }
 
+# switch between left separator and right
+prompt_sep() {
+  [[ -n $1 ]] && SEGMENT_SEP="$SEGMENT_LSEP" || SEGMENT_SEP="$SEGMENT_RSEP" 
+}
+
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    print -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+    print -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_LSEP"
   else
     print -n "%{%k%}"
   fi
@@ -54,7 +61,7 @@ prompt_end() {
 prompt_context() {
   local user=$(whoami)
 
-  if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CONNECTION" ]]; then
+  if [[ -n "$SSH_CONNECTION" ]]; then
     prompt_segment 234 245 " %(!.%{%F{yellow}%}.)$user@%m "
   fi
 }
@@ -86,7 +93,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment 31 $fg_bold[$PRIMARY_FG] ' %c '
+  prompt_segment 31 $PRIMARY_FG ' %c '
 }
 
 # Status:
@@ -114,9 +121,13 @@ prompt_agnoster_main() {
   prompt_end
 }
 
+prompt_right() {
+}
+
 prompt_agnoster_precmd() {
   vcs_info
   PROMPT='%{%f%b%k%}$(prompt_agnoster_main) '
+  RPROMPT='%{$fg[white]%}%{$FG[239]%}[%{$FG[033]%}%D{%H:%M:%S}%{$FG[239]%}]%D{%H:%M:%S}%{$reset_color%}'
 }
 
 prompt_agnoster_setup() {
