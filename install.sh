@@ -192,7 +192,7 @@ if [[ ! -d ${dir}/vim/bundle/Vundle.vim/ ]]; then
   fi
 fi
 
-vim +VundleInstall! +VundleClean +qall
+vim -Nu "$dir/vim-plugins.vim" -g "$dir/vim-plugins.vim" +PluginInstall! +PluginClean +qall
 }
 
 ####### Go ahead, call the functions #######

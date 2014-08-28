@@ -91,65 +91,38 @@
     onoremap <F9> <C-C>za
     vnoremap <F9> zf
     set foldlevelstart=1
+    let javaScript_fold=1         " JavaScript
+    let perl_fold=1               " Perl
+    let php_folding=1             " PHP
+    let r_syntax_folding=1        " R
+    let ruby_fold=1               " Ruby
+    let sh_fold_enabled=1         " sh
+    let vimsyn_folding='af'       " Vim script
+    let xml_syntax_folding=1      " XML
     " }
 
 " }
 
 " Specific config for files {
-autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8 ft=c
-autocmd BufRead,BufNewFile *.md setlocal syntax=markdown filetype=markdown
-autocmd BufRead,BufNewFile *.java setlocal shiftwidth=4 softtabstop=4
-autocmd BufRead,BufNewFile *.cpp,*.hpp,*.js,*.php setlocal shiftwidth=4 softtabstop=4
-autocmd BufRead,BufNewFile *.html,*.css, setlocal shiftwidth=2 softtabstop=2
-autocmd FileType make     set noexpandtab shiftwidth=8
-autocmd BufRead,BufNewFile .gitconfig setlocal shiftwidth=8 softtabstop=8
-autocmd FileType asm call AsmSyntax()
-function AsmSyntax()
-    syntax match asmComment "\/\*\_.\{-}\*\/" "\/\/.*"
-    syntax match asmComment "\/\/.*"
-endfunction
+  autocmd BufRead,BufNewFile *.c,*.h setlocal shiftwidth=8 softtabstop=8 ft=c
+  autocmd BufRead,BufNewFile *.md setlocal syntax=markdown filetype=markdown
+  autocmd BufRead,BufNewFile *.java setlocal shiftwidth=4 softtabstop=4
+  autocmd BufRead,BufNewFile *.cpp,*.hpp,*.js,*.php setlocal shiftwidth=4 softtabstop=4
+  autocmd BufRead,BufNewFile *.html,*.css, setlocal shiftwidth=2 softtabstop=2
+  autocmd FileType make     set noexpandtab shiftwidth=8
+  autocmd BufRead,BufNewFile .gitconfig setlocal shiftwidth=8 softtabstop=8
+  autocmd FileType asm call AsmSyntax()
+  function AsmSyntax()
+      syntax match asmComment "\/\*\_.\{-}\*\/" "\/\/.*"
+      syntax match asmComment "\/\/.*"
+  endfunction
 " }
 
-" Init options for vundle {
-  set nocompatible
-  filetype off
-
-  set rtp+=~/.vim/bundle/Vundle.vim
-  call vundle#begin()
+" Plugin loading {
+  source ~/dotfiles/vim-plugins.vim
 " }
 
-" Vundle and main plugins {
-  Plugin 'gmarik/Vundle.vim'
-  Plugin 'MarcWeber/vim-addon-mw-utils'
-  Plugin 'tomtom/tlib_vim'
-
-" }
-
-" Mines {
-  Plugin 'posva/Rndm'
-  Plugin 'vim-scripts/Mines'
-" }
-
-
-let javaScript_fold=1         " JavaScript
-let perl_fold=1               " Perl
-let php_folding=1             " PHP
-let r_syntax_folding=1        " R
-let ruby_fold=1               " Ruby
-let sh_fold_enabled=1         " sh
-let vimsyn_folding='af'       " Vim script
-let xml_syntax_folding=1      " XML
-
-" Colorschemes {
-  Plugin 'croaker/mustang-vim'
-  Plugin 'fmoralesc/vim-vitamins'
-  Plugin 'flazz/vim-colorschemes'
-  "Plugin 'altercation/vim-colors-solarized'
-  "Plugin 'spf13/vim-colors'
-" }
-
-" Align text with tabular {
-  Plugin 'godlygeek/tabular'
+" Tabular {
   nmap <leader>a& :Tabularize /&<CR>
   vmap <leader>a& :Tabularize /&<CR>
   nmap <leader>a= :Tabularize /=<CR>
@@ -166,8 +139,7 @@ let xml_syntax_folding=1      " XML
   vmap <leader>a<Bar> :Tabularize /<Bar><CR>
 " }
 
-" Sessions are good {
-  Plugin 'vim-scripts/sessionman.vim'
+" sessionman {
   set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
   nmap <leader>sl :SessionList<CR>
   nmap <leader>ss :SessionSave<CR>
@@ -178,8 +150,7 @@ let xml_syntax_folding=1      " XML
   nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
 " }
 
-" Airline iformation about the file in bottom line {
-  Plugin 'bling/vim-airline'
+" Airline {
   " TODO when poweline isn't available
   "let g:airline_left_sep = ''
   "let g:airline_right_sep = ''
@@ -193,28 +164,7 @@ let xml_syntax_folding=1      " XML
   "let g:airline#extensions#whitespace#checks = [ 'indent' ]
 " }
 
-" shell within vim {
-  " Do make after installing this plugin
-  if v:version >= 702
-    Plugin 'Shougo/vimproc.vim'
-    Plugin 'Shougo/vimshell.vim'
-    nmap <leader>s :VimShell<CR>
-  endif
-" }
-
-" Javascript {
-  Plugin 'elzr/vim-json'
-  Plugin 'groenewege/vim-less'
-  Plugin 'pangloss/vim-javascript' " indentation and syntax support
-  Plugin 'briancollins/vim-jst' " indenting and highlighting jst/ejs
-  Plugin 'kchmck/vim-coffee-script'
-" }
-
 " HTML {
-  Plugin 'amirh/HTML-AutoCloseTag'
-  Plugin 'hail2u/vim-css3-syntax'
-  Plugin 'tpope/vim-haml'
-
   autocmd BufRead,BufNewFile *.html,*.css, setlocal shiftwidth=2 softtabstop=2
   " Make it so AutoCloseTag works for xml and xhtml files as well
   au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
@@ -222,20 +172,12 @@ let xml_syntax_folding=1      " XML
 " }
 
 " PHP {
-  Plugin 'spf13/PIV'
-  Plugin 'arnaud-lb/vim-php-namespace'
   let g:DisableAutoPHPFolding = 0
   let g:PIVAutoClose = 0
 " }
 
-" Autoclose brackets, etc Press <C-c> for new line {
-Plugin 'spf13/vim-autoclose'
-imap <C-c> <CR><Esc>O
-" }
-
 " Autocompletion {
 if has("lua") && v:version >= 740
-  Plugin 'Shougo/neocomplete.vim'
   " Config {
     let g:acp_enableAtStartup = 0
     let g:neocomplete#enable_at_startup = 1
@@ -280,11 +222,6 @@ if has("lua") && v:version >= 740
     inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
     inoremap <expr><C-y> neocomplete#close_popup()
   " }
-
-  Plugin 'Shougo/neosnippet'
-  Plugin 'Shougo/neosnippet-snippets'
-  Plugin 'honza/vim-snippets'
-
 else
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -298,14 +235,12 @@ endif
 
 " TagBar {
   if v:version >= 702
-    Plugin 'majutsushi/tagbar'
     nmap <F8> :TagbarToggle<CR>
   endif
 " }
 
 " Indent guide plugin {
   if exists('*matchadd')
-    Plugin 'nathanaelkane/vim-indent-guides'
     let g:indent_guides_enable_on_vim_startup = 1
     let g:indent_guides_auto_colors = 0
     hi IndentGuidesOdd ctermbg=234
@@ -348,9 +283,7 @@ map <F3> o\begin{equation*}<ESC>o\begin{split}<ESC>o\end{split}<ESC>o\end{equati
 " Disable preview scratch
 set completeopt=menu,menuone
 
-" Syntastic plugin for compilation errors
-" REMEMBER TO CREATE THE FILE .ycm_extra_config.py
-Plugin 'scrooloose/syntastic'
+" Syntastic plugin for compilation errors {
 let g:syntastic_java_javac_classpath="src\nlib/gui.jar\n/usr/share/java/junit4.jar\n/Applications/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar\n/usr/local/eclipse-3.2.6/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar"
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_check_header = 1
@@ -359,52 +292,40 @@ let g:syntastic_c_include_dirs = [ 'src', '../src', '../include', 'include' ]
 let g:syntastic_cpp_compiler_options = ' -Wall -Wextra -O2 -std=c++11'
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
+" }
 
-" git addtitions and deletions
-Plugin 'airblade/vim-gitgutter'
+" gitgutter {
+" prevent  running after every modification
 let g:gitgutter_realtime = 0
+" }
 
-" Java IDE
-"Plugin 'vim-scripts/Vim-JDE'
-Plugin 'vim-scripts/javacomplete'
-
-" Bash within vim
-Plugin 'basepi/vim-conque'
-
-" NERD Tree
-Plugin 'scrooloose/nerdtree'
+" NERD Tree {
 "Open NerdTree with Ctrl+N
 map <C-N> :NERDTreeToggle<CR>
 " Autoclose vim when only NerdTree is open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " Open Nerdtree when nothing is opened
 " autocmd vimenter * if !argc() | NERDTree | endif
+" }
 
-" NERD commenter
-Plugin 'scrooloose/nerdcommenter'
+" NERD commenter {
 map <F5> <leader>c<space>
+" }
 
-" Markdown
-Plugin 'plasticboy/vim-markdown'
-
-" SQL
-Plugin 'vim-scripts/dbext.vim'
+" SQL dbext.vim {
 if (filereadable("~/dotfiles/db.vim"))
   source ~/dotfiles/db.vim
 endif
+" }
 
-" Surrounding, just awesome
-Plugin 'tpope/vim-surround'
-
-" Rainbow parantheses
-Plugin 'kien/rainbow_parentheses.vim'
+" Rainbow parantheses {
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+" }
 
-"Ctrl-P open fast files {
-  Plugin 'kien/ctrlp.vim'
+"Ctrl-P {
   let g:ctrlp_working_path_mode = 'ra'
   nnoremap <silent> <D-t> :CtrlP<CR>
   nnoremap <silent> <D-r> :CtrlPMRU<CR>
@@ -433,21 +354,6 @@ au Syntax * RainbowParenthesesLoadBraces
 "}
 
 " TODO neocomplcache
-
-" numbers: better line numbers {
-if v:version >= 730
-  Plugin 'myusuf3/numbers.vim'
-endif
-"}
-
-" A plugin for automatically restoring file's cursor position and folding
-Plugin 'vim-scripts/restore_view.vim'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
 
 " Theme {
 
