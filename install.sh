@@ -29,11 +29,15 @@ BLUE="\e[94m"
 RESET="\e[m"
 
 function good_msg {
-echo -e "${GREEN}${1}${RESET}"
+local M
+[[ -n "$1" ]] && M="$1" || M=" [✔]"
+echo -e "${GREEN}${M}${RESET}"
 }
 
 function bad_msg {
-echo -e "${RED}${1}${RESET}"
+local M
+[[ -n "$1" ]] && M="$1" || M=" [✗]" # 🚸
+echo -e "${RED}${M}${RESET}"
 }
 
 function info_msg {
