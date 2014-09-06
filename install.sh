@@ -28,19 +28,19 @@ YELLOW="\e[93m"
 BLUE="\e[94m"
 RESET="\e[m"
 
-function good_msg {
+good_msg() {
 local M
 [[ -n "$1" ]] && M="$1" || M=" [✔]"
 echo -e "${GREEN}${M}${RESET}"
 }
 
-function bad_msg {
+bad_msg() {
 local M
 [[ -n "$1" ]] && M="$1" || M=" [✗]" # 🚸
 echo -e "${RED}${M}${RESET}"
 }
 
-function info_msg {
+info_msg() {
 if [[ "$1" = "-n" ]]; then
   echo -ne "${BLUE}${2}${RESET}"
 else
@@ -48,7 +48,7 @@ else
 fi
 }
 
-function warning_msg {
+warning_msg() {
 if [[ "$1" = "-n" ]]; then
   echo -ne "${YELLOW}${2}${RESET}"
 else
@@ -91,7 +91,7 @@ done
 ####### Functions #######
 
 # Install Homebrew only for OSX
-function install_brew {
+install_brew() {
 if [[ "$OSX" ]]; then
   if [[ ! -x $(which brew) ]]; then
     info_msg -n "Installing Homebrew(brew)..."
@@ -105,7 +105,7 @@ if [[ "$OSX" ]]; then
 fi
 }
 
-function install_git {
+install_git() {
 if [[ ! -x $(which git) ]]; then
   info_msg -n "Installing Git..."
   if ${INSTALL} git; then
@@ -118,7 +118,7 @@ fi
 }
 
 # Install zsh, need git and brew
-function install_zsh {
+install_zsh() {
 # Test to see if zshell is installed.  If it is:
 if [[ -x $(which zsh) ]]; then
   # Clone my oh-my-zsh repository from GitHub only if it isn't already present
@@ -154,7 +154,7 @@ fi
 }
 
 # Install some programs I cannot live without
-function install_more {
+install_more() {
 if [[ ! -x $(which source-highlight) ]]; then
   info_msg "Installing source-highlight"
   ${INSTALL} source-highlight && good_msg "done" || bad_msg "Error installing source-highlight"
@@ -162,7 +162,7 @@ fi
 }
 
 # Install vim and plugins
-function install_vim {
+install_vim() {
 if [[ ! -x $(which vim) ]]; then
   if [[ "$OSX" ]]; then
     brew install vim --with-lua
@@ -196,7 +196,42 @@ if [[ ! -d ${dir}/vim/bundle/Vundle.vim/ ]]; then
   fi
 fi
 
-vim -Nu "$dir/vim-plugins.vim" -g "$dir/vim-plugins.vim" +PluginInstall! +PluginClean +qall
+#vim -Nu "$dir/vim-plugins.vim" +PluginInstall! +qall
+}
+
+install_font() {
+  if [[ "$OSX" ]]; then
+    cp "$1" ~/Library/Fonts/ || return 1
+  else
+    mkdir -p ~/.fonts
+    cp "$1" ~/.fonts/ || return 1
+  fi
+  return 0
+}
+
+install_powerfonts() {
+info_msg -n "Copying powerline-fonts..."
+for f in $dir/powerline-fonts/*; do
+  if ! install_font "$f"; then
+    bad_msg "error copying ${f}..."
+    return 1
+  fi
+done
+good_msg "done"
+if [[ -z "$OSX" ]]; then
+  info_msg "Updating font cache..."
+  fc-cache -fv || bad_msg "Error"
+fi
+}
+
+install_powerline() {
+  if [[ ! -d ${dir}/powerline/ ]]; then
+    info_msg "Cloning powerline"
+    if ! git clone https://github.com/Lokaltog/powerline.git ~/powerline; then
+      bad_msg "error"
+      exit 1
+    fi
+  fi
 }
 
 ####### Go ahead, call the functions #######
@@ -211,4 +246,8 @@ fi
 install_vim || exit 1
 
 install_more || exit 1
+
+install_powerline || exit 1
+
+install_powerfonts || exit 1
 
