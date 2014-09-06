@@ -1,7 +1,7 @@
 # Theme by Eduardo San Martin Morote aka Posva
 # http://posva.github.io
 # Use as you wish but don't remove this notice
-# Sat May 18 16:30:33 CEST 2013 
+# Sat Sep 06 16:50:46 CEST 2014
 
 # Powerline sep ❯
 SEP=""
@@ -30,7 +30,7 @@ prompt_segment() {
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
   [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-    print -n "%{$bg%F{$CURRENT_BG}%}$SEGMENT_LSEP%{$fg%}"
+    print -n "%{$bg%F{$CURRENT_BG}%}$SEGMENT_SEP%{$fg%}"
   else
     print -n "%{$bg%}%{$fg%}"
   fi
@@ -38,15 +38,10 @@ prompt_segment() {
   [[ -n $3 ]] && print -n $3
 }
 
-# switch between left separator and right
-prompt_sep() {
-  [[ -n $1 ]] && SEGMENT_SEP="$SEGMENT_LSEP" || SEGMENT_SEP="$SEGMENT_RSEP" 
-}
-
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    print -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_LSEP"
+    print -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_SEP"
   else
     print -n "%{%k%}"
   fi
@@ -111,7 +106,7 @@ prompt_status() {
 }
 
 ## Main prompt
-prompt_agnoster_main() {
+prompt_main() {
   RETVAL=$?
   CURRENT_BG='NONE'
   prompt_status
@@ -121,13 +116,10 @@ prompt_agnoster_main() {
   prompt_end
 }
 
-prompt_right() {
-}
-
 prompt_agnoster_precmd() {
   vcs_info
-  PROMPT='%{%f%b%k%}$(prompt_agnoster_main) '
-  RPROMPT='%{$fg[white]%}%{$FG[239]%}[%{$FG[033]%}%D{%H:%M:%S}%{$FG[239]%}]%D{%H:%M:%S}%{$reset_color%}'
+  PROMPT='%{%f%b%k%}$(prompt_main) '
+  RPROMPT='%{%f%b%k%}%{$FG[033]%}%D{%H:%M:%S}%{$reset_color%}'
 }
 
 prompt_agnoster_setup() {
@@ -152,9 +144,9 @@ prompt_agnoster_setup "$@"
 
 #ZSH_THEME_GIT_PROMPT_PREFIX="%{$FG[123]%}[%{$reset_color%}%{$fg[gray]%}\ue0a0%{$fg[gray]%}:%{$fg[white]%}"
 #ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}%{$FG[123]%}]%{$fg[white]%}"
-#ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[124]%} ✗%{$reset_color%}" # 💩 
+#ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[124]%} ✗%{$reset_color%}" # 💩
 #ZSH_THEME_GIT_PROMPT_CLEAN="%{$FG[082]%} ✓%{$reset_color%}"
- 
+
 #ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$FG[226]%} ✭ " # ⓣ
 
 #ZSH_THEME_GIT_PROMPT_ADDED="%{$FG[082]%} ✚ " # ⓐ ⑃
