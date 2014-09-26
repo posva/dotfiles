@@ -143,7 +143,12 @@ install_zsh() {
     zsh_theme="oh-my-zsh/themes/posva.zsh-theme"
     if [ ! -f $zsh_theme ]; then
       info_msg -n "Installing zsh theme..."
-      wget -q https://raw.github.com/posva/oh-my-zsh/6e611f2f45320eef572d13fc3c57391fd0beedb3/themes/posva.zsh-theme -O $zsh_theme && good_msg "done" || bad_msg "error"
+      ln -s ${dir}/posva.zsh-theme $zsh_theme
+    fi
+    zsh_theme="oh-my-zsh/themes/posva-powerline.zsh-theme"
+    if [ ! -f $zsh_theme ]; then
+      info_msg -n "Installing powerline zsh theme..."
+      ln -s ${dir}/posva-powerline.zsh-theme $zsh_theme
     fi
   else
     info_msg "Installig zsh"
@@ -227,7 +232,7 @@ install_powerfonts() {
 install_powerline() {
   if [[ ! -d ${dir}/powerline/ ]]; then
     info_msg "Cloning powerline"
-    if ! git clone https://github.com/Lokaltog/powerline.git ~/powerline; then
+    if ! git clone https://github.com/Lokaltog/powerline.git ${dir}/powerline; then
       bad_msg "error"
       exit 1
     fi
