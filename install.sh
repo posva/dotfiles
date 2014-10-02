@@ -5,6 +5,10 @@
 # in ~/dotfiles
 # Install brew (OSX only), git, zsh (can be skipped with -z), oh-my-zsh, vim
 ############################
+# TODO LIST
+# - add options: prefix, no-root
+#
+############################
 
 ########## Variables
 
