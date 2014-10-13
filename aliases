@@ -108,11 +108,13 @@ function update_dotfiles() {
   cd -
 }
 
-alias ccat="source-highlight --out-format=esc -o STDOUT -i"
+if which source-highlight; then
+  alias ccat="source-highlight --out-format=esc -o STDOUT -i"
+fi
 
 export EDITOR=vim
 
-if [[ -f ~/.atos-bashrc ]]; then
-  source ~/.atos-bashrc
+if which pyenv-virtualenv-init > /dev/null; then
+  eval "$(pyenv virtualenv-init -)";
 fi
 
