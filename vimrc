@@ -24,6 +24,9 @@
 
     set mouse=a " mouse is so usefull if well used
 
+    set list
+    set listchars=tab:›\ ,trail:●,extends:#,nbsp:.
+
   " }
 
   " Indentation {

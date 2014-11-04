@@ -1,6 +1,12 @@
 dotfiles
 ========
 
+## TODO
+
+* add pip install
+* Add powerline clone
+* install psutil with pip
+
 ##Master
 
 * These are my dotfiles, you can install them by launching the `install.sh`script
