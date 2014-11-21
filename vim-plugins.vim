@@ -18,10 +18,11 @@ Plugin 'posva/Rndm'
 Plugin 'vim-scripts/Mines'
 " }
 
-" Colorschemes {
+" Colorschemes/Themes {
 Plugin 'croaker/mustang-vim'
 Plugin 'fmoralesc/vim-vitamins'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'chriskempson/tomorrow-theme'
 "Plugin 'altercation/vim-colors-solarized'
 "Plugin 'spf13/vim-colors'
 " }

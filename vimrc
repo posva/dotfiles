@@ -363,7 +363,7 @@ au Syntax * RainbowParenthesesLoadBraces
   " Nice theme are mustang, vitamins, 256-..., peaksea,
   " ir_black, xoria256
 
-  let themes = ['mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black']
+  let themes = ['mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black', 'Tomorrow-Night-Bright']
 
   execute 'colorscheme '.themes[localtime() % len(themes)]
   unlet themes
