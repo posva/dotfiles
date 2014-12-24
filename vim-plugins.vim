@@ -10,12 +10,17 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
+" }
 
+" Editing & Utils {
+Plugin 'tpope/vim-repeat'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'tomtom/tcomment_vim'
 " }
 
 " Mines {
-Plugin 'posva/Rndm'
-Plugin 'vim-scripts/Mines'
+"Plugin 'posva/Rndm'
+"Plugin 'vim-scripts/Mines'
 " }
 
 " Colorschemes/Themes {
@@ -41,21 +46,22 @@ Plugin 'bling/vim-airline'
 
 " Javascript {
 Plugin 'elzr/vim-json'
-Plugin 'groenewege/vim-less'
+"Plugin 'groenewege/vim-less'
 Plugin 'pangloss/vim-javascript' " indentation and syntax support
 Plugin 'briancollins/vim-jst' " indenting and highlighting jst/ejs
 Plugin 'kchmck/vim-coffee-script'
 " }
 
 " HTML {
-Plugin 'amirh/HTML-AutoCloseTag'
+Plugin 'mattn/emmet-vim'
+"Plugin 'amirh/HTML-AutoCloseTag'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'tpope/vim-haml'
 " }
 
 " PHP {
-Plugin 'spf13/PIV'
-Plugin 'arnaud-lb/vim-php-namespace'
+"Plugin 'spf13/PIV'
+"Plugin 'arnaud-lb/vim-php-namespace'
 " }
 
 " Scala {
@@ -97,11 +103,7 @@ Plugin 'airblade/vim-gitgutter'
 
 " Java IDE {
 "Plugin 'vim-scripts/Vim-JDE'
-Plugin 'vim-scripts/javacomplete'
-" }
-
-" shell and vim {
-Plugin 'basepi/vim-conque'
+"Plugin 'vim-scripts/javacomplete'
 " }
 
 " NERD Tree {
