@@ -54,6 +54,9 @@
   " Be polite!
   set confirm
 
+  " tmux fix (background color erase)
+  set t_ut=
+
   "show parial pattern matches in real time
   set incsearch
   " I like highlighted search pattern

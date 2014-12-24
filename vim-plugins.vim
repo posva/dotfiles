@@ -58,6 +58,10 @@ Plugin 'spf13/PIV'
 Plugin 'arnaud-lb/vim-php-namespace'
 " }
 
+" Scala {
+Plugin 'derekwyatt/vim-scala'
+" }
+
 " Autoclose brackets, etc Press <C-c> for new line {
 "Plugin 'spf13/vim-autoclose'
 " }
