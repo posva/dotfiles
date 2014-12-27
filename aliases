@@ -113,7 +113,9 @@ if which source-highlight > /dev/null 2>&1; then
 fi
 
 export EDITOR=vim
-export JAVA_HOME=$(/usr/libexec/java_home)
+if [[ -x /usr/libexec/java_home ]]; then
+  export JAVA_HOME=$(/usr/libexec/java_home)
+fi
 
 if which pyenv-virtualenv-init > /dev/null 2>&1; then
   eval "$(pyenv init -)"
