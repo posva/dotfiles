@@ -9,6 +9,7 @@ SEP="❯"
 
 CURRENT_BG='NONE'
 PRIMARY_FG=black
+SEC_FG=51
 
 # Characters
 SEGMENT_LSEP="\ue0b0"
@@ -88,7 +89,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment 31 $PRIMARY_FG ' %c '
+  prompt_segment 55 $SEC_FG ' %c '
 }
 
 # Status:
