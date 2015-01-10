@@ -50,6 +50,8 @@ Plugin 'elzr/vim-json'
 Plugin 'pangloss/vim-javascript' " indentation and syntax support
 Plugin 'briancollins/vim-jst' " indenting and highlighting jst/ejs
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'maksimr/vim-jsbeautify'
+Plugin 'einars/js-beautify'
 " }
 
 " HTML {
