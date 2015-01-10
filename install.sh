@@ -254,7 +254,7 @@ fi
 
 install_vim || exit 1
 
-install_more || exit 1
+#install_more || exit 1
 
 install_powerline || exit 1
 
