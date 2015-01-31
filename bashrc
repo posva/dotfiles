@@ -281,3 +281,6 @@ export TNS_ADMIN=$ORACLE_HOME
 export iOSOpenDevPath=/opt/iOSOpenDev
 export iOSOpenDevDevice=
 export PATH=/opt/iOSOpenDev/bin:$PATH
+
+# added by travis gem
+[ -f /Users/sanmarte/.travis/travis.sh ] && source /Users/sanmarte/.travis/travis.sh
