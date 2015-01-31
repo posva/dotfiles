@@ -5,7 +5,8 @@ dotfiles
 
 * add pip install
 * Add powerline clone
-* install psutil with pip
+* install psutil and powerline-status with pip
+* use task-logger.sh
 
 ##Master
 

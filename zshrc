@@ -41,14 +41,16 @@ export PATH=$HOME/.cabal/bin:/usr/local/php5/bin:/usr/texbin:/usr/local/bin:/usr
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git git-extras git-remote-branch gitfast gitflow lol nyan osx brew encode64 urltools rand-quote gem extract pip pylint python screen sudo web-search tmuxinator node)
 
-source $ZSH/oh-my-zsh.sh
+#jsource $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
 autoload -U colors
 colors
 
-source ~/dotfiles/aliases
+if [[ -f $HOME/dotfiles/aliases ]]; then
+  source $HOME/dotfiles/aliases
+fi
 
 export TERM=xterm-256color
 
@@ -66,5 +68,8 @@ fi
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+return
 # added by travis gem
-[ -f /Users/sanmarte/.travis/travis.sh ] && source /Users/sanmarte/.travis/travis.sh
+if [[ -f $HOME/.travis/travis.sh ]]; then
+  source $HOME/.travis/travis.sh
+fi
