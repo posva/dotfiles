@@ -174,7 +174,7 @@ install_more() {
 install_vim() {
   if [[ ! -x $(which vim) ]]; then
     if [[ "$OSX" ]]; then
-      brew install vim --with-lua
+      brew install vim --with-lua --with-python3
     else
       if [[ ! -x $(which hg) ]]; then
         info_msg "Installing hg(Mercurial)"
@@ -205,7 +205,8 @@ install_vim() {
     fi
   fi
 
-  #vim -Nu "$dir/vim-plugins.vim" +PluginInstall! +qall
+  # install plugins
+  vim -Nu "$dir/vim-plugins.vim" +PluginInstall! +qall
 }
 
 install_font() {
