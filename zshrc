@@ -68,7 +68,6 @@ fi
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-return
 # added by travis gem
 if [[ -f $HOME/.travis/travis.sh ]]; then
   source $HOME/.travis/travis.sh
