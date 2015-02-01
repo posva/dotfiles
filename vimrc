@@ -385,6 +385,7 @@ au Syntax * RainbowParenthesesLoadBraces
   let themes = ['mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black', 'Tomorrow-Night-Bright']
 
   execute 'colorscheme '.themes[localtime() % len(themes)]
+  set background=dark
   unlet themes
 
 " }
