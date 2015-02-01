@@ -300,6 +300,11 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 " }
 
+" python3 Syntax {
+let g:syntastic_python_checkers = ['python', 'python3']
+let g:syntastic_python_python_exec = 'python3'
+" }
+
 " gitgutter {
 " prevent  running after every modification
 let g:gitgutter_realtime = 0
