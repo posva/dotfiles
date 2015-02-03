@@ -13,8 +13,10 @@
 ########## Variables
 
 dir=~/dotfiles               # dotfiles directory
-olddir=~/dotfiles_old             # old dotfiles backup directory
+olddir=~/old_dotfiles        # old dotfiles backup directory
 files="bashrc vimrc vim zshrc gitconfig oh-my-zsh tmux.conf"    # list of files/folders to symlink in homedir
+
+source ${dir}/task-logger.sh || exit 1
 
 # Get OS. Installing in windows is the same as in Linux
 # because I use Cygwin
@@ -60,37 +62,52 @@ warning_msg() {
   fi
 }
 
+fail() {
+  ko
+  bad "$@"
+}
+
+crash() {
+  ko
+  bad "$@"
+  exit 1
+}
+
 ####### Verifications and backup #######
 
 # Verification of the install dir
-if [[ ! "$(cd "$(dirname "$0")" && pwd)" == "$dir" ]]; then
-  bad_msg "The dotfiles repo is at a wrong place. It should be at ${dir}"
-  exit 1
-fi
+check_install_dir() {
+  working -n "Checking dotfiles dir"
+  log_cmd -c install-dir test "$(cd "$(dirname "$0")" && pwd)" = "$dir" || crash  "The dotfiles path is wrong! It should be ${dir}"
+  cd $dir || crash "Cannot access $dir"
+}
 
-# create dotfiles_old in homedir
-info_msg -n "Creating $olddir for backup of any existing dotfiles in ~ ..."
-rm -rf $olddir && mkdir -p $olddir && good_msg "done" || bad_msg "error"
+# create old_dotfiles in homedir
+_backup_dir() {
+  mkdir -p $olddir || return 1
+  for file in $files; do
+    if [ -f ~/."$file" -o -d ~/."$file" ]; then
+      mv -f ~/."$file" "$olddir" || return 1
+    fi
+  done
+}
+backup_dir() {
+  local i tmp
+  i=0
+  tmp="$olddir"
+  while [[ -d "$olddir" ]]; do
+    ((i++))
+    olddir="${tmp}-$i"
+  done
+  working -n "Backing up files to $olddir"
+  log_cmd $0 _backup_dir || crash "Backup failed, aborting"
+}
 
-# change to the dotfiles directory
-info_msg -n "Changing to the $dir directory ..."
-if cd $dir; then
-  good_msg "done"
-else
-  bad_msg "error"
-  exit 1
-fi
-
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-for file in $files; do
-  info_msg -n "Moving $file to $olddir..."
-  if [ -f ~/."$file" -o -d ~/."$file" ]; then
-    mv -f ~/."$file" "$olddir" && good_msg "done" || bad_msg "error"
-  fi
-  info_msg -n "Creating symlink to $file in home directory..."
-  ln -s "${dir}/${file}" ~/."$file" && good_msg "done" || bad_msg "error"
-done
-
+_symlinks() {
+  for file in $files; do
+    ln -s "${dir}/${file}" ~/."$file" || return 1
+  done
+}
 
 ####### Functions #######
 
@@ -98,115 +115,108 @@ done
 install_brew() {
   if [[ "$OSX" ]]; then
     if [[ ! -x $(which brew) ]]; then
-      info_msg -n "Installing Homebrew(brew)..."
-      if ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" ; then
-        good_msg "done"
-      else
-        bad_msg "error"
-        exit 1
-      fi
+      working -n "Installing Homebrew(brew)"
+      log_cmd -c brew ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
   fi
 }
 
 install_git() {
   if [[ ! -x $(which git) ]]; then
-    info_msg -n "Installing Git..."
-    if ${INSTALL} git; then
-      good_msg "done"
-    else
-      bad_msg "error"
-      exit 1
-    fi
+    working -n "Installing Git"
+    log_cmd $0 ${INSTALL} git || ko
   fi
 }
 
 # Install zsh, need git and brew
+_add_zsh() {
+  sudo echo $(which zsh) > /etc/shells
+}
+_install_zsh() {
+  if [[ ! -x $(which zsh) ]]; then
+    working -n "Installing zsh"
+    log_cmd zsh-install ${INSTALL} zsh || return 1
+  fi
+  if [[ ! -d ${dir}/oh-my-zsh/ ]]; then
+    working -n "Cloning oh-my-zsh"
+    log_cmd oh-my-zsh git clone https://github.com/robbyrussell/oh-my-zsh.git || return 1
+  fi
+  if [[ ! "$SHELL" == $(which zsh) ]]; then
+    if [[ ! "$(grep "$(which zsh)" /etc/shells)" ]]; then
+      working -n "Adding zsh to /etc/shells"
+      log_cmd add-zsh _add_zsh || return 1
+    fi
+    important 'You should manually change your shell with chsh $(which zsh)'
+    #if [[ $(uname) == 'Linux' || $(uname) == 'Darwin' ]]; then
+      #working -n "Changing the default shell for $USER"
+      #log_cmd change-shell chsh -s "$(which zsh)" || return 1
+    #fi
+  fi
+  # Install posva zsh theme
+  zsh_theme="oh-my-zsh/themes/posva.zsh-theme"
+  if [ ! -f "$zsh_theme" ]; then
+    working -n "Installing zsh theme"
+    log_cmd zsh-theme ln -s "${dir}/posva.zsh-theme" "$zsh_theme" || return 1
+  fi
+  zsh_theme="oh-my-zsh/themes/posva-powerline.zsh-theme"
+  if [ ! -f "$zsh_theme" ]; then
+    working -n "Installing powerline zsh theme"
+    log_cmd zsh-theme-powerline ln -s "${dir}/posva-powerline.zsh-theme" "$zsh_theme" || return 1
+  fi
+}
 install_zsh() {
-  # Test to see if zshell is installed.  If it is:
-  if [[ -x $(which zsh) ]]; then
-    # Clone my oh-my-zsh repository from GitHub only if it isn't already present
-    if [[ ! -d ${dir}/oh-my-zsh/ ]]; then
-      info_msg "Cloning oh-my-zsh"
-      if ! git clone https://github.com/robbyrussell/oh-my-zsh.git; then
-        bad_msg "error"
-        exit 1
-      fi
-    fi
-    # Set the default shell to zsh if it isn't currently set to zsh
-    if [[ ! "$SHELL" == $(which zsh) ]]; then
-      if [[ ! "$(grep "$(which zsh)" /etc/shells)" ]]; then
-        if [[ $(uname) == 'Linux' || $(uname) == 'Darwin' ]]; then
-          #which zsh | sudo tee -a /etc/shells
-          chsh -s "$(which zsh)" || warning_msg "Manually change it with chsh -s $(which zsh)"
-        fi
-      fi
-    fi
-
-    # Install posva zsh theme
-    zsh_theme="oh-my-zsh/themes/posva.zsh-theme"
-    if [ ! -f $zsh_theme ]; then
-      info_msg -n "Installing zsh theme..."
-      ln -s ${dir}/posva.zsh-theme $zsh_theme
-    fi
-    zsh_theme="oh-my-zsh/themes/posva-powerline.zsh-theme"
-    if [ ! -f $zsh_theme ]; then
-      info_msg -n "Installing powerline zsh theme..."
-      ln -s ${dir}/posva-powerline.zsh-theme $zsh_theme
-    fi
-  else
-    info_msg "Installig zsh"
-    ${INSTALL} zsh || exit 1
-    # install oh-my-zsh if installation was successful
-    install_zsh
-  fi
+  _install_zsh || ko
 }
 
-# Install some programs I cannot live without
-install_more() {
-  if [[ ! -x $(which source-highlight) ]]; then
-    info_msg "Installing source-highlight"
-    ${INSTALL} source-highlight && good_msg "done" || bad_msg "Error installing source-highlight"
-  fi
-}
-
-# Install vim and plugins
-install_vim() {
+_install_vim() {
   if [[ ! -x $(which vim) ]]; then
     if [[ "$OSX" ]]; then
-      brew install vim --with-lua --with-python3
+      working -n "Installing vim"
+      log_cmd vim-install brew install vim --with-lua --with-python3 || return 1
     else
       if [[ ! -x $(which hg) ]]; then
-        info_msg "Installing hg(Mercurial)"
-        ${INSTALL} mercurial || exit 1
+        working -n "Installing hg(Mercurial)"
+        log_cmd hg-install ${INSTALL} mercurial || return 1
       fi
       if [[ ! -d "vim_src" ]]; then
-        info_msg "Cloning vim repo"
-        hg clone https://vim.googlecode.com/hg/ vim_src || exit 1
+        working -n "Cloning vim repo"
+        log_cmd vim-clone hg clone https://vim.googlecode.com/hg/ vim_src || return 1
       fi
-      cd vim_src
-      info_msg "Installing Vim with python and ruby support"
-      ./configure --prefix=/usr/local/ --enable-rubyinterp --enable-pythoninterp --enable-luainterp --with-features=huge || exit 1
-      make || exit 1
-      sudo make install || exit 1
+      cd vim_src || return 1
+      working -n "Installing ncurses"
+      log_cmd ncurses-install ${INSTALL} libncurses5-dev || return 1
+      working -n "Vim ./configure.sh"
+      log_cmd vim-conf ./configure --prefix=/usr/local/ --enable-rubyinterp --enable-pythoninterp --enable-luainterp --with-features=huge || return 1
+      working -n "Vim make -j 4"
+      log_cmd vim-make make -j 4 || return 1
+      working -n "Vim make install"
+      log_cmd sudo make install || return 1
     fi
   fi
-
-  # backup dir
-  info_msg -n "Creating backup vim directory..."
-  mkdir -p vim/backup && good_msg "done" || warning_msg "Manually create the dir ~/.vim/backup"
+  # backup dir. My vimrc does this already
+  #working -n "Creating vim backup directory"
+  #log_cmd vim-back mkdir -p vim/backup || return 1
 
   # Plugins
-  if [[ ! -d ${dir}/vim/bundle/Vundle.vim/ ]]; then
-    info_msg "Installing Vundle"
-    if ! git clone https://github.com/gmarik/Vundle.vim.git vim/bundle/Vundle.vim ; then
-      bad_msg "Error doing git clone..."
-      exit 1
-    fi
+  if [[ ! -d ${dir}/vim/bundle/Vundle.vim ]]; then
+    working -n "Installing Vundle"
+    log_cmd vundle git clone https://github.com/gmarik/Vundle.vim.git vim/bundle/Vundle.vim || return 1
   fi
 
   # install plugins
-  vim -Nu "$dir/vim-plugins.vim" +PluginInstall! +qall
+  working -n "Installing plugins"
+  reset_timer 5
+  if vim -Nu "$dir/vim-plugins.vim" +PluginInstall! +qall; then
+    echo -n "[$(get_timer 5) s]"
+    ok
+  else
+    echo -n "[$(get_timer 5) s]"
+    return 1
+  fi
+}
+
+install_vim() {
+  _install_vim || ko
 }
 
 install_font() {
@@ -219,45 +229,48 @@ install_font() {
   return 0
 }
 
-install_powerfonts() {
-  info_msg -n "Copying powerline-fonts..."
+_install_powerfonts() {
   for f in $dir/powerline-fonts/*; do
-    if ! install_font "$f"; then
-      bad_msg "error copying ${f}..."
-      return 1
-    fi
+    install_font "$f" || return 1
   done
-  good_msg "done"
+}
+
+install_powerfonts() {
+  working -n "Copying powerline-fonts"
+  log_cmd font-copy _install_powerfonts || fail "Could not copy the fonts. Check logs at $LOG_DIR"
   if [[ -z "$OSX" ]]; then
-    info_msg "Updating font cache..."
-    fc-cache -fv || bad_msg "Error"
+    working "Updating font cache..."
+    log_cmd font-cache fc-cache -fv || ko
   fi
 }
 
 install_powerline() {
   if [[ ! -d ${dir}/powerline/ ]]; then
-    info_msg "Cloning powerline"
-    if ! git clone https://github.com/Lokaltog/powerline.git ${dir}/powerline; then
-      bad_msg "error"
-      exit 1
-    fi
+    working -n "Cloning powerline"
+    log_cmd powerline-git git clone https://github.com/Lokaltog/powerline.git ${dir}/powerline || ko
   fi
 }
 
-####### Go ahead, call the functions #######
+##### Call everything #####
 
-install_brew || exit 1
-install_git || exit 1
+important "Logs are at $LOG_DIR"
+
+check_install_dir
+
+backup_dir
+
+working -n "Symlinking dotfiles"
+log_cmd symlink _symlinks || fail "Symlink failed. Check logs at $LOG_DIR"
+
+install_brew
+
+install_git
 
 if [ ! "$1" = -z ]; then
-  install_zsh || exit 1
+  install_zsh
 fi
 
-install_vim || exit 1
+install_vim
 
-#install_more || exit 1
-
-install_powerline || exit 1
-
-install_powerfonts || exit 1
-
+install_powerline
+install_powerfonts
