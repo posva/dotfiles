@@ -274,3 +274,5 @@ install_vim
 
 install_powerline
 install_powerfonts
+
+finish
