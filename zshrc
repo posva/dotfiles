@@ -72,3 +72,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 if [[ -f $HOME/.travis/travis.sh ]]; then
   source $HOME/.travis/travis.sh
 fi
+
+if [[ -f ~/.local-exports ]]; then
+  source ~/.local-exports
+fi
