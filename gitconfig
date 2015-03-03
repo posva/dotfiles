@@ -1,9 +1,8 @@
 [user]
 	name = Eduardo San Martin Morote
-	email = eduardo.san-martin-morote@ensimag.grenoble-inp.fr
+	email = i@posva.net
 [github]
 	user = posva
-	;token = ./gh-token
 [credential]
 	helper = osxkeychain
 [push]
