@@ -144,6 +144,10 @@ endif
 " A plugin for automatically restoring file's cursor position and folding
 Plugin 'vim-scripts/restore_view.vim'
 
+" Autocompletion {
+Plugin 'Valloric/YouCompleteMe'
+" }
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required

@@ -27,41 +27,6 @@ if [[ "$(uname)" = "Darwin" ]]; then
   INSTALL="brew install"
 fi
 
-# Colors makes it easier to read
-RED="\e[91m"
-GREEN="\e[92m"
-YELLOW="\e[93m"
-BLUE="\e[94m"
-RESET="\e[m"
-
-good_msg() {
-  local M
-  [[ -n "$1" ]] && M="$1" || M=" [✔]"
-  echo -e "${GREEN}${M}${RESET}"
-}
-
-bad_msg() {
-  local M
-  [[ -n "$1" ]] && M="$1" || M=" [✗]" # 🚸
-  echo -e "${RED}${M}${RESET}"
-}
-
-info_msg() {
-  if [[ "$1" = "-n" ]]; then
-    echo -ne "${BLUE}${2}${RESET}"
-  else
-    echo -e "${BLUE}${1}${RESET}"
-  fi
-}
-
-warning_msg() {
-  if [[ "$1" = "-n" ]]; then
-    echo -ne "${YELLOW}${2}${RESET}"
-  else
-    echo -e "${YELLOW}${1}${RESET}"
-  fi
-}
-
 fail() {
   ko
   bad "$@"
@@ -219,6 +184,15 @@ install_vim() {
   _install_vim || ko
 }
 
+install_YCM() {
+  if [[ -d "${dir}/vim/bundle/YouCompleteMe" ]]; then
+    working -n "Compiling YouCompleteMe"
+    cd "${dir}/vim/bundle/YouCompleteMe"
+    log_cmd ycm ./install.sh --clang-completer || fail "Could not install YouCompleteMe. Check at $LOG_DIR/ycm.err for details"
+    cd "$dir"
+  fi
+}
+
 install_font() {
   if [[ "$OSX" ]]; then
     cp "$1" ~/Library/Fonts/ || return 1
@@ -249,6 +223,30 @@ install_powerline() {
     working -n "Cloning powerline"
     log_cmd powerline-git git clone https://github.com/Lokaltog/powerline.git ${dir}/powerline || ko
   fi
+  if [[ -x $(which pip) ]]; then
+    working -n "Installing powerline-status"
+    log_cmd powerline-status sudo pip install powerline-status || ko
+  else
+    warning "powerline-status not installed because pip is missing"
+  fi
+}
+
+install_python() {
+  local cmd
+  working -n "Installing Python"
+  if [[ "$OSX" ]]; then
+    cmd="$INSTALL python python3"
+  else
+    cmd="$INSTALL python-dev python3"
+  fi
+  log_cmd python $CMD || ko
+}
+
+install_pip() {
+  # brew installs pip by default
+  if [[ ! "$OSX" ]]; then
+    log_cmd pip $INSTALL python-pip || ko
+  fi
 }
 
 ##### Call everything #####
@@ -270,7 +268,11 @@ if [ ! "$1" = -z ]; then
   install_zsh
 fi
 
+install_python
+
 install_vim
+
+install_pip
 
 install_powerline
 install_powerfonts
