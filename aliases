@@ -34,8 +34,6 @@ alias gd='git diff'
 alias gf='git ls-files | grep'
 alias gg='git gui citool'
 alias gga='git gui citool --amend'
-alias ggpnp='git pull origin $(current_branch) && git push origin $(current_branch)'
-alias ggpull='git pull origin $(current_branch)'
 alias ggpur='git pull --rebase origin $(current_branch)'
 alias ggpush='git push origin $(current_branch)'
 alias git-svn-dcommit-push='git svn dcommit && git push github master:svntrunk'
@@ -69,6 +67,11 @@ alias gst='git status'
 alias gsts='git stash show --text'
 alias gup='git pull --rebase'
 alias gwc='git whatchanged -p --abbrev-commit --pretty=medium'
+
+# search for commits where a specific file was added (argument)
+alias gfa='git log --diff-filter=A --'
+alias gfd='git log --diff-filter=D --'
+alias gfm='git log --diff-filter=M --'
 
 # some more ls aliases
 alias ll='ls -alhF'
