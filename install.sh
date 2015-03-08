@@ -169,7 +169,7 @@ _install_vim() {
   fi
 
   # install plugins
-  working -n "Installing plugins"
+  working -n "Installing vim plugins"
   reset_timer 5
   if vim -Nu "$dir/vim-plugins.vim" +PluginInstall! +qall; then
     echo -n "[$(get_timer 5) s]"
@@ -209,12 +209,27 @@ _install_powerfonts() {
   done
 }
 
+check_installed_fonts() {
+  # return as soon as we find a fotn that doesn't exist
+  for f in $dir/powerline-fonts/*; do
+    if [[ "$OSX" ]]; then
+      [[ -f "~/Library/Fonts/$f" ]] || return 1
+    else
+      [[ -f "~/.fonts/$f" ]] || return 1
+    fi
+  done
+  return 0
+}
+
 install_powerfonts() {
-  working -n "Copying powerline-fonts"
-  log_cmd font-copy _install_powerfonts || fail "Could not copy the fonts. Check logs at $LOG_DIR"
-  if [[ -z "$OSX" ]]; then
-    working "Updating font cache..."
-    log_cmd font-cache fc-cache -fv || ko
+  if check_installed_fonts; then
+    working -n "Copying powerline-fonts"
+    log_cmd font-copy _install_powerfonts || fail "Could not copy the fonts. Check logs at $LOG_DIR"
+    if [[ -z "$OSX" ]]; then
+      working -n "Updating font cache"
+      log_cmd font-cache fc-cache -fv || ko
+    fi
+    info "Remeber to change the font to Liberation Mono for Powerline"
   fi
 }
 
@@ -224,8 +239,10 @@ install_powerline() {
     log_cmd powerline-git git clone https://github.com/Lokaltog/powerline.git ${dir}/powerline || ko
   fi
   if [[ -x $(which pip) ]]; then
-    working -n "Installing powerline-status"
-    log_cmd powerline-status sudo pip install powerline-status || ko
+    if [[ ! -x $(which powerline) ]]; then
+      working -n "Installing powerline-status"
+      log_cmd powerline-status sudo pip install powerline-status || ko
+    fi
   else
     warning "powerline-status not installed because pip is missing"
   fi
@@ -233,19 +250,31 @@ install_powerline() {
 
 install_python() {
   local cmd
-  working -n "Installing Python"
   if [[ "$OSX" ]]; then
-    cmd="$INSTALL python python3"
+    working -n "Installing Python"
+    log_cmd python "$INSTALL" python || ko
   else
-    cmd="$INSTALL python-dev python3"
+    if ! dpkg -s python-dev >/dev/null 2>/dev/null; then
+      working -n "Installing Python"
+      log_cmd python "$INSTALL" python-dev || ko
+    fi
   fi
-  log_cmd python $CMD || ko
 }
 
 install_pip() {
   # brew installs pip by default
   if [[ ! "$OSX" ]]; then
-    log_cmd pip $INSTALL python-pip || ko
+    if ! dpkg -s python-pip >/dev/null 2>/dev/null; then
+      working -n "Installing pip"
+      log_cmd pip $INSTALL python-pip || ko
+    fi
+  fi
+}
+
+install_zsh_syntax_highlight() {
+  if [[ ! -d ${dir}/zsh-syntax-highlighting/ ]]; then
+    working -n "Cloning zsh-syntax-highlighting"
+    log_cmd zsh-syntax git clone git://github.com/zsh-users/zsh-syntax-highlighting.git || ko
   fi
 }
 
@@ -276,5 +305,7 @@ install_pip
 
 install_powerline
 install_powerfonts
+
+install_zsh_syntax_highlight
 
 finish
