@@ -14,7 +14,7 @@
 
 dir=~/dotfiles               # dotfiles directory
 olddir=~/old_dotfiles        # old dotfiles backup directory
-files="bashrc vimrc vim zshrc gitconfig oh-my-zsh tmux.conf"    # list of files/folders to symlink in homedir
+files="bashrc vimrc vim zshrc gitconfig oh-my-zsh tmux.conf editorconfig"    # list of files/folders to symlink in homedir
 
 source ${dir}/task-logger.sh || exit 1
 
