@@ -210,15 +210,17 @@ _install_powerfonts() {
 }
 
 check_installed_fonts() {
-  # return as soon as we find a fotn that doesn't exist
+  # return as soon as we find a font that doesn't exist
   for f in $dir/powerline-fonts/*; do
+    f=$(basename "$f")
     if [[ "$OSX" ]]; then
-      [[ -f "~/Library/Fonts/$f" ]] || return 1
+      [[ -f "~/Library/Fonts/$f" ]] || return 0
     else
-      [[ -f "~/.fonts/$f" ]] || return 1
+      warning checking $f
+      [[ -f "~/.fonts/$f" ]] || return 0
     fi
   done
-  return 0
+  return 1
 }
 
 install_powerfonts() {
