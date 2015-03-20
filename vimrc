@@ -27,6 +27,14 @@
     set list
     set listchars=tab:›\ ,trail:●,extends:#,nbsp:.
 
+    " relative line numbers
+    autocmd BufLeave * set norelativenumber
+    autocmd BufLeave * set number
+    autocmd BufEnter * set relativenumber
+    autocmd InsertEnter * set norelativenumber
+    autocmd InsertEnter * set number
+    autocmd InsertLeave * set relativenumber
+
   " }
 
   " Indentation {
