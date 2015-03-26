@@ -1,20 +1,86 @@
 #!/bin/bash
-############################
-# ./install.sh
-# This script creates symlinks from the home directory to any desired dotfiles
-# in ~/dotfiles
-# Install brew (OSX only), git, zsh (can be skipped with -z), oh-my-zsh, vim
-############################
-# TODO LIST
-# - add options: prefix, no-root
-#
-############################
 
-########## Variables
+##############################################################################
+#                                                                            #
+# ./install.sh                                                               #
+# This script creates symlinks from the home directory to any desired        #
+# dotfiles in ~/dotfiles                                                     #
+#                                                                            #
+##############################################################################
+# TODO LIST                                                                  #
+# - use git repo for vim                                                     #
+# - create a bootrap script                                                  #
+#                                                                            #
+##############################################################################
+
+show_help() {
+  echo "$0 [-h] [--no-<soemthing>..] [--only-<something>...]"
+  echo "example: $0 --no-vim"
+  echo "example: $0 --no-only"
+  echo ""
+  echo "The availables values for <something> are:"
+  grep 'check_option' "$0" | grep 'return' | grep -v 'sed' | sed -e \
+  's/.*check_option /\t/g' -e 's/ .*//g' | sort | uniq
+}
+
+add_option() {
+  local option
+  option=$(echo "$1" | sed 's/^--no-//')
+  if [[ "$option" != "$1" ]]; then
+    export declare "no_$option=YES"
+  else
+    option=$(echo "$1" | sed 's/^--only-//')
+    if [[ "$option" != "$1" ]]; then
+      global_no=YES
+      export declare "only_$option=YES"
+    else
+      return 1
+    fi
+  fi
+}
+
+# check_option vim && return inside a function
+check_option() {
+  local tmp
+  if [[ "$global_no" == "YES" ]]; then
+    tmp="only_$1"
+    [[ "${!tmp}" != "YES" ]]
+    return "$?"
+  else
+    tmp="no_$1"
+    [[ "${!tmp}" == "YES" ]]
+    return "$?"
+  fi
+}
+
+# Start off by parsing the options
+while [[ "$#" > 0 ]]; do
+  key="$1"
+
+  case $key in
+    -h|?)
+      show_help
+      exit
+      ;;
+    *)
+      if add_option "$key"; then
+        shift
+      else
+        echo "Unknown option $key"
+        show_help
+        exit 1
+      fi
+      ;;
+  esac
+  shift
+done
+
+# Variables
 
 dir=~/dotfiles               # dotfiles directory
 olddir=~/old_dotfiles        # old dotfiles backup directory
-files="bashrc vimrc vim zshrc gitconfig oh-my-zsh tmux.conf editorconfig"    # list of files/folders to symlink in homedir
+# list of files/folders to symlink in homedir
+files="bashrc vimrc vim zshrc gitconfig oh-my-zsh tmux.conf editorconfig"
 
 source ${dir}/task-logger.sh || exit 1
 
@@ -57,6 +123,7 @@ _backup_dir() {
   done
 }
 backup_dir() {
+  check_option backup && return 0
   local i tmp
   i=0
   tmp="$olddir"
@@ -72,6 +139,12 @@ _symlinks() {
   for file in $files; do
     ln -s "${dir}/${file}" ~/."$file" || return 1
   done
+}
+
+symlink() {
+  check_option link && return 0
+  working -n "Symlinking dotfiles"
+  log_cmd symlink _symlinks || fail "Symlink failed. Check logs at $LOG_DIR"
 }
 
 ####### Functions #######
@@ -130,6 +203,7 @@ _install_zsh() {
   fi
 }
 install_zsh() {
+  check_option zsh && return 0
   _install_zsh || ko
 }
 
@@ -181,10 +255,12 @@ _install_vim() {
 }
 
 install_vim() {
+  check_option vim && return 0
   _install_vim || ko
 }
 
 install_YCM() {
+  check_option ycm && return 0
   if [[ -d "${dir}/vim/bundle/YouCompleteMe" ]]; then
     working -n "Compiling YouCompleteMe"
     cd "${dir}/vim/bundle/YouCompleteMe"
@@ -224,6 +300,7 @@ check_installed_fonts() {
 }
 
 install_powerfonts() {
+  check_option font && return 0
   if check_installed_fonts; then
     working -n "Copying powerline-fonts"
     log_cmd font-copy _install_powerfonts || fail "Could not copy the fonts. Check logs at $LOG_DIR"
@@ -236,6 +313,7 @@ install_powerfonts() {
 }
 
 install_powerline() {
+  check_option powerline && return 0
   if [[ ! -d ${dir}/powerline/ ]]; then
     working -n "Cloning powerline"
     log_cmd powerline-git git clone https://github.com/Lokaltog/powerline.git ${dir}/powerline || ko
@@ -251,6 +329,7 @@ install_powerline() {
 }
 
 install_python() {
+  check_option python && return 0
   local cmd
   if [[ "$OSX" ]]; then
     working -n "Installing Python"
@@ -264,6 +343,7 @@ install_python() {
 }
 
 install_pip() {
+  check_option python && return 0
   # brew installs pip by default
   if [[ ! "$OSX" ]]; then
     if ! dpkg -s python-pip >/dev/null 2>/dev/null; then
@@ -288,16 +368,14 @@ check_install_dir
 
 backup_dir
 
-working -n "Symlinking dotfiles"
-log_cmd symlink _symlinks || fail "Symlink failed. Check logs at $LOG_DIR"
+symlink
 
+exit
 install_brew
 
 install_git
 
-if [ ! "$1" = -z ]; then
-  install_zsh
-fi
+install_zsh
 
 install_python
 
