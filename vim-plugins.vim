@@ -133,8 +133,9 @@ Plugin 'tpope/vim-surround'
 " Cool surronding character coloring
 Plugin 'kien/rainbow_parentheses.vim'
 
-" Ctrl-P ST like {
+" ST like functionalities {
 Plugin 'kien/ctrlp.vim'
+Plugin 'erryma/vim-multiple-cursors'
 " }
 
 " numbers: better line numbers {

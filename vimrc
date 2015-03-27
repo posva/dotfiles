@@ -24,6 +24,10 @@
 
     set mouse=a " mouse is so usefull if well used
 
+    " Gotta go fast
+    set ttyfast
+    set lazyredraw
+
     set list
     set listchars=tab:›\ ,trail:●,extends:#,nbsp:.
 
@@ -319,8 +323,8 @@ let g:gitgutter_realtime = 0
 " }
 
 " NERD Tree {
-"Open NerdTree with Ctrl+N
-map <C-N> :NERDTreeToggle<CR>
+"Open NerdTree with Ctrl+H
+nmap <C-H> :NERDTreeToggle<CR>
 " Autoclose vim when only NerdTree is open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " Open Nerdtree when nothing is opened
