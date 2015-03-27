@@ -126,3 +126,7 @@ if which pyenv-virtualenv-init > /dev/null 2>&1; then
 fi
 export GLASSFISH_HOME=/usr/local/opt/glassfish/libexec
 export PATH=${PATH}:${GLASSFISH_HOME}/bin
+
+# moving between words
+#bindkey "OD" forward-word
+#bindkey "OC:" backward-word

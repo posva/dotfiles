@@ -60,6 +60,7 @@ Plugin 'mattn/emmet-vim'
 "Plugin 'amirh/HTML-AutoCloseTag'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'tpope/vim-haml'
+Plugin 'digitaltoad/vim-jade'
 " }
 
 " PHP {
