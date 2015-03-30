@@ -135,7 +135,7 @@ Plugin 'kien/rainbow_parentheses.vim'
 
 " ST like functionalities {
 Plugin 'kien/ctrlp.vim'
-Plugin 'erryma/vim-multiple-cursors'
+Plugin 'terryma/vim-multiple-cursors'
 " }
 
 " numbers: better line numbers {
