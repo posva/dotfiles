@@ -179,7 +179,7 @@ _install_zsh() {
     working -n "Cloning oh-my-zsh"
     log_cmd oh-my-zsh git clone https://github.com/robbyrussell/oh-my-zsh.git || return 1
   fi
-  if [[ ! "$SHELL" == $(which zsh) ]]; then
+  if [[ $(basename "$SHELL") != "zsh" ]]; then
     if [[ ! "$(grep "$(which zsh)" /etc/shells)" ]]; then
       working -n "Adding zsh to /etc/shells"
       log_cmd add-zsh _add_zsh || return 1
@@ -377,7 +377,6 @@ backup_dir
 
 symlink
 
-exit
 install_brew
 
 install_git
