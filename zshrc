@@ -61,6 +61,21 @@ alias watch="nocorrect watch"
 # UTF-8 for logs
 export LANG="en_US.UTF-8"
 
+if [[ -f "$HOME/dotfiles/zsh-history-substring-search/zsh-history-substring-search.zsh" ]]; then
+  source $HOME/dotfiles/zsh-history-substring-search/zsh-history-substring-search.zsh
+fi
+
+# bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+# bind UP and DOWN arrow keys
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
 if [[ -f "$HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
   source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi

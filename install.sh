@@ -360,6 +360,13 @@ install_zsh_syntax_highlight() {
   fi
 }
 
+install_zsh_history_substring_search() {
+  if [[ ! -d ${dir}/zsh-history-substring-search/ ]]; then
+    working -n "Cloning zsh-history-substring-search"
+    log_cmd zsh-syntax git clone git://github.com/zsh-users/zsh-history-substring-search.git || ko
+  fi
+}
+
 ##### Call everything #####
 
 important "Logs are at $LOG_DIR"
@@ -387,5 +394,6 @@ install_powerline
 install_powerfonts
 
 install_zsh_syntax_highlight
+install_zsh_history_substring_search
 
 finish

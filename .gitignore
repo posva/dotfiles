@@ -9,3 +9,4 @@ vim/sessions
 vim/view
 powerline
 zsh-syntax-highlighting
+zsh-history-substring-search
