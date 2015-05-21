@@ -16,6 +16,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tomtom/tcomment_vim'
+Plugin 'mhinz/vim-startify'
 " }
 
 " Mines {
@@ -53,6 +54,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'mtscout6/vim-cjsx'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'einars/js-beautify'
+Plugin 'heavenshell/vim-jsdoc'
 " }
 
 " HTML {
