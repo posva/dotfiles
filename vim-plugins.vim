@@ -60,6 +60,7 @@ Plugin 'heavenshell/vim-jsdoc'
 Plugin 'mattn/emmet-vim'
 "Plugin 'amirh/HTML-AutoCloseTag'
 Plugin 'hail2u/vim-css3-syntax'
+Plugin 'wavded/vim-stylus'
 Plugin 'tpope/vim-haml'
 Plugin 'digitaltoad/vim-jade'
 " }
