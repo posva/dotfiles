@@ -289,7 +289,6 @@ endif
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
-map <F3> o\begin{equation*}<ESC>o\begin{split}<ESC>o\end{split}<ESC>o\end{equation*}<ESC>kO
 
 " Omni completion  when you don't have neocompl {
 "  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
