@@ -59,6 +59,7 @@ Plugin 'heavenshell/vim-jsdoc'
 " HTML {
 Plugin 'mattn/emmet-vim'
 "Plugin 'amirh/HTML-AutoCloseTag'
+Plugin 'wavded/vim-stylus'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'wavded/vim-stylus'
 Plugin 'tpope/vim-haml'

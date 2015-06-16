@@ -3,10 +3,30 @@
 " http://posva.net
 " foldmethod=maker foldmarker={,}
 
+" Plugin loading {
+  source ~/dotfiles/vim-plugins.vim
+" }
+
 " General options {
+
+  " Theme {
+
+    " Nice theme are mustang, vitamins, 256-..., peaksea,
+    " ir_black, xoria256
+
+    let themes = ['solarized', 'mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black', 'Tomorrow-Night-Bright']
+
+    set background=dark
+    colorscheme solarized
+    "execute 'colorscheme '.themes[localtime() % len(themes)]
+    unlet themes
+
+  " }
+
 
   " Editing  & encoding {
     set nu " Show number lines
+    set cursorline
 
     syntax on " syntax highlight
 
@@ -152,10 +172,6 @@
   endfunction
 " }
 
-" Plugin loading {
-  source ~/dotfiles/vim-plugins.vim
-" }
-
 " Tabular {
   nmap <leader>a& :Tabularize /&<CR>
   vmap <leader>a& :Tabularize /&<CR>
@@ -207,12 +223,8 @@
   autocmd BufRead,BufNewFile *.html,*.css, setlocal shiftwidth=2 softtabstop=2
   " Make it so AutoCloseTag works for xml and xhtml files as well
   au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
+  "TODO
   nmap <Leader>ac <Plug>ToggleAutoCloseMappings
-" }
-
-" PHP {
-  let g:DisableAutoPHPFolding = 0
-  let g:PIVAutoClose = 0
 " }
 
 " Autocompletion {
@@ -282,8 +294,8 @@ endif
   if exists('*matchadd')
     let g:indent_guides_enable_on_vim_startup = 1
     let g:indent_guides_auto_colors = 0
-    hi IndentGuidesOdd ctermbg=234
-    hi IndentGuidesEven ctermbg=235
+    hi IndentGuidesOdd ctermbg=0
+    hi IndentGuidesEven ctermbg=8
   endif
 " }
 
@@ -409,19 +421,6 @@ au Syntax * RainbowParenthesesLoadBraces
 
 " TODO neocomplcache
 
-" Theme {
-
-  " Nice theme are mustang, vitamins, 256-..., peaksea,
-  " ir_black, xoria256
-
-  let themes = ['mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black', 'Tomorrow-Night-Bright']
-
-  execute 'colorscheme '.themes[localtime() % len(themes)]
-  set background=dark
-  unlet themes
-
-" }
-
 " Utility commands {
 command Spaces %s/\s\+$\|\t\+$//g
 map <F4> O/*  */<ESC>hhi
@@ -445,7 +444,7 @@ ab teh the
 ab fro for
 
 " Some remapping
-imap jj <ESC>
+imap hh <ESC>
 " }
 
 " LATEX {
@@ -535,8 +534,6 @@ command Latex w | execute '!latex % && dvipdf %:r.dvi'
 
   " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
   " Restore cursor to file position in previous editing session
-  " To disable this, add the following to your .vimrc.before.local file:
-  "   let g:spf13_no_restore_cursor = 1
   function! ResCur()
     if line("'\"") <= line("$")
       normal! g`"
