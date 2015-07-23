@@ -39,7 +39,7 @@ export PATH=$HOME/.cabal/bin:/usr/local/php5/bin:/usr/texbin:/usr/local/bin:/usr
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git git-extras git-remote-branch gitfast gitflow nyan osx brew encode64 urltools rand-quote gem extract pip pylint python screen sudo web-search tmuxinator node npm)
+plugins=(vi-mode git git-extras git-remote-branch gitfast gitflow lol nyan osx brew encode64 urltools rand-quote gem extract pip pylint python screen sudo web-search tmuxinator node npm z)
 
 source $ZSH/oh-my-zsh.sh
 
