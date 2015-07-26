@@ -2,8 +2,6 @@
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
-alias tele="ssh sanmarte@telesun.imag.fr"
-alias telex="ssh -Y sanmarte@telesun.imag.fr"
 alias du="du -h"
 
 #alias catimg="~/catimg/catimg"
@@ -12,13 +10,11 @@ alias du="du -h"
 alias gource="gource --user-image-dir ~/gource-img/ --multi-sampling --dont-stop"
 
 alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
-alias exp='env LD_LIBRARY_PATH=${HOME}/expect5.45 ${HOME}/expect5.45/expect'
-alias walle='cat ~/partage/wall-e.txt'
-alias term='source set-term'
 
 # git OP
 alias g=git
 alias ga='git add'
+alias gap='git add -p'
 alias gb='git branch'
 alias gba='git branch -a'
 alias gc='git commit -v'
