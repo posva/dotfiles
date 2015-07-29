@@ -1,0 +1,3 @@
+[submodule "task-logger.sh"]
+	path = task-logger.sh
+	url = https://github.com/posva/task-logger.sh.git

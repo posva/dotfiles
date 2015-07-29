@@ -16,7 +16,7 @@
 show_help() {
   echo "$0 [-h] [--no-<soemthing>..] [--only-<something>...]"
   echo "example: $0 --no-vim"
-  echo "example: $0 --no-only"
+  echo "example: $0 --only-vim"
   echo ""
   echo "The availables values for <something> are:"
   grep 'check_option' "$0" | grep 'return' | grep -v 'sed' | sed -e \
@@ -82,7 +82,7 @@ olddir=~/old_dotfiles        # old dotfiles backup directory
 # list of files/folders to symlink in homedir
 files="bashrc vimrc vim zshrc gitconfig oh-my-zsh tmux.conf editorconfig"
 
-source ${dir}/task-logger.sh || exit 1
+source ${dir}/task-logger.sh/task-logger.sh || exit 1
 
 # Get OS. Installing in windows is the same as in Linux
 # because I use Cygwin
@@ -208,6 +208,7 @@ install_zsh() {
 }
 
 _install_vim() {
+  local ret elapsed
   if [[ ! -x $(which vim) ]]; then
     if [[ "$OSX" ]]; then
       working -n "Installing vim"
@@ -245,13 +246,11 @@ _install_vim() {
   # install plugins
   working -n "Installing vim plugins"
   reset_timer 5
-  if vim -Nu "$dir/vim-plugins.vim" +PluginInstall! +qall; then
-    echo -n "[$(get_timer 5) s]"
-    ok
-  else
-    echo -n "[$(get_timer 5) s]"
-    return 1
-  fi
+  vim -Nu "$dir/vim-plugins.vim" +PluginInstall! +qall
+  ret="$?"
+  elapsed="$(get_timer 5)"
+  echo -n " [$(ptime $(echo "$elapsed"))]"
+  [[ "$ret" = 0 ]] && ok || return 1
 }
 
 install_vim() {
