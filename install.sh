@@ -9,12 +9,12 @@
 ##############################################################################
 # TODO LIST                                                                  #
 # - use git repo for vim                                                     #
-# - create a bootrap script                                                  #
+# - create a boostrap script                                                  #
 #                                                                            #
 ##############################################################################
 
 show_help() {
-  echo "$0 [-h] [--no-<soemthing>..] [--only-<something>...]"
+  echo "$0 [-h] [--no-<something>..] [--only-<something>...]"
   echo "example: $0 --no-vim"
   echo "example: $0 --only-vim"
   echo ""
@@ -58,7 +58,7 @@ while [[ "$#" > 0 ]]; do
   key="$1"
 
   case $key in
-    -h|?)
+    -h|?|--help)
       show_help
       exit
       ;;
@@ -72,7 +72,6 @@ while [[ "$#" > 0 ]]; do
       fi
       ;;
   esac
-  shift
 done
 
 # Variables
@@ -80,9 +79,12 @@ done
 dir=~/dotfiles               # dotfiles directory
 olddir=~/old_dotfiles        # old dotfiles backup directory
 # list of files/folders to symlink in homedir
-files="bashrc vimrc vim zshrc gitconfig oh-my-zsh tmux.conf editorconfig"
+files="bashrc vimrc vim gitconfig tmux.conf editorconfig"
 
-source ${dir}/task-logger.sh/task-logger.sh || exit 1
+if ! source ${dir}/task-logger.sh/task-logger.sh 2>/dev/null; then
+  echo "ERROR: install git submodules: git submodules init && git submodules update"
+  exit 1
+fi
 
 # Get OS. Installing in windows is the same as in Linux
 # because I use Cygwin
@@ -144,7 +146,7 @@ _symlinks() {
 symlink() {
   check_option link && return 0
   working -n "Symlinking dotfiles"
-  log_cmd symlink _symlinks || fail "Symlink failed. Check logs at $LOG_DIR"
+  log_cmd symlink _symlinks || fail "Symlink failed. Check logs at $LOG_DIR/symlink.err"
 }
 
 ####### Functions #######
@@ -175,10 +177,6 @@ _install_zsh() {
     working -n "Installing zsh"
     log_cmd zsh-install ${INSTALL} zsh || return 1
   fi
-  if [[ ! -d ${dir}/oh-my-zsh/ ]]; then
-    working -n "Cloning oh-my-zsh"
-    log_cmd oh-my-zsh git clone https://github.com/robbyrussell/oh-my-zsh.git || return 1
-  fi
   if [[ $(basename "$SHELL") != "zsh" ]]; then
     if [[ ! "$(grep "$(which zsh)" /etc/shells)" ]]; then
       working -n "Adding zsh to /etc/shells"
@@ -191,20 +189,56 @@ _install_zsh() {
     #fi
   fi
   # Install posva zsh theme
-  zsh_theme="oh-my-zsh/themes/posva.zsh-theme"
-  if [ ! -f "$zsh_theme" ]; then
-    working -n "Installing zsh theme"
-    log_cmd zsh-theme ln -s "${dir}/posva.zsh-theme" "$zsh_theme" || return 1
-  fi
-  zsh_theme="oh-my-zsh/themes/posva-powerline.zsh-theme"
-  if [ ! -f "$zsh_theme" ]; then
-    working -n "Installing powerline zsh theme"
-    log_cmd zsh-theme-powerline ln -s "${dir}/posva-powerline.zsh-theme" "$zsh_theme" || return 1
-  fi
+  #zsh_theme="oh-my-zsh/themes/posva.zsh-theme"
+  #if [ ! -f "$zsh_theme" ]; then
+    #working -n "Installing zsh theme"
+    #log_cmd zsh-theme ln -s "${dir}/posva.zsh-theme" "$zsh_theme" || return 1
+  #fi
+  #zsh_theme="oh-my-zsh/themes/posva-powerline.zsh-theme"
+  #if [ ! -f "$zsh_theme" ]; then
+    #working -n "Installing powerline zsh theme"
+    #log_cmd zsh-theme-powerline ln -s "${dir}/posva-powerline.zsh-theme" "$zsh_theme" || return 1
+  #fi
 }
+
 install_zsh() {
   check_option zsh && return 0
   _install_zsh || ko
+}
+
+_install_antigen() {
+  curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh > ${dir}/antigen.zsh || return 1
+}
+
+install_antigen() {
+  check_option antigen && return 0
+  if [[ ! -f "${dir}/antigen.zsh" ]]; then
+    working -n "Downloading antigen.zsh"
+    log_cmd antigen _install_antigen || ko
+  fi
+}
+
+_clone_prezto() {
+  git clone --recursive https://github.com/posva/prezto.git "${HOME}/.zprezto" || return 1
+  ln -fs ${HOME}/.zprezto zprezto || return 1
+}
+
+_install_prezto() {
+  local rcfile
+  for rcfile in "${HOME}"/.zprezto/runcoms/z*; do
+    ln -fs "$rcfile" "${ZDOTDIR:-$HOME}/.$(basename "$rcfile")" || return 1
+  done
+}
+
+install_prezto() {
+  if [[ ! -d "${HOME}/.zprezto" ]]; then
+    working -n "Cloning prezto"
+    log_cmd clone_prezto  _clone_prezto || ko
+  fi
+  if [[ -d "${HOME}/.zprezto" ]]; then
+    working -n "Symlinking prezto files"
+    log_cmd install_prezto  _install_prezto || ko
+  fi
 }
 
 _install_vim() {
@@ -212,7 +246,7 @@ _install_vim() {
   if [[ ! -x $(which vim) ]]; then
     if [[ "$OSX" ]]; then
       working -n "Installing vim"
-      log_cmd vim-install brew install vim --with-lua --with-python3 || return 1
+      log_cmd vim-install brew install vim --disable-nls --with-lua --with-ruby --with-python3 || return 1
     else
       if [[ ! -x $(which hg) ]]; then
         working -n "Installing hg(Mercurial)"
@@ -307,7 +341,7 @@ install_powerfonts() {
       working -n "Updating font cache"
       log_cmd font-cache fc-cache -fv || ko
     fi
-    info "Remeber to change the font to Liberation Mono for Powerline"
+    info "Remember to change the font to 'Liberation Mono for Powerline'"
   fi
 }
 
@@ -352,28 +386,12 @@ install_pip() {
   fi
 }
 
-install_zsh_syntax_highlight() {
-  if [[ ! -d ${dir}/zsh-syntax-highlighting/ ]]; then
-    working -n "Cloning zsh-syntax-highlighting"
-    log_cmd zsh-syntax git clone git://github.com/zsh-users/zsh-syntax-highlighting.git || ko
-  fi
-}
-
-install_zsh_history_substring_search() {
-  if [[ ! -d ${dir}/zsh-history-substring-search/ ]]; then
-    working -n "Cloning zsh-history-substring-search"
-    log_cmd zsh-syntax git clone git://github.com/zsh-users/zsh-history-substring-search.git || ko
-  fi
-}
-
 ##### Call everything #####
 
 important "Logs are at $LOG_DIR"
 
 check_install_dir
-
 backup_dir
-
 symlink
 
 install_brew
@@ -381,17 +399,15 @@ install_brew
 install_git
 
 install_zsh
-
-install_python
+install_prezto
+install_antigen
 
 install_vim
 
+install_python
 install_pip
 
 install_powerline
 install_powerfonts
-
-install_zsh_syntax_highlight
-install_zsh_history_substring_search
 
 finish

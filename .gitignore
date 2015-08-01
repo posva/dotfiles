@@ -1,4 +1,3 @@
-oh-my-zsh/
 vim/bundle
 vim/backup/
 gh-token
@@ -8,5 +7,4 @@ vim/plugin
 vim/sessions
 vim/view
 powerline
-zsh-syntax-highlighting
-zsh-history-substring-search
+antigen.zsh
