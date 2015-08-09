@@ -206,18 +206,6 @@ install_zsh() {
   _install_zsh || ko
 }
 
-_install_antigen() {
-  curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh > ${dir}/antigen.zsh || return 1
-}
-
-install_antigen() {
-  check_option antigen && return 0
-  if [[ ! -f "${dir}/antigen.zsh" ]]; then
-    working -n "Downloading antigen.zsh"
-    log_cmd antigen _install_antigen || ko
-  fi
-}
-
 _clone_prezto() {
   git clone --recursive https://github.com/posva/prezto.git "${HOME}/.zprezto" || return 1
   ln -fs ${HOME}/.zprezto zprezto || return 1
@@ -400,7 +388,6 @@ install_git
 
 install_zsh
 install_prezto
-install_antigen
 
 install_vim
 
