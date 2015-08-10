@@ -14,9 +14,11 @@
 ##############################################################################
 
 show_help() {
-  echo "$0 [-h] [--no-<something>..] [--only-<something>...]"
+  echo "$0 [-h] [-s|--shell] [--no-<something>..] [--only-<something>...]"
   echo "example: $0 --no-vim"
   echo "example: $0 --only-vim"
+  echo ""
+  echo "-s, --shell:\t equivalent to --only-backup --only-link --only-zsh"
   echo ""
   echo "The availables values for <something> are:"
   grep 'check_option' "$0" | grep 'return' | grep -v 'sed' | sed -e \
@@ -61,6 +63,11 @@ while [[ "$#" > 0 ]]; do
     -h|?|--help)
       show_help
       exit
+      ;;
+    -s|--shell)
+      add_option link
+      add_option backup
+      add_option zsh
       ;;
     *)
       if add_option "$key"; then
