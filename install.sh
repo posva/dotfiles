@@ -9,7 +9,8 @@
 ##############################################################################
 # TODO LIST                                                                  #
 # - use git repo for vim                                                     #
-# - create a boostrap script                                                  #
+# - create a boostrap script                                                 #
+# - symlink vim files and other in their proper scripts                      #
 #                                                                            #
 ##############################################################################
 
@@ -65,9 +66,10 @@ while [[ "$#" > 0 ]]; do
       exit
       ;;
     -s|--shell)
-      add_option link
-      add_option backup
-      add_option zsh
+      add_option --only-link
+      add_option --only-backup
+      add_option --only-zsh
+      break
       ;;
     *)
       if add_option "$key"; then
