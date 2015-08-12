@@ -1,8 +1,8 @@
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
 alias du="du -h"
+
+# prezto plugin
+alias x=unarchive
 
 #alias catimg="~/catimg/catimg"
 
