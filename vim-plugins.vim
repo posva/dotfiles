@@ -125,10 +125,6 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'plasticboy/vim-markdown'
 " }
 
-" SQL {
-Plugin 'vim-scripts/dbext.vim'
-" }
-
 " Surrounding, just awesome {
 Plugin 'tpope/vim-surround'
 " }
@@ -151,7 +147,7 @@ endif
 Plugin 'vim-scripts/restore_view.vim'
 
 " Autocompletion {
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 " }
 
 " All of your Plugins must be added before the following line
