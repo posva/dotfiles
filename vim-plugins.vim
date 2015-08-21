@@ -19,6 +19,10 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'rking/ag.vim'
 " }
 
+" Latex {
+Plugin 'lervag/vimtex'
+" }
+
 " Mines {
 "Plugin 'posva/Rndm'
 "Plugin 'vim-scripts/Mines'
