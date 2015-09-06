@@ -163,6 +163,13 @@
   autocmd BufRead,BufNewFile *.cpp,*.hpp,*.js,*.php setlocal shiftwidth=4 softtabstop=4
   autocmd BufRead,BufNewFile *.html,*.css,*.js setlocal shiftwidth=2 softtabstop=2
   autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
+
+  " Vuejs {
+    autocmd BufNewFile,BufReadPost *.vue call TextEnableCodeSnip('coffee', '<script lang=\"coffee\">', '</script>', 'SpecialComment')
+    autocmd BufNewFile,BufReadPost *.vue call TextEnableCodeSnip('stylus', '<style lang=\"stylus\">', '</style>', 'SpecialComment')
+    autocmd BufNewFile,BufReadPost *.vue call TextEnableCodeSnip('jade', '<template lang=\"jade\">', '</template>', 'SpecialComment')
+  " }
+
   autocmd FileType make     set noexpandtab shiftwidth=8
   autocmd BufRead,BufNewFile .gitconfig setlocal shiftwidth=8 softtabstop=8
   autocmd FileType asm call AsmSyntax()
@@ -455,6 +462,31 @@ command Latex w | execute '!latex % && dvipdf %:r.dvi'
 
 " FUNCTIONS {
 
+  function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
+    let ft=toupper(a:filetype)
+    let group='textGroup'.ft
+    if exists('b:current_syntax')
+      let s:current_syntax=b:current_syntax
+      " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
+      " do nothing if b:current_syntax is defined.
+      unlet b:current_syntax
+    endif
+    execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
+    try
+      execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
+    catch
+    endtry
+    if exists('s:current_syntax')
+      let b:current_syntax=s:current_syntax
+    else
+      unlet b:current_syntax
+    endif
+    execute 'syntax region textSnip'.ft.'
+    \ matchgroup='.a:textSnipHl.'
+    \ start="'.a:start.'" end="'.a:end.'"
+    \ contains=@'.group
+  endfunction
+
   " fill rest of line with characters
   function! FillLine( str, l )
     " set tw to the desired total length
@@ -553,4 +585,3 @@ if filereadable(".vim-local.vim")
   source .vim-local.vim
 endif
 " }
-
