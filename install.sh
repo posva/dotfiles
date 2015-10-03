@@ -222,6 +222,7 @@ _clone_prezto() {
 
 _install_prezto() {
   local rcfile
+  setopt EXTENDED_GLOB
   for rcfile in "${HOME}"/.zprezto/runcoms/z*; do
     ln -fs "$rcfile" "${ZDOTDIR:-$HOME}/.$(basename "$rcfile")" || return 1
   done
