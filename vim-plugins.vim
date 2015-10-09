@@ -33,6 +33,7 @@ Plugin 'croaker/mustang-vim'
 Plugin 'fmoralesc/vim-vitamins'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'chriskempson/tomorrow-theme'
+Plugin 'jaxbot/semantic-highlight.vim'
 "Plugin 'altercation/vim-colors-solarized'
 "Plugin 'spf13/vim-colors'
 " }
