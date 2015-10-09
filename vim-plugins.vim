@@ -69,6 +69,7 @@ Plugin 'wavded/vim-stylus'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'tpope/vim-haml'
 Plugin 'digitaltoad/vim-jade'
+Plugin 'posva/vim-vue'
 " }
 
 " PHP {

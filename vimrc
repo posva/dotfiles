@@ -164,15 +164,6 @@
   autocmd BufRead,BufNewFile *.html,*.css,*.js setlocal shiftwidth=2 softtabstop=2
   autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
 
-  " Vuejs {
-    autocmd BufNewFile,BufReadPost *.vue call TextEnableCodeSnip('html', '<template>', '</template>', 'SpecialComment')
-    autocmd BufNewFile,BufReadPost *.vue call TextEnableCodeSnip('css', '<style>', '</style>', 'SpecialComment')
-    autocmd BufNewFile,BufReadPost *.vue call TextEnableCodeSnip('javascript', '<script>', '</script>', 'SpecialComment')
-    autocmd BufNewFile,BufReadPost *.vue call TextEnableCodeSnip('coffee', '<script lang=\"coffee\">', '</script>', 'SpecialComment')
-    autocmd BufNewFile,BufReadPost *.vue call TextEnableCodeSnip('stylus', '<style lang=\"stylus\">', '</style>', 'SpecialComment')
-    autocmd BufNewFile,BufReadPost *.vue call TextEnableCodeSnip('jade', '<template lang=\"jade\">', '</template>', 'SpecialComment')
-  " }
-
   autocmd FileType make     set noexpandtab shiftwidth=8
   autocmd BufRead,BufNewFile .gitconfig setlocal shiftwidth=8 softtabstop=8
   autocmd FileType asm call AsmSyntax()
