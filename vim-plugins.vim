@@ -47,7 +47,8 @@ Plugin 'vim-scripts/sessionman.vim'
 " }
 
 " Airline iformation about the file at bottom {
-Plugin 'bling/vim-airline'
+"Plugin 'bling/vim-airline'
+Plugin 'itchyny/lightline.vim'
 " }
 
 " Javascript {
@@ -110,8 +111,13 @@ endif
 Plugin 'scrooloose/syntastic'
 " }
 
+" Gundo {
+Plugin 'gundo.vim'
+" }
+
 " git  {
 Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
 " }
 
 " Java IDE {
