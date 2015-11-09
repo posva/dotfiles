@@ -19,7 +19,6 @@
 	renames = true
 [alias]
 	co = checkout
-        br = branch
         ci = commit
         hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
         lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %Cblue[%an]' --abbrev-commit --date=relative
