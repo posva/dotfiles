@@ -479,7 +479,7 @@ let g:gitgutter_realtime = 0
 
 " NERD Tree {
 "Open NerdTree with Ctrl+H
-nmap <C-H> :NERDTreeToggle<CR>
+nmap <silent> <C-H> :NERDTreeToggle<CR>
 " Autoclose vim when only NerdTree is open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " Open Nerdtree when nothing is opened

@@ -135,6 +135,8 @@ export PATH=${PATH}:${GLASSFISH_HOME}/bin
 export PATH="$HOME/npm/bin:$HOME/.linuxbrew/bin:$PATH"
 
 export TERM=xterm-256color
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # moving between words
 #bindkey "OD" forward-word
