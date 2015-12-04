@@ -112,7 +112,7 @@ Plugin 'scrooloose/syntastic'
 " }
 
 " Gundo {
-Plugin 'gundo.vim'
+Plugin 'sjl/gundo.vim'
 " }
 
 " git  {
