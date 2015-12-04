@@ -49,6 +49,7 @@ Plugin 'vim-scripts/sessionman.vim'
 " Airline iformation about the file at bottom {
 "Plugin 'bling/vim-airline'
 Plugin 'itchyny/lightline.vim'
+Plugin 'ryanoasis/vim-devicons'
 " }
 
 " Javascript {
@@ -145,7 +146,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'kien/rainbow_parentheses.vim'
 
 " ST like functionalities {
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'terryma/vim-multiple-cursors'
 " }
 
