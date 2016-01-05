@@ -17,6 +17,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'rking/ag.vim'
+Plugin 'tikhomirov/vim-glsl'
 " }
 
 " Latex {

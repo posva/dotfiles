@@ -42,8 +42,6 @@
     " "Give me some space" said the cursor
     set scrolloff=15
 
-    set mouse=a " mouse is so usefull if well used
-
     " Gotta go fast
     set ttyfast
     set lazyredraw
