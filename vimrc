@@ -565,6 +565,7 @@ au Syntax * RainbowParenthesesLoadBraces
 " Utility commands {
 command Spaces %s/\s\+$\|\t\+$//g
 map <F4> O/*  */<ESC>hhi
+set timeoutlen=200
 
 iab _TIME        <C-R>=strftime("%X")<CR>
 iab _DATE        <C-R>=strftime("%a %b %d %T %Z %Y")<CR>
