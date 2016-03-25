@@ -18,6 +18,7 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'rking/ag.vim'
 Plugin 'tikhomirov/vim-glsl'
+Plugin 'FredKSchott/CoVim'
 " }
 
 " Latex {
@@ -71,7 +72,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'wavded/vim-stylus'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'tpope/vim-haml'
-Plugin 'digitaltoad/vim-jade'
+Plugin 'digitaltoad/vim-pug'
 Plugin 'posva/vim-vue'
 " }
 
