@@ -17,7 +17,7 @@
     let themes = ['solarized', 'mustang', 'vitamins', '256-grayvim', '256-jungle', 'peaksea', 'xoria256', 'ir_black', 'Tomorrow-Night-Bright']
 
     set background=dark
-    colorscheme solarized
+    colorscheme ir_black
     "execute 'colorscheme '.themes[localtime() % len(themes)]
     unlet themes
 
@@ -120,7 +120,7 @@
     vnoremap > >gv
 
     " Use , instead of \
-    let mapleader = ','
+    let mapleader = ' '
 
     " Disable arrow keys
     map <up> <nop>
@@ -408,7 +408,7 @@ endif
 
 " Indent guide plugin {
   if exists('*matchadd')
-    let g:indent_guides_enable_on_vim_startup = 1
+    let g:indent_guides_enable_on_vim_startup = 0
     let g:indent_guides_auto_colors = 0
     hi IndentGuidesOdd ctermbg=0
     hi IndentGuidesEven ctermbg=8
