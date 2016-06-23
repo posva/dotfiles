@@ -395,6 +395,7 @@ symlink
 install_brew
 
 install_git
+curl https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight > /usr/local/bin/diff-highlight && chmod +x /usr/local/bin/diff-highlight
 
 install_zsh
 install_prezto

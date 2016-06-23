@@ -28,3 +28,9 @@
         set-rem = "! git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)"
         oneline = log --pretty=oneline --abbrev-commit --graph --decorate
 
+[pager]
+	log = diff-highlight | less -r
+	show = diff-highlight | less -r
+	diff = diff-highlight | less -r
+[interactive]
+	diffFilter = diff-highlight
