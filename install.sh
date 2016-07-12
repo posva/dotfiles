@@ -384,6 +384,11 @@ install_pip() {
   fi
 }
 
+install_emojify() {
+  working -n "Installing emojify"
+  log_cmd emojify gem install terminal-emojify || ko
+}
+
 ##### Call everything #####
 
 important "Logs are at $LOG_DIR"
@@ -401,6 +406,8 @@ install_zsh
 install_prezto
 
 install_vim
+
+install_emojify
 
 install_python
 install_pip

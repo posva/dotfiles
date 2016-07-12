@@ -1,6 +1,7 @@
 [user]
 	name = Eduardo San Martin Morote
 	email = posva13@gmail.com
+	signingkey = 71EC6E1D
 [github]
 	user = posva
 [credential]
@@ -29,8 +30,8 @@
         oneline = log --pretty=oneline --abbrev-commit --graph --decorate
 
 [pager]
-	log = diff-highlight | less -r
-	show = diff-highlight | less -r
+	log = emojify | diff-highlight | less -r
+	show = emojify | diff-highlight | less -r
 	diff = diff-highlight | less -r
 [interactive]
 	diffFilter = diff-highlight
