@@ -47,6 +47,7 @@ values."
      react
      osx
      eyebrowse
+     elixir
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -119,7 +120,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("mononoki"
                                :size 13
                                :weight normal
                                :width normal
@@ -252,6 +253,7 @@ It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
   (add-to-list 'auto-mode-alist '("\\.vue$" . web-mode))
+  (setq-default js-indent-level 2)
   )
 
 (defun dotspacemacs/user-config ()
