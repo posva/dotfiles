@@ -254,6 +254,7 @@ any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
   (add-to-list 'auto-mode-alist '("\\.vue$" . web-mode))
   (setq-default js-indent-level 2)
+  (add-to-list 'auto-mode-alist '("\\.cjsx\\'" . coffee-mode))
   )
 
 (defun dotspacemacs/user-config ()

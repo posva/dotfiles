@@ -19,6 +19,7 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'rking/ag.vim'
 Plugin 'tikhomirov/vim-glsl'
 Plugin 'FredKSchott/CoVim'
+Plugin 'kyuhi/vim-emoji-complete'
 " }
 
 " Latex {
@@ -69,6 +70,7 @@ Plugin 'heavenshell/vim-jsdoc'
 " HTML {
 Plugin 'mattn/emmet-vim'
 "Plugin 'amirh/HTML-AutoCloseTag'
+Plugin 'othree/html5.vim'
 Plugin 'wavded/vim-stylus'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'tpope/vim-haml'
