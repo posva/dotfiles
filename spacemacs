@@ -45,6 +45,7 @@ values."
      html
      javascript
      react
+     swift
      osx
      eyebrowse
      elixir
