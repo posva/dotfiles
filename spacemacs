@@ -297,6 +297,13 @@ layers configuration. You are free to put any user code."
   (setq-default evil-escape-key-sequence "hh")
   (setq-default evil-escape-delay 0.2)
 
+  ;; Unset the right alt key modifier so it can
+  ;; be used to insert diacritics and special chars
+  (cond
+   ((eq system-type 'darwin)
+    (setq mac-right-option-modifier 'none)
+    ))
+
   (setq-default default-tab-width 2 indent-tabs-mode nil)
   (setq javascript-indent-level 2)
   (setq js2-basic-offset 2)
