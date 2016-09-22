@@ -162,6 +162,7 @@ endif
 
 " A plugin for automatically restoring file's cursor position and folding
 Plugin 'vim-scripts/restore_view.vim'
+Plugin 'Konfekt/FastFold'
 
 " Autocompletion {
 "Plugin 'Valloric/YouCompleteMe'
