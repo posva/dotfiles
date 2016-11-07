@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     nginx
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -47,8 +48,12 @@ values."
      react
      swift
      osx
-     eyebrowse
      elixir
+     typescript
+     python
+     ruby
+     slack
+     shell-scripts
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -125,7 +130,7 @@ values."
                                :size 13
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.15)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -256,6 +261,8 @@ in `dotspacemacs/user-config'."
   (add-to-list 'auto-mode-alist '("\\.vue$" . web-mode))
   (setq-default js-indent-level 2)
   (add-to-list 'auto-mode-alist '("\\.cjsx\\'" . coffee-mode))
+
+  ;; Support ligatures characters with a font like Firacode
   (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
                (36 . ".\\(?:>\\)")
@@ -296,6 +303,9 @@ layers configuration. You are free to put any user code."
 
   (setq-default evil-escape-key-sequence "hh")
   (setq-default evil-escape-delay 0.2)
+
+  ;; Always toggle indent guides
+  (spacemacs/toggle-indent-guide-globally-on)
 
   ;; Unset the right alt key modifier so it can
   ;; be used to insert diacritics and special chars
@@ -364,7 +374,6 @@ layers configuration. You are free to put any user code."
                                         helm-source-file-cache
                                         ;; helm-source-files-in-current-dir
                                         ))
-  (define-key evil-normal-state-map (kbd "C-p") 'helm-multi-files)
 
   ;; Get email and store it in nnml
   (setq gnus-secondary-select-methods
@@ -391,12 +400,6 @@ layers configuration. You are free to put any user code."
   ;; store email in ~/gmail directory
   (setq nnml-directory "~/gmail")
   (setq message-directory "~/gmail")
-
-  ;; (setq-default default-tab-width 2 indent-tabs-mode nil)
-  ;; (setq powerline-default-separator nil)
-  (setq javascript-indent-level 2)
-  (setq js2-basic-offset 2)
-  (setq-default fill-column-indicator t)
 
   )
 
