@@ -301,6 +301,18 @@ layers configuration. You are free to put any user code."
   (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
   (define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
 
+  ;; Use local version of eslint
+  (defun my/use-eslint-from-node-modules ()
+    (let ((root (locate-dominating-file
+                 (or (buffer-file-name) default-directory)
+                 (lambda (dir)
+                   (let ((eslint (expand-file-name "node_modules/.bin/eslint" dir)))
+                     (and eslint (file-executable-p eslint)))))))
+      (when root
+        (let ((eslint (expand-file-name "node_modules/.bin/eslint" root)))
+          (setq-local flycheck-javascript-eslint-executable eslint)))))
+  (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+
   (setq-default evil-escape-key-sequence "hh")
   (setq-default evil-escape-delay 0.2)
 
@@ -332,7 +344,8 @@ layers configuration. You are free to put any user code."
                         '(javascript-jshint)
                         '(javascript-jscs)))
 
-  ;; (flycheck-add-mode 'javascript-standard 'web-mode)
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'javascript-eslint 'js2-mode)
   ;; (add-hook 'js2-mode-hook
   ;;           (defun my-js2-mode-setup ()
   ;;             (flycheck-mode t)
