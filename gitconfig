@@ -13,7 +13,6 @@
 [core]
 	editor = vim
 	quotepath = off
-	autocrlf = true
 [credential]
 	helper = osxkeychain
 [diff]

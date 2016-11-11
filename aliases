@@ -150,10 +150,6 @@ if which pyenv-virtualenv-init > /dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)";
 fi
-export GLASSFISH_HOME=/usr/local/opt/glassfish/libexec
-export PATH=${PATH}:${GLASSFISH_HOME}/bin
-
-export PATH="$HOME/npm/bin:$HOME/.linuxbrew/bin:$PATH"
 
 export TERM=xterm-256color
 export LC_ALL=en_US.UTF-8
