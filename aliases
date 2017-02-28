@@ -1,15 +1,19 @@
-alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
-alias du="du -h"
-
 # prezto plugin
 alias x=unarchive
-
-#alias catimg="~/catimg/catimg"
 
 # gource pictures
 alias gource="gource --user-image-dir ~/gource-img/ --multi-sampling --dont-stop"
 
+# Convert receipts pictures to a readable date format
+facture() {
+  local file
+  file="$1"
+  shift
+  convert "$file" -resize 1000 "$(echo "$file" | sed -E "s/^[^0-9]+([0-9]{4})([0-9]{2})([0-9]{2})[^.]+/\1-\2-\3 $*/")" && rm "$file"
+}
+
 alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
+alias du="du -h"
 
 # git OP
 alias g=git
@@ -142,6 +146,7 @@ if which source-highlight > /dev/null 2>&1; then
 fi
 
 export EDITOR=vim
+export VISUAL=vim
 if [[ -x /usr/libexec/java_home ]]; then
   export JAVA_HOME=$(/usr/libexec/java_home)
 fi
