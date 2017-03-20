@@ -100,6 +100,10 @@ alias gfhf='git-flow hotfix finish'
 alias gfhp='git-flow hotfix publish'
 alias gfhs='git-flow hotfix start'
 
+# gitmoji
+alias ge='gitmoji'
+alias gea='git add -A && gitmoji'
+
 # Remove bad git aliases
 unalias gs 2>/dev/null
 
