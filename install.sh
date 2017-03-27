@@ -88,7 +88,7 @@ done
 dir=~/dotfiles               # dotfiles directory
 olddir=~/old_dotfiles        # old dotfiles backup directory
 # list of files/folders to symlink in homedir
-files="bashrc vimrc vim gitconfig tmux.conf editorconfig"
+files="bashrc spacemacs spacevim vim gitconfig tmux.conf editorconfig"
 
 if ! source ${dir}/task-logger.sh/task-logger.sh 2>/dev/null; then
   echo "ERROR: install git submodules: git submodules init && git submodules update"

@@ -1,0 +1,103 @@
+" You can enable the existing layers in space-vim and
+" exclude the partial plugins in a certain layer.
+" The command Layer is vaild in the function Layers().
+" Use exclude option if you don't want the full Layer,
+" e.g., Layer 'better-defaults', { 'exclude': 'itchyny/vim-cursorword' }
+function! Layers()
+
+    " Default layers, recommended!
+    Layer 'fzf'
+    Layer 'unite'
+    Layer 'better-defaults'
+    Layer 'auto-completion'
+    Layer 'syntax-checking'
+    Layer 'html'
+    Layer 'javascript'
+    Layer 'vue'
+    Layer 'git'
+
+endfunction
+
+" Put your private plugins here.
+function! UserInit()
+
+    " Space has been set as the default leader key,
+    " if you want to change it, uncomment and set it here.
+    " let g:spacevim_leader = "<\Space>"
+    " let g:spacevim_localleader = ','
+
+    " Install private plugins
+    " Plug 'extr0py/oni'
+
+   " Automatically create the directories we need
+    function! InitializeDirectories()
+        let parent = $HOME
+        let prefix = 'vim'
+        let dir_list = {
+                    \ 'backup': 'backupdir',
+                    \ 'views': 'viewdir',
+                    \ 'swap': 'directory' }
+
+        if has('persistent_undo')
+            let dir_list['undo'] = 'undodir'
+        endif
+
+        let common_dir = parent . '/.' . prefix
+
+        for [dirname, settingname] in items(dir_list)
+            let directory = common_dir . dirname . '/'
+            if exists("*mkdir")
+                if !isdirectory(directory)
+                    call mkdir(directory)
+                endif
+            endif
+            if !isdirectory(directory)
+                echo "Warning: Unable to create backup directory: " . directory
+                echo "Try: mkdir -p " . directory
+            else
+                let directory = substitute(directory, " ", "\\\\ ", "g")
+                exec "set " . settingname . "=" . directory
+            endif
+        endfor
+    endfunction
+    call InitializeDirectories()
+
+endfunction
+
+" Put your costom configurations here, e.g., change the colorscheme.
+function! UserConfig()
+
+    " If you enable airline layer and have installed the powerline fonts, set it here.
+    " let g:airline_powerline_fonts=1
+    " color desert
+    autocmd BufRead,BufNewFile *.html,*.css,*.js setlocal shiftwidth=2 softtabstop=2
+
+    " Disable ex mode
+    map Q <Nop>
+
+    set wrap
+
+    " Stop acting dumb when pasting
+    nnoremap <F2> :set invpaste paste?<CR>
+    set pastetoggle=<F2>
+    set showmode
+    set timeoutlen=200
+
+    " common typing mistakes
+    ab teh the
+    ab fro for
+
+    " Some remapping
+    imap hh <ESC>
+
+    set confirm
+
+    " Local config file {
+    if filereadable(".vim-local.vim")
+        source .vim-local.vim
+    endif
+    " }
+
+  set clipboard-=unnamed
+  set dir=~/.vimswap//,~/.vimbackup//,~/.vimviews//,~/.vimundo
+endfunction

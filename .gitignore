@@ -8,3 +8,5 @@ vim/sessions
 vim/view
 powerline
 zprezto
+vim/autoload
+vim/plugged
