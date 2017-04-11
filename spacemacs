@@ -63,7 +63,6 @@ values."
      typescript
      python
      ruby
-     slack
      shell-scripts
      nginx
      floobits
@@ -387,6 +386,8 @@ layers configuration. You are free to put any user code."
   (setq-default default-tab-width 2 indent-tabs-mode nil)
   (setq javascript-indent-level 2)
   (setq js2-basic-offset 2)
+  (setq typescript-expr-indent-offset 0)
+  (setq typescript-indent-level 2)
   (setq js2-mode-show-strict-warnings nil)
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
