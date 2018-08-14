@@ -25,8 +25,8 @@
 [interactive]
 	diffFilter = diff-highlight
 [pager]
-	log = emojify | diff-highlight | less -r
-	show = emojify | diff-highlight | less -r
+	log = diff-highlight | less -r
+	show = diff-highlight | less -r
 	diff = diff-highlight | less -r
 [push]
 	default = current

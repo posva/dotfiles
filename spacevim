@@ -23,7 +23,7 @@ function! UserInit()
 
     " Space has been set as the default leader key,
     " if you want to change it, uncomment and set it here.
-    " let g:spacevim_leader = "<\Space>"
+    let g:spacevim_leader = "<\Space>"
     " let g:spacevim_localleader = ','
 
     " Install private plugins
@@ -89,6 +89,8 @@ function! UserConfig()
 
     " Some remapping
     imap hh <ESC>
+    nmap <leader>f :Files<CR>
+    nmap <leader>b :Buffers<CR>
 
     set confirm
 
