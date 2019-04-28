@@ -36,3 +36,8 @@
 	name = Eduardo San Martin Morote
 	email = posva13@gmail.com
 	signingkey = 59AF6DFC8A56282D
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
