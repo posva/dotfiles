@@ -16,3 +16,10 @@ dotfiles
 
 ##Contact
 For further help you can mail me at i@posva.net or open an issue
+
+## Changing key repeat
+
+```
+defaults write -g InitialKeyRepeat -int 25
+defaults write -g KeyRepeat -int 1
+```

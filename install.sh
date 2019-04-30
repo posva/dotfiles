@@ -272,7 +272,7 @@ _install_vim() {
   # Plugins
   if [[ ! -d ${dir}/vim/bundle/Vundle.vim ]]; then
     working -n "Installing Vundle"
-    log_cmd vundle git clone https://github.com/gmarik/Vundle.vim.git vim/bundle/Vundle.vim || return 1
+    log_cmd vundle git clone https://github.com/VundleVim/Vundle.vim.git vim/bundle/Vundle.vim || return 1
   fi
 
   # install plugins
@@ -347,7 +347,7 @@ install_powerline() {
   check_option powerline && return 0
   if [[ ! -d ${dir}/powerline/ ]]; then
     working -n "Cloning powerline"
-    log_cmd powerline-git git clone https://github.com/Lokaltog/powerline.git ${dir}/powerline || ko
+    log_cmd powerline-git git clone https://github.com/powerline/powerline.git ${dir}/powerline || ko
   fi
   if [[ -x $(which pip) ]]; then
     if [[ ! -x $(which powerline) ]]; then

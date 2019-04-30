@@ -154,9 +154,11 @@ fi
 
 export EDITOR=vim
 export VISUAL=vim
-if [[ -x /usr/libexec/java_home ]]; then
-  export JAVA_HOME=$(/usr/libexec/java_home)
-fi
+
+# if you want java
+#if [[ -x /usr/libexec/java_home ]]; then
+#  export JAVA_HOME=$(/usr/libexec/java_home)
+#fi
 
 if which pyenv-virtualenv-init > /dev/null 2>&1; then
   eval "$(pyenv init -)"
