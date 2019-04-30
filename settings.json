@@ -1,0 +1,53 @@
+{
+  "editor.formatOnSave": true,
+  "editor.fontFamily": "'Dank Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 14,
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "boundary",
+  "editor.wordWrap": "on",
+
+  "files.insertFinalNewline": true,
+
+  "workbench.colorTheme": "Spacemacs - dark",
+
+  "emmet.includeLanguages": {
+    "vue": "html",
+    "vue-html": "html"
+  },
+  "emmet.triggerExpansionOnTab": true,
+
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "prettier.trailingComma": "es5",
+  "prettier.eslintIntegration": true,
+
+  // THE DEVIL!
+  // "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "workbench.statusBar.feedback.visible": false,
+
+  "vim.hlsearch": true,
+  "vim.leader": "<space>",
+  "vim.visualstar": true,
+  "vim.easymotion": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["h", "h"],
+      "after": ["<Esc>"]
+    }
+  ],
+
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}/src",
+    "~": "${workspaceRoot}"
+  },
+
+  "window.zoomLevel": 0,
+
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.iconTheme": "vscode-icons",
+  "sync.gist": "39c94fdef01115374be8db134f1cb8db"
+}
