@@ -9,8 +9,6 @@
 
   "files.insertFinalNewline": true,
 
-  "workbench.colorTheme": "Spacemacs - dark",
-
   "emmet.includeLanguages": {
     "vue": "html",
     "vue-html": "html"
@@ -49,5 +47,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "workbench.iconTheme": "vscode-icons",
-  "sync.gist": "39c94fdef01115374be8db134f1cb8db"
+  "sync.gist": "39c94fdef01115374be8db134f1cb8db",
+  "workbench.colorTheme": "Spacemacs - dark"
 }

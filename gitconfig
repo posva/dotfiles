@@ -9,10 +9,16 @@
 	set-rem = "! git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)"
 	oneline = log --pretty=oneline --abbrev-commit --graph --decorate
 [color]
-	ui = auto
+	ui = always
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
 [core]
 	editor = vim
 	quotepath = off
+	pager = diff-highlight | less -r
 [credential]
 	helper = osxkeychain
 [diff]

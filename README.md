@@ -19,7 +19,15 @@ For further help you can mail me at i@posva.net or open an issue
 
 ## Changing key repeat
 
-```
+```sh
 defaults write -g InitialKeyRepeat -int 25
 defaults write -g KeyRepeat -int 1
+```
+
+## Adding `diff-highlight`
+
+Install `git` with `brew` then:
+
+```sh
+ln -s /usr/local/share/git-core/contrib/diff-highlight/diff-highlight /usr/local/bin/diff-highlight
 ```
