@@ -48,5 +48,12 @@
   },
   "workbench.iconTheme": "vscode-icons",
   "sync.gist": "39c94fdef01115374be8db134f1cb8db",
-  "workbench.colorTheme": "Spacemacs - dark"
+  "workbench.colorTheme": "Spacemacs - dark",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.startupEditor": "newUntitledFile",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
