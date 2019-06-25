@@ -55,5 +55,6 @@
   "workbench.startupEditor": "newUntitledFile",
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "vsicons.dontShowNewVersionMessage": true
 }
