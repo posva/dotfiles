@@ -1,0 +1,62 @@
+{
+  "title": "Browser tab navigation",
+  "rules": [
+    {
+      "description": "Remap cmd + {/} to Previous/Next Tab on Chrome",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "4",
+            "modifiers": {
+              "mandatory": ["command"]
+            }
+          },
+          "to_if_alone": [
+            {
+              "key_code": "tab",
+              "modifiers": ["control"]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.google\\.Chrome",
+                "^com\\.microsoft\\.edge",
+                "^org\\.mozilla\\.nightly",
+                "^org\\.mozilla\\.firefox"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "3",
+            "modifiers": {
+              "mandatory": ["command"]
+            }
+          },
+          "to_if_alone": [
+            {
+              "key_code": "tab",
+              "modifiers": ["control", "left_shift"]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.google\\.Chrome",
+                "^com\\.microsoft\\.edge",
+                "^org\\.mozilla\\.nightly",
+                "^org\\.mozilla\\.firefox"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
