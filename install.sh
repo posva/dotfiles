@@ -191,7 +191,7 @@ _install_zsh() {
       working -n "Adding zsh to /etc/shells"
       log_cmd add-zsh _add_zsh || return 1
     fi
-    important 'You should manually change your shell with chsh $(which zsh)'
+    important 'You should manually change your shell with chsh -s $(which zsh)'
     #if [[ $(uname) == 'Linux' || $(uname) == 'Darwin' ]]; then
       #working -n "Changing the default shell for $USER"
       #log_cmd change-shell chsh -s "$(which zsh)" || return 1
