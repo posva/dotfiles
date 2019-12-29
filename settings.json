@@ -24,13 +24,8 @@
   "vim.easymotion": true,
   "vim.insertModeKeyBindings": [
     {
-      "before": [
-        "h",
-        "h"
-      ],
-      "after": [
-        "<Esc>"
-      ]
+      "before": ["h", "h"],
+      "after": ["<Esc>"]
     }
   ],
   "path-intellisense.mappings": {
