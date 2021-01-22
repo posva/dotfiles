@@ -1,5 +1,4 @@
 {
-  "editor.formatOnSave": true,
   "editor.fontFamily": "'Dank Mono', Menlo, Monaco, 'Courier New', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
@@ -15,13 +14,18 @@
   "prettier.singleQuote": true,
   "prettier.semi": false,
   "prettier.trailingComma": "es5",
-  "eslint.autoFixOnSave": true,
   // THE DEVIL!
   // "vetur.format.defaultFormatter.html": "js-beautify-html",
   "vim.hlsearch": true,
   "vim.leader": "<space>",
   "vim.visualstar": true,
   "vim.easymotion": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<A-q>"],
+      "commands": ["rewrap.rewrapComment"]
+    }
+  ],
   "vim.insertModeKeyBindings": [
     {
       "before": ["h", "h"],
@@ -37,7 +41,6 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "workbench.iconTheme": "vscode-icons",
   "sync.gist": "39c94fdef01115374be8db134f1cb8db",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -54,12 +57,33 @@
   "vsicons.dontShowNewVersionMessage": true,
   "vetur.useWorkspaceDependencies": true,
   "editor.formatOnPaste": true,
-  "editor.formatOnType": false,
-  "workbench.colorTheme": "Spacemacs - dark",
+  "editor.formatOnType": true,
+  "workbench.colorTheme": "Night Owl",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
   "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "vetur.experimental.templateInterpolationService": true,
+  "workbench.iconTheme": "vscode-icons",
+  "debug.javascript.usePreview": true,
+  "cSpell.userWords": [
+    "Randomizer",
+    "Vnode",
+    "circleci",
+    "codecov",
+    "navigations",
+    "prepending",
+    "stringifies",
+    "unmount"
+  ],
+  "editor.formatOnSave": true,
+  "extensions.ignoreRecommendations": false,
+  "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
