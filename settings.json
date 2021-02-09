@@ -22,6 +22,14 @@
   "vim.easymotion": true,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
+      "before": ["<C-o>"],
+      "commands": ["workbench.action.navigateBack"]
+    },
+    {
+      "before": ["<C-i>"],
+      "commands": ["workbench.action.navigateForward"]
+    },
+    {
       "before": ["<A-q>"],
       "commands": ["rewrap.rewrapComment"]
     }
@@ -76,6 +84,7 @@
     "Vnode",
     "circleci",
     "codecov",
+    "devtools",
     "navigations",
     "prepending",
     "stringifies",
@@ -85,5 +94,6 @@
   "extensions.ignoreRecommendations": false,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "jest.autoEnable": false
 }
