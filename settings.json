@@ -97,5 +97,6 @@
   "jest.autoEnable": false,
   "[rust]": {
     "editor.defaultFormatter": "statiolake.vscode-rustfmt"
-  }
+  },
+  "codestream.email": "posva13@gmail.com"
 }
