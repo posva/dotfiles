@@ -1,0 +1,1 @@
+{"title":"Diacritics","rules":[{"description":"right alt + ` to left alt + `","manipulators":[{"type":"basic","from":{"modifiers":{"mandatory":["right_alt"]},"key_code":"grave_accent_and_tilde"},"to":[{"repeat":true,"key_code":"grave_accent_and_tilde","modifiers":["left_alt"]}]}]}]}

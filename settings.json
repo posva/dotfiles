@@ -80,6 +80,7 @@
   "debug.javascript.usePreview": true,
   "cSpell.userWords": [
     "Randomizer",
+    "Tooling",
     "Vnode",
     "circleci",
     "codecov",
