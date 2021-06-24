@@ -99,5 +99,9 @@
   "[rust]": {
     "editor.defaultFormatter": "statiolake.vscode-rustfmt"
   },
-  "codestream.email": "posva13@gmail.com"
+  "codestream.email": "posva13@gmail.com",
+  "editor.cursorStyle": "line",
+  "editor.insertSpaces": false,
+  "editor.lineNumbers": "on",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-"
 }
