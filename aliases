@@ -32,8 +32,6 @@ alias gcount='git shortlog -sn'
 alias gcp='git cherry-pick'
 alias gd='git diff'
 alias gdc='git diff --cached'
-alias gg='git ls-files | grep'
-alias gk='gitk --all --branches'
 alias gl='git pull'
 alias glg='git log --stat --max-count=5'
 alias glgg='git log --graph --max-count=5'
@@ -71,39 +69,6 @@ alias gfa='git log --diff-filter=A --'
 alias gfd='git log --diff-filter=D --'
 alias gfm='git log --diff-filter=M --'
 
-# Git flow
-alias gf='git-flow'
-alias gfi='git-flow init'
-alias gfid='git-flow init -d'
-
-alias gff='git-flow feature'
-alias gffv='git-flow feature -v'
-alias gffco='git-flow feature checkout'
-alias gffd='git-flow feature diff'
-alias gfff='git-flow feature finish'
-alias gffp='git-flow feature publish'
-alias gffl='git-flow feature pull'
-alias gffr='git-flow feature rebase'
-alias gffs='git-flow feature start'
-alias gfft='git-flow feature track'
-
-alias gfr='git-flow release'
-alias gfrv='git-flow release -v'
-alias gfrf='git-flow release finish'
-alias gfrp='git-flow release publish'
-alias gfrs='git-flow release start'
-alias gfrt='git-flow release track'
-
-alias gfh='git-flow hotfix'
-alias gfhv='git-flow hotfix -v'
-alias gfhf='git-flow hotfix finish'
-alias gfhp='git-flow hotfix publish'
-alias gfhs='git-flow hotfix start'
-
-# gitmoji
-alias ge='gitmoji -c'
-alias gea='git add -A && gitmoji -c'
-
 # Remove bad git aliases
 unalias gs 2>/dev/null
 
@@ -116,15 +81,6 @@ alias l='ls -CFlh'
 #alias -='cd -'
 alias ..='cd ..'
 alias ...='cd ../..'
-alias 1='cd -'
-alias 2='cd -2'
-alias 3='cd -3'
-alias 4='cd -4'
-alias 5='cd -5'
-alias 6='cd -6'
-alias 7='cd -7'
-alias 8='cd -8'
-alias 9='cd -9'
 
 # npm run alias
 alias r='npm run'
