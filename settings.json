@@ -76,6 +76,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "vetur.experimental.templateInterpolationService": true,
+  "volar.autoCompleteRefs": false,
   "workbench.iconTheme": "vscode-icons",
   "debug.javascript.usePreview": true,
   "cSpell.userWords": [
@@ -95,7 +96,7 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "jest.autoEnable": false,
+  "jest.autoRun": false,
   "[rust]": {
     "editor.defaultFormatter": "statiolake.vscode-rustfmt"
   },
