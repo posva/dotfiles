@@ -48,7 +48,6 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "sync.gist": "39c94fdef01115374be8db134f1cb8db",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -58,11 +57,8 @@
   },
   "rewrap.autoWrap.enabled": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "vetur.format.defaultFormatter.html": "prettier",
-  "vetur.completion.tagCasing": "initial",
   "glsllint.glslangValidatorPath": "/usr/local/bin/glslangValidator",
   "vsicons.dontShowNewVersionMessage": true,
-  "vetur.useWorkspaceDependencies": true,
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
   "workbench.colorTheme": "Night Owl",
@@ -75,10 +71,8 @@
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "vetur.experimental.templateInterpolationService": true,
   "volar.autoCompleteRefs": false,
   "workbench.iconTheme": "vscode-icons",
-  "debug.javascript.usePreview": true,
   "cSpell.userWords": [
     "Randomizer",
     "Tooling",
@@ -96,7 +90,6 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "jest.autoRun": false,
   "[rust]": {
     "editor.defaultFormatter": "statiolake.vscode-rustfmt"
   },
@@ -104,5 +97,6 @@
   "editor.cursorStyle": "line",
   "editor.insertSpaces": false,
   "editor.lineNumbers": "on",
-  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-"
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+  "editor.wordWrapColumn": 120
 }

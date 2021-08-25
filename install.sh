@@ -389,6 +389,14 @@ install_emojify() {
   log_cmd emojify gem install terminal-emojify || ko
 }
 
+install_modern_cmd() {
+  working -n "Installing modern commands"
+  log_cmd git-delta "$INSTALL" git-delta
+  log_cmd dust "$INSTALL" dust
+  log_cmd bat "$INSTALL" bat
+  log_cmd fd "$INSTALL" fd
+}
+
 ##### Call everything #####
 
 important "Logs are at $LOG_DIR"
@@ -400,14 +408,15 @@ symlink
 install_brew
 
 install_git
-curl https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight > /usr/local/bin/diff-highlight && chmod +x /usr/local/bin/diff-highlight
 
 install_zsh
 install_prezto
 
 install_vim
 
-install_emojify
+# install_emojify
+
+install_modern_cmd
 
 install_python
 install_pip
