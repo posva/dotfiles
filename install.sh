@@ -391,10 +391,7 @@ install_emojify() {
 
 install_modern_cmd() {
   working -n "Installing modern commands"
-  log_cmd git-delta "$INSTALL" git-delta
-  log_cmd dust "$INSTALL" dust
-  log_cmd bat "$INSTALL" bat
-  log_cmd fd "$INSTALL" fd
+  log_cmd modern_cmd "$INSTALL" git-delta dust bat fd fzf zoxide
 }
 
 ##### Call everything #####
