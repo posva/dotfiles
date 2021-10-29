@@ -164,8 +164,8 @@ symlink() {
 install_brew() {
   if [[ "$OSX" ]]; then
     if [[ ! -x $(which brew) ]]; then
-      working -n "Installing Homebrew(brew)"
-      log_cmd -c brew ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      working -n "Installing Homebrew"
+      log_cmd $0 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || crash "Failed to install Hombrew"
     fi
   fi
 }
@@ -223,8 +223,8 @@ _clone_prezto() {
 _install_prezto() {
   local rcfile
   setopt EXTENDED_GLOB
-  for rcfile in "${HOME}"/.zprezto/runcoms/z*; do
-    ln -fs "$rcfile" "${ZDOTDIR:-$HOME}/.$(basename "$rcfile")" || return 1
+  for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
   done
 }
 
@@ -290,14 +290,21 @@ install_vim() {
   _install_vim || ko
 }
 
-install_YCM() {
-  check_option ycm && return 0
-  if [[ -d "${dir}/vim/bundle/YouCompleteMe" ]]; then
-    working -n "Compiling YouCompleteMe"
-    cd "${dir}/vim/bundle/YouCompleteMe"
-    log_cmd ycm ./install.sh --clang-completer || fail "Could not install YouCompleteMe. Check at $LOG_DIR/ycm.err for details"
-    cd "$dir"
+_install_nvim() {
+  if [[ ! -x $(which nvim) ]]; then
+    if [[ "$OSX" ]]; then
+      working -n "Installing neovim"
+      log_cmd nvim-install ${INSTALL} nvim || return 1
+    else
+      fail "Not supported!"
+    fi
   fi
+
+  # TODO: istall plugins
+}
+install_nvim() {
+  check_option vim && return 0
+  _install_nvim || ko
 }
 
 install_font() {
@@ -345,14 +352,10 @@ install_powerfonts() {
 
 install_powerline() {
   check_option powerline && return 0
-  if [[ ! -d ${dir}/powerline/ ]]; then
-    working -n "Cloning powerline"
-    log_cmd powerline-git git clone https://github.com/powerline/powerline.git ${dir}/powerline || ko
-  fi
   if [[ -x $(which pip) ]]; then
     if [[ ! -x $(which powerline) ]]; then
       working -n "Installing powerline-status"
-      log_cmd powerline-status sudo pip install powerline-status || ko
+      log_cmd $0 pip install powerline-status || ko
     fi
   else
     warning "powerline-status not installed because pip is missing"
@@ -384,14 +387,10 @@ install_pip() {
   fi
 }
 
-install_emojify() {
-  working -n "Installing emojify"
-  log_cmd emojify gem install terminal-emojify || ko
-}
 
 install_modern_cmd() {
   working -n "Installing modern commands"
-  log_cmd modern_cmd "$INSTALL" git-delta dust bat fd fzf zoxide
+  log_cmd modern_cmd "$INSTALL" git-delta dust bat fd fzf zoxide || ko
 }
 
 ##### Call everything #####
@@ -409,9 +408,7 @@ install_git
 install_zsh
 install_prezto
 
-install_vim
-
-# install_emojify
+install_nvim
 
 install_modern_cmd
 
@@ -419,6 +416,5 @@ install_python
 install_pip
 
 install_powerline
-install_powerfonts
 
 finish

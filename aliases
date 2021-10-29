@@ -38,13 +38,17 @@ alias glo='git log --oneline'
 alias glu='git submodule foreach git pull origin master'
 alias gm='git merge'
 alias gmt='git mergetool --no-prompt'
+
 alias gp='git push'
 alias gpf='git push --force'
 alias gpoat='git push origin --all && git push origin --tags'
+
 alias gr='git remote'
+
 alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
 alias grbi='git rebase -i'
+
 alias grh='git reset HEAD'
 alias grhh='git reset HEAD --hard'
 alias grmv='git remote rename'
@@ -107,8 +111,8 @@ function update_dotfiles() {
 #   alias ccat="source-highlight --out-format=esc -o STDOUT -i"
 # fi
 
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 
 # if you want java
 #if [[ -x /usr/libexec/java_home ]]; then
