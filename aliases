@@ -86,7 +86,9 @@ alias ..='cd ..'
 alias ...='cd ../..'
 
 # npm run alias
-alias r='npm run'
+alias r='nr'
+alias c='code-insiders'
+alias vim="nvim"
 
 # Update function
 function update_dotfiles() {

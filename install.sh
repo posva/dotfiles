@@ -88,7 +88,7 @@ done
 dir=~/dotfiles               # dotfiles directory
 olddir=~/old_dotfiles        # old dotfiles backup directory
 # list of files/folders to symlink in homedir
-files="bashrc spacemacs spacevim vim gitconfig tmux.conf editorconfig"
+files="bashrc gitconfig tmux.conf editorconfig"
 
 if ! source ${dir}/task-logger.sh/task-logger.sh 2>/dev/null; then
   echo "ERROR: install git submodules: git submodules init && git submodules update"
@@ -216,7 +216,7 @@ install_zsh() {
 }
 
 _clone_prezto() {
-  git clone --recursive https://github.com/posva/prezto.git "${HOME}/.zprezto" || return 1
+  git clone --recursive https://github.com/posva/prezto.git "${ZDOTDIR:-$HOME}/.zprezto" || return 1
   ln -fs ${HOME}/.zprezto zprezto || return 1
 }
 
@@ -237,57 +237,6 @@ install_prezto() {
     working -n "Symlinking prezto files"
     log_cmd install_prezto  _install_prezto || ko
   fi
-}
-
-_install_vim() {
-  local ret elapsed
-  if [[ ! -x $(which vim) ]]; then
-    if [[ "$OSX" ]]; then
-      working -n "Installing vim"
-      log_cmd vim-install brew install vim --disable-nls --with-lua --with-ruby --with-python3 || return 1
-    else
-      if [[ ! -x $(which hg) ]]; then
-        working -n "Installing hg(Mercurial)"
-        log_cmd hg-install ${INSTALL} mercurial || return 1
-      fi
-      if [[ ! -d "vim_src" ]]; then
-        working -n "Cloning vim repo"
-        log_cmd vim-clone hg clone https://vim.googlecode.com/hg/ vim_src || return 1
-      fi
-      cd vim_src || return 1
-      working -n "Installing ncurses"
-      log_cmd ncurses-install ${INSTALL} libncurses5-dev || return 1
-      working -n "Vim ./configure.sh"
-      log_cmd vim-conf ./configure --prefix=/usr/local/ --enable-rubyinterp --enable-pythoninterp --enable-luainterp --with-features=huge || return 1
-      working -n "Vim make -j 4"
-      log_cmd vim-make make -j 4 || return 1
-      working -n "Vim make install"
-      log_cmd sudo make install || return 1
-    fi
-  fi
-  # backup dir. My vimrc does this already
-  #working -n "Creating vim backup directory"
-  #log_cmd vim-back mkdir -p vim/backup || return 1
-
-  # Plugins
-  if [[ ! -d ${dir}/vim/bundle/Vundle.vim ]]; then
-    working -n "Installing Vundle"
-    log_cmd vundle git clone https://github.com/VundleVim/Vundle.vim.git vim/bundle/Vundle.vim || return 1
-  fi
-
-  # install plugins
-  working -n "Installing vim plugins"
-  reset_timer 5
-  vim -Nu "$dir/vim-plugins.vim" +PluginInstall! +qall
-  ret="$?"
-  elapsed="$(get_timer 5)"
-  echo -n " [$(ptime $(echo "$elapsed"))]"
-  [[ "$ret" = 0 ]] && ok || return 1
-}
-
-install_vim() {
-  check_option vim && return 0
-  _install_vim || ko
 }
 
 _install_nvim() {
@@ -406,7 +355,8 @@ install_brew
 install_git
 
 install_zsh
-install_prezto
+# must be done with zsh
+# install_prezto
 
 install_nvim
 
