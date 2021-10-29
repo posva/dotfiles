@@ -248,26 +248,6 @@
                 },
                 {
                     "from": {
-                        "key_code": "right_control"
-                    },
-                    "to": [
-                        {
-                            "key_code": "fn"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_7"
-                    },
-                    "to": [
-                        {
-                            "key_code": "keypad_1"
-                        }
-                    ]
-                },
-                {
-                    "from": {
                         "key_code": "keypad_1"
                     },
                     "to": [
@@ -283,6 +263,26 @@
                     "to": [
                         {
                             "key_code": "keypad_8"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "keypad_3"
+                    },
+                    "to": [
+                        {
+                            "key_code": "keypad_9"
+                        }
+                    ]
+                },
+                {
+                    "from": {
+                        "key_code": "keypad_7"
+                    },
+                    "to": [
+                        {
+                            "key_code": "keypad_1"
                         }
                     ]
                 },
@@ -308,11 +308,11 @@
                 },
                 {
                     "from": {
-                        "key_code": "keypad_3"
+                        "key_code": "right_control"
                     },
                     "to": [
                         {
-                            "key_code": "keypad_9"
+                            "key_code": "fn"
                         }
                     ]
                 }

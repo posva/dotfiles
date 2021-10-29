@@ -69,21 +69,23 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "johnsoncodehk.volar"
   },
   "volar.autoCompleteRefs": false,
   "workbench.iconTheme": "vscode-icons",
   "cSpell.userWords": [
-    "Randomizer",
-    "Tooling",
-    "Vnode",
     "circleci",
     "codecov",
+    "compat",
     "devtools",
+    "minifiers",
     "navigations",
     "prepending",
+    "Randomizer",
     "stringifies",
-    "unmount"
+    "Tooling",
+    "unmount",
+    "Vnode"
   ],
   "editor.formatOnSave": true,
   "extensions.ignoreRecommendations": false,
