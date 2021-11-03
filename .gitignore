@@ -12,3 +12,4 @@ vim/autoload
 vim/plugged
 .DS_Store
 *.swp
+karabiner-config/automatic_backups
