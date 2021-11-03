@@ -223,9 +223,9 @@ _clone_prezto() {
 _install_prezto() {
   local rcfile
   setopt EXTENDED_GLOB
-  for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-  done
+  #for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+  #  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+  #done
 }
 
 install_prezto() {
@@ -352,9 +352,9 @@ symlink
 
 install_brew
 
-install_git
+# install_git
 
-install_zsh
+# install_zsh
 # must be done with zsh
 # install_prezto
 
