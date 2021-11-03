@@ -18,7 +18,7 @@
 [core]
 	editor = vim
 	quotepath = off
-	pager = diff-highlight | less -r
+	pager = delta
 [credential]
 	helper = osxkeychain
 [diff]
