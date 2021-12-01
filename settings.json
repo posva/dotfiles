@@ -59,8 +59,8 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "glsllint.glslangValidatorPath": "/usr/local/bin/glslangValidator",
   "vsicons.dontShowNewVersionMessage": true,
-  "editor.formatOnPaste": false,
-  "editor.formatOnType": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
   "workbench.colorTheme": "Night Owl",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
@@ -103,5 +103,6 @@
   "editor.wordWrapColumn": 120,
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "vite.autoStart": false,
 }
