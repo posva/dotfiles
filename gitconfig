@@ -16,7 +16,7 @@
 	newNormal = green bold
 	newHighlight = green bold 22
 [core]
-	editor = vim
+	editor = nvim
 	quotepath = off
 	pager = delta
 [credential]
