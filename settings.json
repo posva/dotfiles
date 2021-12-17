@@ -80,6 +80,7 @@
     "devtools",
     "minifiers",
     "navigations",
+    "pnpm",
     "prepending",
     "Randomizer",
     "stringifies",
@@ -98,11 +99,11 @@
   "codestream.email": "posva13@gmail.com",
   "editor.cursorStyle": "line",
   "editor.insertSpaces": false,
-  "editor.lineNumbers": "on",
+  "editor.lineNumbers": "relative",
   "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
   "editor.wordWrapColumn": 120,
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
-  "vite.autoStart": false,
+  "vite.autoStart": false
 }
