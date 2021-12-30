@@ -251,16 +251,6 @@
                 },
                 {
                     "from": {
-                        "key_code": "fn"
-                    },
-                    "to": [
-                        {
-                            "key_code": "right_option"
-                        }
-                    ]
-                },
-                {
-                    "from": {
                         "key_code": "keypad_1"
                     },
                     "to": [
