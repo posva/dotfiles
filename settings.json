@@ -96,7 +96,6 @@
   "[rust]": {
     "editor.defaultFormatter": "statiolake.vscode-rustfmt"
   },
-  "codestream.email": "posva13@gmail.com",
   "editor.cursorStyle": "line",
   "editor.insertSpaces": false,
   "editor.lineNumbers": "relative",
@@ -105,5 +104,6 @@
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
-  "vite.autoStart": false
+  "vite.autoStart": false,
+  "jest.autoRun": null
 }
