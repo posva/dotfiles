@@ -40,6 +40,7 @@
 
 [delta]
     features = decorations
+    light = false
 
 [delta "interactive"]
     keep-plus-minus-markers = false
@@ -60,7 +61,7 @@
 [user]
 	name = Eduardo San Martin Morote
 	email = posva13@gmail.com
-	signingkey = 59AF6DFC8A56282D
+	signingkey = 4C2F0033B36AEE47
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -70,3 +71,5 @@
 	ff = only
 [init]
 	defaultBranch = main
+[commit]
+	gpgsign = true
