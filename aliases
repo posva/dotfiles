@@ -82,10 +82,13 @@ alias ...='cd ../..'
 alias r='nr'
 alias c='code-insiders'
 alias vim="nvim"
-alias d='nr dev'
-alias b='nr build'
+# d was already taken
+alias nd='nr dev'
+# b was already taken
+alias nb='nr build'
 alias t='nr test'
-alias p='nr play'
+# p was already taken
+alias np='nr play'
 
 # Update function
 function update_dotfiles() {
