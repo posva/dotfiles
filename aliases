@@ -27,7 +27,7 @@ alias gl='git pull'
 alias glg='git log --stat --max-count=5'
 alias glgg='git log --graph --max-count=5'
 alias glgga='git log --graph --decorate --all'
-alias glo='git log --oneline'
+alias glo='git lg | ag --invert "(\[bot\]|Renovate Bot)" | less'
 alias glu='git submodule foreach git pull origin master'
 alias gm='git merge'
 alias gmt='git mergetool --no-prompt'
@@ -89,6 +89,9 @@ alias nb='nr build'
 alias t='nr test'
 # p was already taken
 alias np='nr play'
+
+# for talks with demos
+alias nio='pnpm i --prefer-offline'
 
 # Update function
 function update_dotfiles() {
