@@ -18,7 +18,8 @@
 [core]
 	editor = nvim
 	quotepath = off
-	pager = delta
+	pager = delta --features "$(defaults read -globalDomain AppleInterfaceStyle > /dev/null 2>&1 && echo dark-mode || echo light-mode)"
+
 [credential]
 	helper = osxkeychain
 [diff]
@@ -29,30 +30,30 @@
 	logoutputencoding = utf8
 	commitencoding = utf8
 
-[pager]
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
-
 [interactive]
-    diffFilter = delta --color-only --features=interactive
+	diffFilter = delta --color-only --features="$(defaults read -globalDomain AppleInterfaceStyle > /dev/null 2>&1 && echo dark-interactive || echo light-interactive)"
+
 
 [delta]
-    features = decorations
-    light = false
+	commit-decoration-style = blue ol
+	commit-style = raw
+	file-style = omit
+	hunk-header-decoration-style = blue box
+	hunk-header-file-style = red
+	hunk-header-line-number-style = "#067a00"
+	hunk-header-style = file line-number syntax
 
-[delta "interactive"]
-    keep-plus-minus-markers = false
+[delta "light-mode"]
+	light = true
+[delta "dark-mode"]
+	light = false
 
-[delta "decorations"]
-    commit-decoration-style = blue ol
-    commit-style = raw
-    file-style = omit
-    hunk-header-decoration-style = blue box
-    hunk-header-file-style = red
-    hunk-header-line-number-style = "#067a00"
-    hunk-header-style = file line-number syntax
+[delta "light-interactive"]
+	light = true
+	keep-plus-minus-markers = false
+[delta "dark-interactive"]
+	light = false
+	keep-plus-minus-markers = false
 
 [push]
 	default = current
