@@ -21,6 +21,7 @@ alias gcleand='git clean -dfin --' # dry run
 alias gcleanf='git reset --hard && git clean -dfx' # fore clean everything
 alias gcm='git checkout main'
 alias gco='git checkout'
+alias gcop='git checkout -p'
 alias gcount='git shortlog -sn'
 alias gcp='git cherry-pick'
 alias gd='git diff'
@@ -39,10 +40,11 @@ alias gpf='git push --force'
 alias gpoat='git push origin --all && git push origin --tags'
 
 alias gr='git remote'
+alias gra='git remote add'
+alias grao='git remote add origin'
 alias grmv='git remote rename'
 alias grrm='git remote remove'
 alias grset='git remote set-url'
-alias grso='git remote set-url origin'
 alias grup='git remote update'
 alias grv='git remote -v'
 
