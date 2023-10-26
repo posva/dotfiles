@@ -1,10 +1,7 @@
 [alias]
 	co = checkout
-	ci = commit
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %Cblue[%an]' --abbrev-commit --date=relative
-	br = branch
-	st = status
 # auto set the pull and push rmeote
 	set-rem = "! git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)"
 	oneline = log --pretty=oneline --abbrev-commit --graph --decorate
