@@ -9,7 +9,7 @@ alias g=git
 alias ga='git add'
 alias gap='git add -p'
 # stage deleted files
-alias gad='git add $(git ls-files --deleted)'
+alias gad='git add "$(git ls-files --deleted)"'
 alias gb='git branch'
 alias gba='git branch -a'
 alias gbc='git checkout -b'
@@ -51,7 +51,7 @@ alias grbi='git rebase -i'
 
 alias grh='git reset HEAD'
 alias grhh='git reset HEAD --hard'
-alias grt='cd $(git rev-parse --show-toplevel || echo ".")'
+alias grt='cd "$(git rev-parse --show-toplevel || echo ".")"'
 alias gst='git status -s'
 alias gsta='git stash'
 alias gstaa='git stash apply'
@@ -99,7 +99,7 @@ alias nio='pnpm i --prefer-offline'
 function update_dotfiles() {
   printf '\033[0;34m%s\033[0m\n' "Updating dotfiles"
   cd ~/dotfiles
-  if git pull --rebase origin $(git rev-parse --abbrev-ref HEAD)
+  if git pull --rebase origin "$(git rev-parse --abbrev-ref HEAD)"
   then
     echo -e "\e[32m    .___      __    _____.__.__                 "
     echo "  __| _/_____/  |__/ ____\__|  |   ____   ______"
