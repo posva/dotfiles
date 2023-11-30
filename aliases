@@ -85,12 +85,15 @@ alias r='nr'
 alias c='code-insiders'
 alias vim="nvim"
 # d was already taken
-alias nd='nr dev'
+unalias d 2>/dev/null
+alias d='nr dev'
 # b was already taken
-alias nb='nr build'
+unalias b 2>/dev/null
+alias b='nr build'
 alias t='nr test'
 # p was already taken
-alias np='nr play'
+unalias p 2>/dev/null
+alias p='nr play'
 
 # for talks with demos
 alias nio='pnpm i --prefer-offline'
