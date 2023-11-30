@@ -123,6 +123,7 @@ function update_dotfiles() {
 
 export EDITOR=nvim
 export VISUAL=nvim
+export PAGER=bat
 
 # if you want java
 #if [[ -x /usr/libexec/java_home ]]; then
