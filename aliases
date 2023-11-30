@@ -138,3 +138,28 @@ export VISUAL=nvim
 # moving between words
 #bindkey "OD" forward-word
 #bindkey "OC:" backward-word
+
+function update_sponsors() {
+  local file
+
+  if [ ! -f "package.json" ]; then
+    echo "No package.json found"
+    return
+  fi
+
+  if [ -n "$1" -a -f "$1" ]; then
+    file=$1
+  else
+    file="$(find . -name sponsors.json)"
+  fi
+
+  if [ -z "$file" ]; then
+    echo "No sponsors.json file found"
+    return
+  fi
+
+  echo "Updating ${file}..."
+
+  wget -O "$file" https://sponsors.esm.is/sponsors-docs.json
+  pnpm exec prettier --write "$file"
+}
