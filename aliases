@@ -165,4 +165,51 @@ function update_sponsors() {
 
   wget -O "$file" https://sponsors.esm.is/sponsors-docs.json
   pnpm exec prettier --write "$file"
+
+  update_readme_sponsors
+}
+
+function update_readme_sponsors() {
+  local content escaped_content temp_start temp_end temp_replacement start_marker end_marker start_line end_line
+
+  # Fetch content from the URL
+  content=$(wget -qO- https://sponsors.esm.is/sponsors-docs-html)
+
+  # Escape special characters for use in sed
+  escaped_content=$(printf '%s\n' "$content" | sed -e 's/[\/&]/\\&/g')
+
+  # Create temporary files for manipulation
+  temp_start=$(mktemp)
+  temp_end=$(mktemp)
+  temp_replacement=$(mktemp)
+
+  # Markers for replacement
+  start_marker="<!--sponsors start-->"
+  end_marker="<!--sponsors end-->"
+
+  # Find line numbers for start and end markers in README.md
+  start_line=$(grep -n "$start_marker" README.md | cut -d ":" -f 1)
+  end_line=$(grep -n "$end_marker" README.md | cut -d ":" -f 1)
+
+	# allow overwriting of files with >
+  set +o noclobber
+
+  # Split README.md into three parts
+  head -n "$((start_line - 1))" README.md > "$temp_start"
+  tail -n "+$((end_line + 1))" README.md > "$temp_end"
+
+  # Insert fetched content between markers
+  printf "%s\n\n%s\n" "$(cat "$temp_start")" "$content" > "$temp_replacement"
+
+  # Combine the parts to reconstruct README.md
+  rm README.md
+  cat "$temp_replacement" "$temp_end" > README.md
+
+  # Remove temporary files
+  rm "$temp_start" "$temp_end" "$temp_replacement"
+
+	# restore
+  set -o noclobber
+
+  pnpm exec prettier --write README.md
 }
