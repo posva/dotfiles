@@ -84,16 +84,14 @@ alias ...='cd ../..'
 alias r='nr'
 alias c='code-insiders'
 alias vim="nvim"
+# TODO: where to remove the aliases of d, b and p?
 # d was already taken
-unalias d 2>/dev/null
-alias d='nr dev'
+alias nd='nr dev'
 # b was already taken
-unalias b 2>/dev/null
-alias b='nr build'
+alias nb='nr build'
 alias t='nr test'
 # p was already taken
-unalias p 2>/dev/null
-alias p='nr play'
+alias np='nr play'
 
 # for talks with demos
 alias nio='pnpm i --prefer-offline'
@@ -123,7 +121,8 @@ function update_dotfiles() {
 
 export EDITOR=nvim
 export VISUAL=nvim
-export PAGER=bat
+# This would break Git
+# export PAGER=bat
 
 # if you want java
 #if [[ -x /usr/libexec/java_home ]]; then
