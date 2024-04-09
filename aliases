@@ -136,7 +136,10 @@ export VISUAL=nvim
 
 # export TERM=xterm-256color
 # export LC_ALL=en_US.UTF-8
-# export LANG=en_US.UTF-8
+
+# To avoid system messages to be in French
+export LANG="en_US.UTF-8"
+export LC_MESSAGES="en_US.UTF-8"
 
 # moving between words
 #bindkey "OD" forward-word
