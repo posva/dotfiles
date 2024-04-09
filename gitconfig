@@ -39,6 +39,8 @@
 	hunk-header-file-style = red
 	hunk-header-line-number-style = "#067a00"
 	hunk-header-style = file line-number syntax
+	# it would be better to be 0 and change the width on the terminal but it doesn't work well
+	tabs = 2
 
 [delta "light-mode"]
 	light = true
