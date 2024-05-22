@@ -9,13 +9,12 @@ alias g=git
 alias ga='git add'
 alias gap='git add -p'
 # stage deleted files
-alias gad='git add "$(git ls-files --deleted)"'
+alias gad='git add $(git ls-files --deleted)'
 alias gb='git branch'
 alias gba='git branch -a'
 alias gbc='git checkout -b'
 alias gc='git commit -v'
 alias gcm='git commit -v -m'
-alias gca='git commit -v -a'
 alias gcl='git config --list'
 alias gclean='git clean -dfi --'
 alias gcleand='git clean -dfin --' # dry run
@@ -64,8 +63,11 @@ alias gup='git pull --rebase'
 alias gwc='git whatchanged -p --abbrev-commit --pretty=medium'
 
 # search for commits where a specific file was added (argument)
+# added
 alias gfa='git log --diff-filter=A --'
+# deleted
 alias gfd='git log --diff-filter=D --'
+# modified
 alias gfm='git log --diff-filter=M --'
 
 # Remove bad git aliases
