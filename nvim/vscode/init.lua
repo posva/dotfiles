@@ -89,6 +89,9 @@ keymap('n', 'gcc', '<Plug>VSCodeCommentaryLine', {})
 keymap('n', '<Tab>', ':Tabnext<CR>', opts)
 keymap('n', '<S-Tab>', ':Tabprev<CR>', opts)
 
+-- Multi cursor
+vim.keymap.set('n', '<C-d>', 'mciw*<Cmd>nohl<CR>', { remap = true })
+
 -- Clipboard setting
 -- vim.o.clipboard = 'unnamedplus'
 
@@ -110,5 +113,16 @@ require("lazy").setup({
   { 'tpope/vim-repeat', },
 	{ 'tpope/vim-surround', },
   "easymotion/vim-easymotion",
+  {
+    'vscode-neovim/vscode-multi-cursor.nvim',
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
+    'vscode-neovim/vscode-multi-cursor.nvim',
+    event = 'VeryLazy',
+    cond = not not vim.g.vscode,
+    opts = {},
+  }
 })
 
