@@ -56,6 +56,9 @@ keymap('n', 'gc', '<Plug>VSCodeCommentary', {})
 keymap('o', 'gc', '<Plug>VSCodeCommentary', {})
 keymap('n', 'gcc', '<Plug>VSCodeCommentaryLine', {})
 
+-- Open links
+keymap('n', 'gl', ':call VSCodeNotify("editor.action.openLink")<CR>', opts)
+
 -- Tab navigation
 keymap('n', '<Tab>', ':Tabnext<CR>', opts)
 keymap('n', '<S-Tab>', ':Tabprev<CR>', opts)
