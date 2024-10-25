@@ -59,6 +59,14 @@ keymap('n', 'gcc', '<Plug>VSCodeCommentaryLine', {})
 -- Open links
 keymap('n', 'gl', ':call VSCodeNotify("editor.action.openLink")<CR>', opts)
 
+-- VSCode folding
+keymap('n', 'za', ':call VSCodeNotify("editor.toggleFold")<CR>', opts)
+keymap('n', 'zA', ':call VSCodeNotify("editor.toggleFoldRecursively")<CR>', opts)
+keymap('n', 'zo', ':call VSCodeNotify("editor.unfold")<CR>', opts)
+keymap('n', 'zO', ':call VSCodeNotify("editor.unfoldRecursively")<CR>', opts)
+keymap('n', 'zc', ':call VSCodeNotify("editor.fold")<CR>', opts)
+keymap('n', 'zC', ':call VSCodeNotify("editor.foldRecursively")<CR>', opts)
+
 -- Tab navigation
 keymap('n', '<Tab>', ':Tabnext<CR>', opts)
 keymap('n', '<S-Tab>', ':Tabprev<CR>', opts)

@@ -70,6 +70,9 @@ alias gfd='git log --diff-filter=D --'
 # modified
 alias gfm='git log --diff-filter=M --'
 
+# checkouts a specific GitHub PR
+alias gpr='gh pr checkout $(gh pr list | fzf | cut -f 1)'
+
 # Remove bad git aliases
 unalias gs 2>/dev/null
 
