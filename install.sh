@@ -170,14 +170,7 @@ install_brew() {
   fi
 }
 
-install_git() {
-  if [[ ! -x $(which git) ]]; then
-    working -n "Installing Git"
-    log_cmd $0 ${INSTALL} git || ko
-  fi
-}
-
-# Install zsh, need git and brew
+# Install zsh, needs git and brew
 _add_zsh() {
   sudo echo $(which zsh) > /etc/shells
 }
@@ -352,8 +345,7 @@ symlink
 
 install_brew
 
-# install_git
-
+# No need to install zsh because OSX has it
 # install_zsh
 # must be done with zsh
 # install_prezto
