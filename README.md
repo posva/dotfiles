@@ -1,5 +1,13 @@
 # dotfiles
 
+## Installation
+
+```sh
+git clone https://github.com/posva/dotfiles
+cd dotfiles
+git submodule update --init --recursive
+```
+
 ## TODO
 
 - add pip install
