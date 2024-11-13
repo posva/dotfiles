@@ -30,6 +30,7 @@ defaults write -g InitialKeyRepeat -int 25
 defaults write -g KeyRepeat -int 1
 defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write -g com.apple.swipescrolldirection -bool false
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadThreeFingerDrag" -bool "true"
 
 # Locale
 defaults write -g AppleLocale en_FR
