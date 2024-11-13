@@ -307,6 +307,18 @@ install_node_globals() {
   volta install @antfu/ni fkill
 }
 
+_symlink_karabiner() {
+  if [[ "$OSX" ]]; then
+    mkdir -p ~/.config
+    ln -fs "$dir/karabiner-config" ~/.config/karabiner
+  fi
+}
+
+symlink_karabiner() {
+  working -n "Symlinking karabiner config"
+  log_cmd karabiner _symlink_karabiner || ko
+}
+
 ##### Call everything #####
 
 important "Logs are at $LOG_DIR"
@@ -339,6 +351,8 @@ install_node_globals
 
 brew install --cask alfred coconutbaterry discord keycastr iterm2 imageoptim spotify vlc notion rectangle karabiner-elements font-jetbrains-mono-nerd-font gstreamer-runtime
 
+symlink_karabiner
+
 # TODO: add when needed
 # install_python
 # install_pip
@@ -348,6 +362,9 @@ brew install --cask alfred coconutbaterry discord keycastr iterm2 imageoptim spo
 # TODO:
 # - copy iterm files
 # - copy iterm themes
-# Check list of apps like vscode
+# - licenes
+# - Setapp
+# - vscode
+# dank mono font
 
 finish
