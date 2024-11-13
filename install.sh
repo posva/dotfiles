@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 ##############################################################################
 #                                                                            #
@@ -47,11 +47,11 @@ check_option() {
   local tmp
   if [[ "$global_no" == "YES" ]]; then
     tmp="only_$1"
-    [[ "${!tmp}" != "YES" ]]
+    [[ "${(P)tmp}" != "YES" ]]
     return "$?"
   else
     tmp="no_$1"
-    [[ "${!tmp}" == "YES" ]]
+    [[ "${(P)tmp}" == "YES" ]]
     return "$?"
   fi
 }
@@ -85,10 +85,11 @@ done
 
 # Variables
 
-dir=~/dotfiles               # dotfiles directory
-olddir=~/old_dotfiles        # old dotfiles backup directory
-# list of files/folders to symlink in homedir
-files="bashrc gitconfig tmux.conf editorconfig"
+dir=~/dotfiles
+olddir=~/dotfiles/__backup
+# array of files to symlink in homedir
+files=($(find rc-files -maxdepth 1 -type f | tr '\n' ' '))
+
 
 if ! source ${dir}/task-logger.sh/task-logger.sh 2>/dev/null; then
   echo "ERROR: install git submodules: git submodules init && git submodules update"
@@ -127,8 +128,11 @@ check_install_dir() {
 # create old_dotfiles in homedir
 _backup_dir() {
   mkdir -p $olddir || return 1
-  for file in $files; do
+  for f in "${files[@]}"; do
+    file="$(basename "$f")"
+    echo "Checking $file"
     if [ -f ~/."$file" -o -d ~/."$file" ]; then
+      echo "Backing up $file"
       mv -f ~/."$file" "$olddir" || return 1
     fi
   done
@@ -147,8 +151,9 @@ backup_dir() {
 }
 
 _symlinks() {
-  for file in $files; do
-    ln -s "${dir}/${file}" ~/."$file" || return 1
+  for file in "${files[@]}"; do
+    echo "Linking $file"
+    ln -fs "${dir}/${file}" ~/."$(basename "$file")" || return 1
   done
 }
 
@@ -161,51 +166,14 @@ symlink() {
 ####### Functions #######
 
 # Install Homebrew only for OSX
+# TODO: is this going to allow installing from
 install_brew() {
   if [[ "$OSX" ]]; then
     if [[ ! -x $(which brew) ]]; then
-      working -n "Installing Homebrew"
-      log_cmd $0 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || crash "Failed to install Hombrew"
+      # we need to input the password, so it's better to install like this
+      curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
     fi
   fi
-}
-
-# Install zsh, needs git and brew
-_add_zsh() {
-  sudo echo $(which zsh) > /etc/shells
-}
-_install_zsh() {
-  if [[ ! -x $(which zsh) ]]; then
-    working -n "Installing zsh"
-    log_cmd zsh-install ${INSTALL} zsh || return 1
-  fi
-  if [[ $(basename "$SHELL") != "zsh" ]]; then
-    if [[ ! "$(grep "$(which zsh)" /etc/shells)" ]]; then
-      working -n "Adding zsh to /etc/shells"
-      log_cmd add-zsh _add_zsh || return 1
-    fi
-    important 'You should manually change your shell with chsh -s $(which zsh)'
-    #if [[ $(uname) == 'Linux' || $(uname) == 'Darwin' ]]; then
-      #working -n "Changing the default shell for $USER"
-      #log_cmd change-shell chsh -s "$(which zsh)" || return 1
-    #fi
-  fi
-  # Install posva zsh theme
-  #zsh_theme="oh-my-zsh/themes/posva.zsh-theme"
-  #if [ ! -f "$zsh_theme" ]; then
-    #working -n "Installing zsh theme"
-    #log_cmd zsh-theme ln -s "${dir}/posva.zsh-theme" "$zsh_theme" || return 1
-  #fi
-  #zsh_theme="oh-my-zsh/themes/posva-powerline.zsh-theme"
-  #if [ ! -f "$zsh_theme" ]; then
-    #working -n "Installing powerline zsh theme"
-    #log_cmd zsh-theme-powerline ln -s "${dir}/posva-powerline.zsh-theme" "$zsh_theme" || return 1
-  #fi
-}
-
-install_zsh() {
-  check_option zsh && return 0
-  _install_zsh || ko
 }
 
 _clone_prezto() {
@@ -232,21 +200,10 @@ install_prezto() {
   fi
 }
 
-_install_nvim() {
-  if [[ ! -x $(which nvim) ]]; then
-    if [[ "$OSX" ]]; then
-      working -n "Installing neovim"
-      log_cmd nvim-install ${INSTALL} nvim || return 1
-    else
-      fail "Not supported!"
-    fi
-  fi
-
-  # TODO: istall plugins
-}
 install_nvim() {
-  check_option vim && return 0
-  _install_nvim || ko
+  if [[ ! -x $(which nvim) ]]; then
+    brew install nvim
+  fi
 }
 
 install_font() {
@@ -304,6 +261,7 @@ install_powerline() {
   fi
 }
 
+# TODO: redo once I install python
 install_python() {
   check_option python && return 0
   local cmd
@@ -329,10 +287,25 @@ install_pip() {
   fi
 }
 
-
 install_modern_cmd() {
-  working -n "Installing modern commands"
-  log_cmd modern_cmd "$INSTALL" git-delta dust bat fd fzf zoxide || ko
+  brew install catimg git-delta dust bat fd fzf zoxide tree timg gh ripgrep
+}
+
+install_node_volta() {
+  if [[ ! -x $(which volta) ]]; then
+    curl https://get.volta.sh | bash
+  fi
+}
+
+install_node() {
+  if [[ ! -x $(which node) ]]; then
+    working -n "Installing node"
+    log_cmd node "$INSTALL" volta install node@lts || ko
+  fi
+}
+
+install_node_globals() {
+  volta install @antfu/ni fkill
 }
 
 ##### Call everything #####
@@ -345,18 +318,29 @@ symlink
 
 install_brew
 
+# breew installations
+
 # No need to install zsh because OSX has it
 # install_zsh
 # must be done with zsh
 # install_prezto
 
-install_nvim
-
 install_modern_cmd
 
-install_python
-install_pip
+install_nvim
+brew install tmux
 
-install_powerline
+# TODO: install lazy vim
+
+install_node_volta
+install_node
+install_node_globals
+
+
+# TODO: add when needed
+# install_python
+# install_pip
+
+# install_powerline
 
 finish
