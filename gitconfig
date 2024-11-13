@@ -15,7 +15,7 @@
 [core]
 	editor = nvim
 	quotepath = off
-	pager = delta --features "$(defaults read -globalDomain AppleInterfaceStyle > /dev/null 2>&1 && echo dark-mode || echo light-mode)"
+	pager = delta --features "$(defaults read -g AppleInterfaceStyle > /dev/null 2>&1 && echo dark-mode || echo light-mode)"
 
 [credential]
 	helper = osxkeychain
@@ -28,7 +28,7 @@
 	commitencoding = utf8
 
 [interactive]
-	diffFilter = delta --color-only --features="$(defaults read -globalDomain AppleInterfaceStyle > /dev/null 2>&1 && echo dark-interactive || echo light-interactive)"
+	diffFilter = delta --color-only --features="$(defaults read -g AppleInterfaceStyle > /dev/null 2>&1 && echo dark-interactive || echo light-interactive)"
 
 
 [delta]
