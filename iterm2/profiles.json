@@ -171,7 +171,7 @@
   },
   "Transparency" : 0.0043500664893617071,
   "Use Bright Bold" : true,
-  "Horizontal Spacing" : 1.04,
+  "Horizontal Spacing" : 1,
   "Ansi 13 Color (Light)" : {
     "Red Component" : 0.80784326791763306,
     "Color Space" : "sRGB",
@@ -229,7 +229,7 @@
     "Blue Component" : 0.00052756658988073468,
     "Red Component" : 0.096005953848361969
   },
-  "Vertical Spacing" : 1.1000000000000001,
+  "Vertical Spacing" : 1,
   "Use Tab Color (Light)" : false,
   "Cursor Type" : 2,
   "Columns" : 80,
@@ -330,7 +330,7 @@
     "slogin",
     "telnet"
   ],
-  "Use Non-ASCII Font" : true,
+  "Use Non-ASCII Font" : false,
   "Custom Directory" : "No",
   "Ansi 8 Color (Light)" : {
     "Red Component" : 0.40392157435417175,
@@ -473,7 +473,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0.73846429586410522
   },
-  "Normal Font" : "DankMono-Regular 16",
+  "Normal Font" : "JetBrainsMonoNFM-Regular 16",
   "Triggers" : [
 
   ],
