@@ -39,3 +39,9 @@ defaults write -g AppleLocale en_FR
 defaults write -g AppleActionOnDoubleClick Maximize
 defaults write -g AppleInterfaceStyle Dark
 defaults write -g AppleWindowTabbingMode always
+
+# Siri
+defaults write com.apple.Siri VoiceTriggerUserEnabled -bool "false"
+defaults write com.apple.Siri StatusMenuVisible -bool "false"
+defaults write com.apple.Siri VoiceTriggerUserEnabled -bool "false"
+defaults write com.apple.SiriNCService AppleLanguages -array "en-US"
