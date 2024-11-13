@@ -287,7 +287,7 @@ install_pip() {
 }
 
 install_modern_cmd() {
-  brew install catimg git-delta dust bat fd fzf zoxide tree timg gh ripgrep
+  brew install catimg git-delta dust bat fd fzf zoxide tree chafa gh ripgrep
 }
 
 install_node_volta() {
@@ -337,12 +337,17 @@ install_node_globals
 
 # Install apps
 
-brew install --cask alfred coconutbaterry discord keycastr iterm2 imageoptim spotify vlc notion rectangle
+brew install --cask alfred coconutbaterry discord keycastr iterm2 imageoptim spotify vlc notion rectangle karabiner-elements font-jetbrains-mono-nerd-font gstreamer-runtime
 
 # TODO: add when needed
 # install_python
 # install_pip
 
 # install_powerline
+
+# TODO:
+# - copy iterm files
+# - copy iterm themes
+# Check list of apps like vscode
 
 finish
