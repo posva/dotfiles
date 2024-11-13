@@ -178,15 +178,14 @@ install_brew() {
 
 _clone_prezto() {
   git clone --recursive https://github.com/posva/prezto.git "${ZDOTDIR:-$HOME}/.zprezto" || return 1
-  ln -fs ${HOME}/.zprezto zprezto || return 1
 }
 
 _install_prezto() {
   local rcfile
   setopt EXTENDED_GLOB
-  #for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  #  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-  #done
+  for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+  done
 }
 
 install_prezto() {
@@ -323,7 +322,7 @@ install_brew
 # No need to install zsh because OSX has it
 # install_zsh
 # must be done with zsh
-# install_prezto
+install_prezto
 
 install_modern_cmd
 
@@ -336,6 +335,9 @@ install_node_volta
 install_node
 install_node_globals
 
+# Install apps
+
+brew install --cask alfred coconutbaterry discord keycastr iterm2 imageoptim spotify vlc notion rectangle
 
 # TODO: add when needed
 # install_python
