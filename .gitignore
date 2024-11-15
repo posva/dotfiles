@@ -14,4 +14,6 @@ vim/plugged
 *.swp
 karabiner-config/automatic_backups
 ./__backup/
-./__backup-*/
+./__backup-*
+__backup-*
+./__backup-[0-9]*/
