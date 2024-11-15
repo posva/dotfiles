@@ -13,7 +13,5 @@ vim/plugged
 .DS_Store
 *.swp
 karabiner-config/automatic_backups
-./__backup/
-./__backup-*
-__backup-*
-./__backup-[0-9]*/
+__backup/
+__backup-*/
