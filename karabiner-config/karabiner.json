@@ -13,7 +13,8 @@
                                             "^com\\.google\\.Chrome",
                                             "^com\\.microsoft\\.edge",
                                             "^org\\.mozilla\\.nightly",
-                                            "^org\\.mozilla\\.firefox"
+                                            "^org\\.mozilla\\.firefox",
+                                            "^com\\.apple\\.Safari"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -37,7 +38,8 @@
                                             "^com\\.google\\.Chrome",
                                             "^com\\.microsoft\\.edge",
                                             "^org\\.mozilla\\.nightly",
-                                            "^org\\.mozilla\\.firefox"
+                                            "^org\\.mozilla\\.firefox",
+                                            "^com\\.apple\\.Safari"
                                         ],
                                         "type": "frontmost_application_if"
                                     }

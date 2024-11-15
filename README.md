@@ -72,6 +72,10 @@ Install with `brew install --cask obs``
 - install psutil and powerline-status with pip
 - Automate OSX defaults
 
+## GPG
+
+Create a key [with these instructions](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key)
+
 ## Info
 
 - These are my dotfiles, you can install them by launching the `install.sh` script

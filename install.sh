@@ -346,7 +346,7 @@ brew install tmux
 
 install_node_volta
 install_node
-install_node_globals
+# install_node_globals
 
 # Install apps
 
