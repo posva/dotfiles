@@ -15,7 +15,8 @@
     "lazyvim.plugins.extras.linting.eslint",
     "lazyvim.plugins.extras.test.core",
     "lazyvim.plugins.extras.util.mini-hipatterns",
-    "lazyvim.plugins.extras.util.octo"
+    "lazyvim.plugins.extras.util.octo",
+    "lazyvim.plugins.extras.util.project"
   ],
   "news": {
     "NEWS.md": "7107"
