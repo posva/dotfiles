@@ -296,6 +296,7 @@ install_node_volta() {
   fi
 }
 
+# TODO: must be launched in a new session
 install_node() {
   if [[ ! -x $(which node) ]]; then
     working -n "Installing node"
@@ -334,7 +335,7 @@ install_brew
 # No need to install zsh because OSX has it
 # install_zsh
 # must be done with zsh
-install_prezto
+# install_prezto
 
 install_modern_cmd
 
