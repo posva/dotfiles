@@ -88,6 +88,8 @@ killall gpg-agent
 echo test | gpg --clearsign
 ```
 
+Add it [on GitHub](https://github.com/settings/keys).
+
 ## Info
 
 - These are my dotfiles, you can install them by launching the `install.sh` script
