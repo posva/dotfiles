@@ -74,7 +74,19 @@ Install with `brew install --cask obs``
 
 ## GPG
 
+```sh
+brewi gpg pinentry-mac
+```
+
 Create a key [with these instructions](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key)
+
+```sh
+touch ~/.gnupg/gpg-agent.conf
+echo "pinentry-program $(brew --prefix)/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+killall gpg-agent
+# test out
+echo test | gpg --clearsign
+```
 
 ## Info
 
