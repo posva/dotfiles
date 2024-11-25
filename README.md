@@ -101,3 +101,5 @@ Add it [on GitHub](https://github.com/settings/keys).
 
 - Can these be set like this or does it need to be manual?`defaults write -g AppleLanguages '("en-FR", "fr-FR", "zh-Hans-FR", "en-GB", "ja-FR")'`
 - Get settings about lock screen and screne saver
+- NeoVim
+  - Fix formatting to not use eslint and prettier at the same time
