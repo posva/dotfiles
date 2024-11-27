@@ -79,7 +79,6 @@ unalias gs 2>/dev/null
 # some more ls aliases
 alias ll='ls -alhF'
 alias la='ls -A'
-alias l='ls -CFlh'
 
 # cd aliases
 #alias -='cd -'

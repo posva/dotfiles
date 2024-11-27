@@ -2,6 +2,8 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+-- local map = vim.keymap.set
+
 local range_ignore_filetypes = { "lua" }
 local diff_format = function()
   local data = require("mini.diff").get_buf_data()

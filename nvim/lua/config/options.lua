@@ -6,4 +6,6 @@ vim.opt.winbar = "%=%m %f"
 vim.opt.conceallevel = 0
 vim.opt.cmdheight = 0
 
+vim.opt.wrap = true
+
 vim.g.root_spec = { "cwd" }
