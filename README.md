@@ -37,6 +37,7 @@ The first two can contain emojis, the last one can't.
 ```sh
 sudo scutil --set ComputerName "newname"
 sudo scutil --set HostName "newname"
+# this one can't have emojis
 sudo scutil --set LocalHostName "newname"
 ```
 
