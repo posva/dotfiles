@@ -17,6 +17,8 @@ killall Safari
 # Finder
 defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"
 defaults write com.apple.finder "ShowPathbar" -bool "true"
+# ⌘ + n opens new window instead of new tab
+defaults write com.apple.finder AppleWindowTabbingMode -string "manual"
 # column view
 defaults write com.apple.finder "FXPreferredViewStyle" -string "clmv"
 defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false"
