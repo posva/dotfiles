@@ -47,3 +47,6 @@ defaults write com.apple.Siri VoiceTriggerUserEnabled -bool "false"
 defaults write com.apple.Siri StatusMenuVisible -bool "false"
 defaults write com.apple.Siri VoiceTriggerUserEnabled -bool "false"
 defaults write com.apple.SiriNCService AppleLanguages -array "en-US"
+
+# Do not auto insert period with a double space
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
