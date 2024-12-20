@@ -33,3 +33,6 @@ local diff_format = function()
 end
 
 vim.api.nvim_create_user_command("DiffFormat", diff_format, { desc = "Format changed lines" })
+
+-- Split or join lines (e.g. one line arrow function to multiline)
+vim.keymap.set("n", "<leader>jj", require("treesj").toggle, { noremap = true, desc = "Split Join code" })
