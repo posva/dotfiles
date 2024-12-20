@@ -8,7 +8,11 @@ defaults write com.apple.dock "show-recents" -bool "false"
 killall Dock
 
 # Save screenshots to the desktop
-defaults write com.apple.screencapture "location" -string "~/Desktop" && killall SystemUIServer
+defaults write com.apple.screencapture "location" -string "${HOME}/Desktop" && killall SystemUIServer
+
+# Lock Screen
+defaults -currentHost write com.apple.screensaver idleTime -int 300 # in seconds
+pmset displaysleep 10                                               # in minutes
 
 # Safari
 defaults write com.apple.Safari "ShowFullURLInSmartSearchField" -bool "true"
