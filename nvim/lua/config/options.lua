@@ -12,3 +12,5 @@ vim.g.root_spec = { "cwd" }
 
 -- The scroll is too annoying
 vim.g.snacks_animate = false
+
+vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert", "popup" }
