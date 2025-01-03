@@ -343,6 +343,8 @@ install_nvim
 brew install tmux
 
 # TODO: install lazy vim
+# TODO: symlink nvim config
+# Symlink move configs to a .config folder and symlink to ~/.config folder
 
 install_node_volta
 install_node
