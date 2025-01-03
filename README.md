@@ -26,6 +26,8 @@ git submodule update --init --recursive
   - Configure double ⌘ to open clipboard
   - Install [Calm notifications](https://alfred.app/workflows/vitor/calm-notifications/) workflow
   - Install [ChatGPT](https://alfred.app/workflows/alfredapp/openai/)
+  - Install [Switch appearance](https://alfred.app/workflows/alfredapp/switch-appearance/)
+  - Install [UTF Search](https://alfred.app/workflows/adamkiss/utf-search/)
 - Install setapp
 
 ## Change computer name
