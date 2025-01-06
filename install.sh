@@ -89,7 +89,8 @@ dir=~/dotfiles
 olddir=~/dotfiles/__backup
 # array of files to symlink in homedir
 files=($(find rc-files -maxdepth 1 -type f | tr '\n' ' '))
-
+# add .config to the array
+files+=".config"
 
 if ! source ${dir}/task-logger.sh/task-logger.sh 2>/dev/null; then
   echo "ERROR: install git submodules: git submodules init && git submodules update"
@@ -340,6 +341,7 @@ install_brew
 install_modern_cmd
 
 install_nvim
+brew install ghostty
 brew install tmux
 
 # TODO: install lazy vim
@@ -357,6 +359,7 @@ brew install --cask alfred coconutbaterry discord keycastr iterm2 imageoptim spo
 symlink_karabiner
 
 # TODO: add when needed
+# Use pyenv? instead of everything else
 # install_python
 # install_pip
 

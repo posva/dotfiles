@@ -104,6 +104,7 @@ Add it [on GitHub](https://github.com/settings/keys).
 
 ## TODO
 
+- Test if the new symlink with `~/.config` works
 - Can these be set like this or does it need to be manual?`defaults write -g AppleLanguages '("en-FR", "fr-FR", "zh-Hans-FR", "en-GB", "ja-FR")'`
 - Get settings about lock screen and screne saver
 - NeoVim
