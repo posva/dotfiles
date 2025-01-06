@@ -12,6 +12,7 @@
     "lazyvim.plugins.extras.lang.typescript",
     "lazyvim.plugins.extras.lang.vue",
     "lazyvim.plugins.extras.test.core",
+    "lazyvim.plugins.extras.ui.alpha",
     "lazyvim.plugins.extras.ui.dashboard-nvim",
     "lazyvim.plugins.extras.util.dot",
     "lazyvim.plugins.extras.util.mini-hipatterns",
