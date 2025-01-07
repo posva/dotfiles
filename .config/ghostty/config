@@ -13,5 +13,6 @@ macos-icon = custom-style
 macos-icon-ghost-color = #9EDF9C
 macos-icon-screen-color = #000
 macos-icon-frame = beige
+mouse-hide-while-typing = true
 
 keybind = ctrl+enter=text:gst\n
