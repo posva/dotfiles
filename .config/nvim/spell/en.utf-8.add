@@ -10,3 +10,5 @@ async
 Redux
 MobX
 Vuex
+pinia
+colada
