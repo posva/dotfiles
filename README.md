@@ -112,3 +112,4 @@ Add it [on GitHub](https://github.com/settings/keys).
   - Add snippets like vscode
   - Change `s S` to show workspace symbols instead of the thing on the right
   - Fix neotest config to run the tests based on the config or adapt for only `.{spec,test}.[jtm]sx?`
+- Fix undercurl [in tmux + nvi](https://gist.github.com/bbqtd/a4ac060d6f6b9ea6fe3aabe735aa9d95)
