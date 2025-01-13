@@ -18,9 +18,9 @@ return {
     if LazyVim.has_extra("formatting.prettier") then
       opts.formatters_by_ft = opts.formatters_by_ft or {}
 
-      local function web_formatters(bufnr)
-        return { first(bufnr, "eslint_d", "prettierd", "prettier"), "injected" }
-      end
+      -- local function web_formatters(bufnr)
+      --   return { first(bufnr, "eslint_d", "prettierd", "prettier"), "injected" }
+      -- end
 
       -- local web_formatters = { "eslint_d" }
       local web_formatters = { "prettierd", "eslint_d" }
