@@ -23,3 +23,6 @@ __backup-*/
 .config/gh
 .config/github-copilot
 .config/htop
+.config/.nuxtrc
+.config/.nuxt
+.config/.wrangler
