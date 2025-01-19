@@ -354,7 +354,7 @@ install_node
 
 # Install apps
 
-brew install --cask alfred coconutbaterry discord keycastr iterm2 imageoptim spotify vlc notion rectangle karabiner-elements font-jetbrains-mono-nerd-font gstreamer-runtime
+brew install --cask alfred coconutbaterry discord keycastr iterm2 imageoptim spotify vlc notion rectangle karabiner-elements font-jetbrains-mono-nerd-font gstreamer-runtime lm-studio
 
 symlink_karabiner
 
