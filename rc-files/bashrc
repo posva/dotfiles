@@ -287,3 +287,6 @@ if [ -f "$HOME/.deno/env" ]; then
 fi
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/posva/.lmstudio/bin"
