@@ -338,6 +338,11 @@ install_brew
 # must be done with zsh
 # install_prezto
 
+
+# rustup
+# https://www.rust-lang.org/tools/install
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 install_modern_cmd
 
 install_nvim
