@@ -26,3 +26,7 @@ __backup-*/
 .config/.nuxtrc
 .config/.nuxt
 .config/.wrangler
+.config/Battle.net
+.config/goose/logs
+.config/goose/sessions
+.config/goose/memory
