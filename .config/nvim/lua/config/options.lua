@@ -14,3 +14,5 @@ vim.g.root_spec = { "cwd" }
 vim.g.snacks_animate = false
 
 vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert", "popup" }
+
+vim.g.lazyvim_blink_main = true

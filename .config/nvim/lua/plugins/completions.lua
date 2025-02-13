@@ -1,6 +1,15 @@
 return {
   -- NOTE: decomment if ai.lua with avante is enabled
-  -- "saghen/blink.cmp",
+  "saghen/blink.cmp",
+  ---@module 'blink.cmp'
+  ---@type blink.cmp.Config
+  opts = {
+    completion = {
+      accept = {
+        dot_repeat = true,
+      },
+    },
+  },
   -- sources = {
   --   providers = {
   --     avante_commands = {
