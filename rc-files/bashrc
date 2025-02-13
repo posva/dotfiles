@@ -290,3 +290,5 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/posva/.lmstudio/bin"
+
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"

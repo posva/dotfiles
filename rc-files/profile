@@ -8,3 +8,4 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$PATH:/Users/posva/.lmstudio/bin"
 
 export PATH="$PATH:$HOME/.local/bin"
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
