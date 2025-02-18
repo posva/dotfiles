@@ -17,4 +17,8 @@ macos-icon-screen-color = #000
 macos-icon-frame = beige
 mouse-hide-while-typing = true
 
+# It doesn't look great
+# background-opacity = 0.95
+# background-blur = true
+
 keybind = ctrl+enter=text:gst\n
