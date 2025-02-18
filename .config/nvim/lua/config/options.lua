@@ -15,4 +15,5 @@ vim.g.snacks_animate = false
 
 vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert", "popup" }
 
-vim.g.lazyvim_blink_main = true
+-- uncomment to get access to the latest git
+-- vim.g.lazyvim_blink_main = true

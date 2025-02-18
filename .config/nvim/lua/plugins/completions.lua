@@ -6,7 +6,8 @@ return {
   opts = {
     completion = {
       accept = {
-        dot_repeat = true,
+        -- it has bugs like <c-n> not working to cycle through completions
+        dot_repeat = false,
       },
     },
   },
