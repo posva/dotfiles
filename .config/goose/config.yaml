@@ -2,7 +2,7 @@ GOOSE_PROVIDER: ollama
 GOOSE_MODEL: qwen2.5-7b-instruct-1m
 extensions:
   computercontroller:
-    enabled: false
+    enabled: true
     name: computercontroller
     type: builtin
   developer:
