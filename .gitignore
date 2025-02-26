@@ -30,3 +30,5 @@ __backup-*/
 .config/goose/logs
 .config/goose/sessions
 .config/goose/memory
+.config/nvim/spell/*.spl
+.config/nvim/spell/*.sug
