@@ -3,18 +3,11 @@ return {
     "mfussenegger/nvim-dap",
     keys = {
       {
-        "<leader>dO",
+        "<leader>dD",
         function()
-          require("dap").step_out()
+          require("dap").clear_breakpoints()
         end,
-        desc = "Step Out",
-      },
-      {
-        "<leader>do",
-        function()
-          require("dap").step_over()
-        end,
-        desc = "Step Over",
+        desc = "Clear breakpoints",
       },
     },
     opts = function()
