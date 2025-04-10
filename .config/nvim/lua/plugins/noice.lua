@@ -11,6 +11,13 @@ return {
         },
         opts = { skip = true },
       },
+      {
+        filter = {
+          event = "notify",
+          find = "Request textDocument/documentHighlight",
+        },
+        opts = { skip = true },
+      },
     },
   },
 }
