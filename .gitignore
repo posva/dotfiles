@@ -32,3 +32,5 @@ __backup-*/
 .config/goose/memory
 .config/nvim/spell/*.spl
 .config/nvim/spell/*.sug
+.config/nodemon.json
+.config/goose/mcp-hermit
