@@ -87,7 +87,8 @@ alias ...='cd ../..'
 
 # npm run alias
 alias r='nr'
-alias c='windsurf'
+# alias c='windsurf'
+alias c='code-insiders'
 alias vim="TERM=xterm-ghostty nvim"
 # TODO: where to remove the aliases of d, b and p?
 # d was already taken
