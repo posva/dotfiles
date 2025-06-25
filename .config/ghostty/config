@@ -22,3 +22,4 @@ mouse-hide-while-typing = true
 # background-blur = true
 
 keybind = ctrl+enter=text:gst\n
+keybind = shift+enter=text:\n
