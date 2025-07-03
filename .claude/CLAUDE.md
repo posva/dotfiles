@@ -13,6 +13,4 @@
 # Code style
 
 - TypeScript
-- no semicolons
-- trailing commas
 - Vue 3 with composition API
