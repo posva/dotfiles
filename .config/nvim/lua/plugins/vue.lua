@@ -17,6 +17,7 @@ return {
     opts = {
       servers = {
         vtsls = {},
+        -- vue_ls = {}, not a valid entry
       },
     },
   },

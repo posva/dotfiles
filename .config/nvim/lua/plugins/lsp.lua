@@ -39,6 +39,7 @@ return {
         "html",
         "lua_ls",
         "vtsls",
+        -- "vue_ls", -- not a valid entry
         -- TODO: should be vue_ls maybe in the future?
         -- "volar",
       },
