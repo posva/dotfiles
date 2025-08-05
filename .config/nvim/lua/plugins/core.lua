@@ -1,6 +1,9 @@
 return {
   {
     "LazyVim/LazyVim",
+    -- FIXME: remove once https://github.com/LazyVim/LazyVim/pull/6053 gets merged
+    url = "https://github.com/dpetka2001/LazyVim",
+    branch = "fix/mason-v2",
     ---@type table<string, string[]|boolean>?
     opts = {
 

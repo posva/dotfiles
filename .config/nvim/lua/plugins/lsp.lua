@@ -26,12 +26,7 @@ return {
     },
     lazy = false,
     opts = {
-      automatic_enable = {
-        -- FIXME: doesn't work
-        exclude = {
-          "volar",
-        },
-      },
+      automatic_enable = true,
       ensure_installed = {
         "ast_grep",
         "tailwindcss",
@@ -39,9 +34,7 @@ return {
         "html",
         "lua_ls",
         "vtsls",
-        -- "vue_ls", -- not a valid entry
-        -- TODO: should be vue_ls maybe in the future?
-        -- "volar",
+        "vue_ls",
       },
     },
   },
