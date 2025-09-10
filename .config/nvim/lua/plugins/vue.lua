@@ -8,6 +8,19 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        ts_ls = {
+          settings = {
+            typescript = {
+              preferences = {
+                importModuleSpecifier = "relative",
+                includePackageJsonAutoImports = "off",
+              },
+              suggest = {
+                autoImports = true,
+              },
+            },
+          },
+        },
         vue_ls = {
           on_init = function(client)
             client.handlers["tsserver/request"] = function(_, result, context)
