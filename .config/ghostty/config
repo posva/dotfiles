@@ -3,7 +3,7 @@ window-colorspace = display-p3
 window-padding-x = 0
 window-padding-y = 0
 window-padding-balance = true
-theme = "dark:Alien Blood,light:catppuccin-latte"
+theme = "dark:Alien Blood,light:Catppuccin Latte"
 font-size = 16
 font-feature = -calt
 font-feature = -liga
@@ -28,3 +28,6 @@ keybind = shift+enter=text:\n
 # custom-shader = ./shaders/inside-the-matrix.glsl
 custom-shader = ./shaders/cursor-matrix.glsl
 # custom-shader = ./shaders/matrix-hallway.glsl
+# custom-shader = ./shaders/bloom.glsl
+
+custom-shader-animation = always

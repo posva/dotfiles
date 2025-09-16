@@ -8,12 +8,12 @@
 */
 
 const int ITERATIONS = 40;   //use less value if you need more performance
-const float SPEED = .5;
+const float SPEED = .05;
 
 const float STRIP_CHARS_MIN =  7.;
 const float STRIP_CHARS_MAX = 40.;
-const float STRIP_CHAR_HEIGHT = 0.15;
-const float STRIP_CHAR_WIDTH = 0.10;
+const float STRIP_CHAR_HEIGHT = 0.015;
+const float STRIP_CHAR_WIDTH = 0.010;
 const float ZCELL_SIZE = 1. * (STRIP_CHAR_HEIGHT * STRIP_CHARS_MAX);  //the multiplier can't be less than 1.
 const float XYCELL_SIZE = 12. * STRIP_CHAR_WIDTH;  //the multiplier can't be less than 1.
 
