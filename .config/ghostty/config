@@ -23,3 +23,8 @@ mouse-hide-while-typing = true
 
 keybind = ctrl+enter=text:gst\n
 keybind = shift+enter=text:\n
+
+# custom-shader = ./shaders/cursor-blaze.glsl
+# custom-shader = ./shaders/inside-the-matrix.glsl
+custom-shader = ./shaders/cursor-matrix.glsl
+# custom-shader = ./shaders/matrix-hallway.glsl
