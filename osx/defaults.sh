@@ -5,10 +5,9 @@ defaults write com.apple.dock "autohide" -bool "true"
 defaults write com.apple.dock "autohide-time-modifier" -float "0.5"
 defaults write com.apple.dock "autohide-delay" -float "0.2"
 defaults write com.apple.dock "show-recents" -bool "false"
-killall Dock
 
 # Save screenshots to the desktop
-defaults write com.apple.screencapture "location" -string "${HOME}/Desktop" && killall SystemUIServer
+defaults write com.apple.screencapture "location" -string "${HOME}/Desktop"
 
 # Lock Screen
 defaults -currentHost write com.apple.screensaver idleTime -int 300 # in seconds
@@ -17,7 +16,6 @@ pmset disksleep 10                                                  # in minutes
 
 # Safari
 defaults write com.apple.Safari "ShowFullURLInSmartSearchField" -bool "true"
-killall Safari
 
 # Finder
 defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"
@@ -27,7 +25,6 @@ defaults write com.apple.finder AppleWindowTabbingMode -string "manual"
 # column view
 defaults write com.apple.finder "FXPreferredViewStyle" -string "clmv"
 defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false"
-killall Finder
 
 # Do not offer new disks for backup
 defaults write com.apple.TimeMachine "DoNotOfferNewDisksForBackup" -bool "true"
@@ -59,3 +56,28 @@ defaults write com.apple.SiriNCService AppleLanguages -array "en-US"
 
 # Do not auto insert period with a double space
 defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
+# Keyoard shortcuts
+# Move left a space (⌃⇧⌘←)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 79 "{
+    enabled = 1;
+    value = {
+        parameters = (65535, 123, 11927552);
+        type = 'standard';
+    };
+}"
+
+# Move right a space (⌃⇧⌘→)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 81 "{
+    enabled = 1;
+    value = {
+        parameters = (65535, 124, 11927552);
+        type = 'standard';
+    };
+}"
+
+# Restart affected apps
+killall SystemUIServer
+killall Safari
+killall Dock
+killall Finder
