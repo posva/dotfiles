@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "plugins": {
+    "osgrep@osgrep": {
+      "version": "0.3.2",
+      "installedAt": "2025-11-24T15:15:37.946Z",
+      "lastUpdated": "2025-11-24T15:15:37.946Z",
+      "installPath": "/Users/posva/.claude/plugins/marketplaces/osgrep/plugins/osgrep",
+      "gitCommitSha": "43ec1452ff6fefb4b9b428caa1fbbe6887b2295d",
+      "isLocal": true
+    }
+  }
+}

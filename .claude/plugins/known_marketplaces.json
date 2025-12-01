@@ -1,0 +1,10 @@
+{
+  "osgrep": {
+    "source": {
+      "source": "github",
+      "repo": "Ryandonofrio3/osgrep"
+    },
+    "installLocation": "/Users/posva/.claude/plugins/marketplaces/osgrep",
+    "lastUpdated": "2025-11-24T15:15:03.926Z"
+  }
+}
