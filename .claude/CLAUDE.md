@@ -6,8 +6,7 @@
 - Aliases that automatically use the right package manager:
   - `ni` for installing packages
   - `nb` for running build scripts
-  - `t` for running ALL tests
-  - `nr <script-name>` to run any other build script
+  - `nr <script-name>` to run build scripts
   - `nun` for uninstalling packages
 
 # Code style
