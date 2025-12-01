@@ -1,0 +1,55 @@
+{
+  "includeCoAuthoredBy": false,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -q '.env'; then exit 2; fi; }"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -Eiq '\\.(ts|mts|tsx|js|mjs|jsx|json|css|html)$'; then pnpm exec prettier --write \"$file_path\"; fi; }"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "terminal-notifier -title \"Claude Code\" -subtitle \"Awaiting\" -message \"➡️ $(jq -r '.message')\" -appIcon \"https://claude.ai/images/claude_app_icon.png\" -activate \"com.mitchellh.ghostty\" -ignoreDnD"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "terminal-notifier -title \"Claude Code\" -message \"✅ Done!\" -appIcon \"https://claude.ai/images/claude_app_icon.png\" -activate \"com.mitchellh.ghostty\" -ignoreDnD"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "osgrep@osgrep": true
+  },
+  "alwaysThinkingEnabled": false
+}
