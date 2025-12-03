@@ -15,12 +15,28 @@
 	quotepath = off
 	pager = delta --features "$(defaults read -g AppleInterfaceStyle > /dev/null 2>&1 && echo dark-mode || echo light-mode)"
 
-[credential]
-	helper = osxkeychain
 [diff]
 	renames = true
+[push]
+	default = current
+[pull]
+	ff = only
+[init]
+	defaultBranch = main
+[commit]
+	gpgsign = true
+[rerere]
+	enabled = true
+
+[credential]
+	helper = osxkeychain
 [github]
 	user = posva
+[user]
+	name = Eduardo San Martin Morote
+	email = posva13@gmail.com
+	signingkey = 5CFCEAB47F7E9844
+
 [i18n]
 	logoutputencoding = utf8
 	commitencoding = utf8
@@ -52,25 +68,11 @@
 	light = false
 	keep-plus-minus-markers = false
 
-[push]
-	default = current
-[rerere]
-	enabled = true
-[user]
-	name = Eduardo San Martin Morote
-	email = posva13@gmail.com
-	signingkey = 5CFCEAB47F7E9844
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[pull]
-	ff = only
-[init]
-	defaultBranch = main
-[commit]
-	gpgsign = true
 [lfs "customtransfer.xet"]
 	path = git-xet
 	args = transfer
