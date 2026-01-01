@@ -13,6 +13,13 @@ Eduardo owns this. Start: say "🤟" + 1 motivating line. Work style: telegraph;
 - Subagents: read `docs/subagent.md`.
 - Web: search early; quote exact errors
 
+## Tools
+
+### ~/.claude/bin/browser-tools
+
+- Use to navigate and inspect web pages
+- Run without args to see help
+
 ## Bash commands
 
 - prefer pnpm over npm or yarn, pick based on lockfile presence
