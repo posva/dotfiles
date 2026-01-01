@@ -94,7 +94,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/statusline.sh"
+    "command": "~/.claude/bin/statusline.sh"
   },
   "enabledPlugins": {
     "osgrep@osgrep": true
