@@ -1,4 +1,5 @@
 clipboard-trim-trailing-spaces = false
+shell-integration-features = no-title
 window-colorspace = display-p3
 window-padding-x = 0
 window-padding-y = 0

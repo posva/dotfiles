@@ -1,9 +1,5 @@
 {
   "includeCoAuthoredBy": false,
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.sh"
-  },
   "hooks": {
     "PreToolUse": [
       {
@@ -22,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -Eiq '\\.(ts|mts|tsx|js|mjs|jsx|json|css|html)$'; then pnpm exec prettier --write \"$file_path\"; fi; }"
+            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -Eiq '\\.(ts|mts|tsx|js|mjs|jsx|json|css|html)$'; then pnpm exec --which prettier >/dev/null 2>&1 && pnpm exec prettier --write \"$file_path\"; fi; }"
           }
         ]
       }
@@ -33,6 +29,20 @@
           {
             "type": "command",
             "command": "terminal-notifier -title \"Claude Code\" -subtitle \"Awaiting\" -message \"➡️ $(jq -r '.message')\" -appIcon \"https://claude.ai/images/claude_app_icon.png\" -activate \"com.mitchellh.ghostty\" -ignoreDnD"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh \"💬 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh \"💬 $(basename \"$CLAUDE_PROJECT_DIR\")\""
           }
         ]
       }
@@ -43,13 +53,50 @@
           {
             "type": "command",
             "command": "terminal-notifier -title \"Claude Code\" -message \"✅ Done!\" -appIcon \"https://claude.ai/images/claude_app_icon.png\" -activate \"com.mitchellh.ghostty\" -ignoreDnD"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh \"🤖 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh \"⚡ $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh \"🤖 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"$TMUX\" ]; then tmux set-window-option automatic-rename on; else ~/.claude/bin/set-title.sh \"$(basename \"$PWD\")\"; fi"
           }
         ]
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
   "enabledPlugins": {
     "osgrep@osgrep": true
-  },
-  "alwaysThinkingEnabled": false
+  }
 }
