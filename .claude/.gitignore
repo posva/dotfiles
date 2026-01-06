@@ -8,3 +8,6 @@ plans
 file-history
 old
 plugins/marketplaces
+bin/browser-tools
+plugins/cache
+stats-cache.json
