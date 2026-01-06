@@ -23,7 +23,8 @@ return {
       -- end
 
       -- local web_formatters = { "eslint_d" }
-      local web_formatters = { "prettierd", "eslint_d" }
+      -- local web_formatters = { "prettierd", "eslint_d" }
+      local web_formatters = { "oxfmt", "oxlint" }
       -- local web_formatters = { "eslint_d", "prettier" }
       -- local web_formatters = { "prettier", "eslint_d" }
 
