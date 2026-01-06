@@ -34,3 +34,4 @@ __backup-*/
 .config/nvim/spell/*.sug
 .config/nodemon.json
 .config/goose/mcp-hermit
+.config/swiftpm
