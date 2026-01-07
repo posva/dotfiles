@@ -114,6 +114,7 @@
       "Bash(tail:*)",
       "Bash(npm:*)",
       "Bash(npx:*)",
+      "Bash(pnpm:*)",
       "Bash(pkill:*)",
       "Bash(touch:*)",
       "Bash(grep:*)",
@@ -129,7 +130,12 @@
       "Bash(python3:*)",
       "Update(*:*)",
       "Update(*)",
-      "Write(*)"
+      "Write(*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:esm.dev)",
+      "WebFetch(domain:esm.is)",
+      "WebFetch(domain:vuejs.org)",
+      "WebFetch(domain:oxc.rs)"
     ],
     "deny": []
   }
