@@ -1,5 +1,44 @@
 {
   "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(go:*)",
+      "Bash(ls:*)",
+      "Bash(git:*)",
+      "Bash(mv:*)",
+      "Bash(echo:*)",
+      "Bash(sed:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(pnpm:*)",
+      "Bash(pkill:*)",
+      "Bash(touch:*)",
+      "Bash(grep:*)",
+      "Bash(sqlite3:*)",
+      "Bash(curl:*)",
+      "Bash(rg:*)",
+      "Bash(chmod:*)",
+      "Bash(lsof:*)",
+      "Bash(make:*)",
+      "Bash(PORT=:*)",
+      "Bash(find:*)",
+      "Bash(docker:*)",
+      "Bash(python3:*)",
+      "Update(*:*)",
+      "Update(*)",
+      "Write(*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:esm.dev)",
+      "WebFetch(domain:esm.is)",
+      "WebFetch(domain:vuejs.org)",
+      "WebFetch(domain:oxc.rs)"
+    ],
+    "deny": []
+  },
+  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -18,7 +57,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -Eiq '\\.(ts|mts|tsx|js|mjs|jsx|json|css|html)$'; then [ -x ./node_modules/.bin/prettier ] && pnpm exec prettier --write \"$file_path\"; fi; }"
+            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -Eiq '\\.(ts|mts|tsx|js|mjs|jsx|json|css|html|md|vue)$'; then pnpm oxfmt  \"$file_path\"; fi; }"
           }
         ]
       }
@@ -98,45 +137,8 @@
   },
   "enabledPlugins": {
     "osgrep@osgrep": true,
-    "typescript-lsp@claude-plugins-official": true
-  },
-  "model": "opus",
-  "permissions": {
-    "allow": [
-      "Bash(mkdir:*)",
-      "Bash(go:*)",
-      "Bash(ls:*)",
-      "Bash(git:*)",
-      "Bash(mv:*)",
-      "Bash(echo:*)",
-      "Bash(sed:*)",
-      "Bash(head:*)",
-      "Bash(tail:*)",
-      "Bash(npm:*)",
-      "Bash(npx:*)",
-      "Bash(pnpm:*)",
-      "Bash(pkill:*)",
-      "Bash(touch:*)",
-      "Bash(grep:*)",
-      "Bash(sqlite3:*)",
-      "Bash(curl:*)",
-      "Bash(rg:*)",
-      "Bash(chmod:*)",
-      "Bash(lsof:*)",
-      "Bash(make:*)",
-      "Bash(PORT=:*)",
-      "Bash(find:*)",
-      "Bash(docker:*)",
-      "Bash(python3:*)",
-      "Update(*:*)",
-      "Update(*)",
-      "Write(*)",
-      "WebFetch(domain:github.com)",
-      "WebFetch(domain:esm.dev)",
-      "WebFetch(domain:esm.is)",
-      "WebFetch(domain:vuejs.org)",
-      "WebFetch(domain:oxc.rs)"
-    ],
-    "deny": []
+    "typescript-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
   }
 }
