@@ -15,24 +15,24 @@ end
 return {
   "conform.nvim",
   opts = function(_, opts)
-    if LazyVim.has_extra("formatting.prettier") then
-      opts.formatters_by_ft = opts.formatters_by_ft or {}
+    opts.formatters_by_ft = opts.formatters_by_ft or {}
 
-      -- local function web_formatters(bufnr)
-      --   return { first(bufnr, "eslint_d", "prettierd", "prettier"), "injected" }
-      -- end
+    -- local function web_formatters(bufnr)
+    --   return { first(bufnr, "eslint_d", "prettierd", "prettier"), "injected" }
+    -- end
 
-      -- local web_formatters = { "eslint_d" }
-      -- local web_formatters = { "prettierd", "eslint_d" }
-      local web_formatters = { "oxfmt", "oxlint" }
-      -- local web_formatters = { "eslint_d", "prettier" }
-      -- local web_formatters = { "prettier", "eslint_d" }
+    -- local web_formatters = { "eslint_d" }
+    -- local web_formatters = { "prettierd", "eslint_d" }
+    local web_formatters = { "oxfmt", "oxlint" }
+    -- local web_formatters = { "eslint_d", "prettier" }
+    -- local web_formatters = { "prettier", "eslint_d" }
 
-      opts.formatters_by_ft.javascript = web_formatters
-      opts.formatters_by_ft.typescript = web_formatters
-      opts.formatters_by_ft.javascriptreact = web_formatters
-      opts.formatters_by_ft.typescriptreact = web_formatters
-    end
+    opts.formatters_by_ft.javascript = web_formatters
+    opts.formatters_by_ft.typescript = web_formatters
+    opts.formatters_by_ft.javascriptreact = web_formatters
+    opts.formatters_by_ft.typescriptreact = web_formatters
+    opts.formatters_by_ft.vue = web_formatters
+    opts.formatters_by_ft.markdown = web_formatters
 
     -- opts.log_level = vim.log.levels.DEBUG
     opts.default_format_opts = opts.default_format_opts or {}
