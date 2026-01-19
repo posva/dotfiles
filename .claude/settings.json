@@ -6,6 +6,7 @@
       "Bash(go:*)",
       "Bash(ls:*)",
       "Bash(git:*)",
+      "Bash(gh issue view:*)",
       "Bash(mv:*)",
       "Bash(echo:*)",
       "Bash(sed:*)",
@@ -30,11 +31,13 @@
       "Update(*:*)",
       "Update(*)",
       "Write(*)",
+      "WebFetch(domain:github.blog)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:esm.dev)",
       "WebFetch(domain:esm.is)",
       "WebFetch(domain:vuejs.org)",
-      "WebFetch(domain:oxc.rs)"
+      "WebFetch(domain:oxc.rs)",
+      "WebSearch(*)"
     ],
     "deny": []
   },
