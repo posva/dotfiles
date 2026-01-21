@@ -1,83 +1,69 @@
 #!/bin/bash
-# Claude Code Status Line: path | branch | status | model | tokens | cost
+# Claude Code Status Line: path | branch | status | model | context% | cost
 
 input=$(cat)
 
-get_model_name() { echo "$input" | jq -r '.model.display_name'; }
-get_current_dir() { echo "$input" | jq -r '.workspace.current_dir'; }
-get_transcript_path() { echo "$input" | jq -r '.transcript_path'; }
-get_total_cost() { echo "$input" | jq -r '.cost.total_cost_usd // empty'; }
+# Extract all values in single jq call (IFS=tab because model name has spaces)
+IFS=$'\t' read -r cwd model_name cost context_pct context_size <<< "$(echo "$input" | jq -r '[
+  .workspace.current_dir,
+  .model.display_name,
+  (.cost.total_cost_usd // 0),
+  (.context_window.used_percentage // 0),
+  (.context_window.context_window_size // 0)
+] | @tsv')"
 
 output=""
 
-# Abbreviated path (dimmed)
-cwd=$(get_current_dir)
+# Abbreviated path (dimmed): ~/foo/bar/baz -> ~/f/b/baz
 cd "$cwd" 2>/dev/null || cd "$HOME"
+path="${cwd/#$HOME/~}"
+abbrev=$(echo "$path" | awk -F/ '{
+  for(i=1;i<NF;i++) {
+    c = substr($i,1,1)
+    if (c == "~") printf "~/"
+    else if (length($i)>0) printf "%s/", c
+  }
+  print $NF
+}')
+output=$(printf "\033[2m%s\033[0m" "$abbrev")
 
-path="$cwd"
-path="${path/#$HOME/~}"
-IFS='/' read -ra parts <<<"$path"
-result=""
-len=${#parts[@]}
-
-for ((i = 0; i < len; i++)); do
-  [ -z "${parts[i]}" ] && continue
-
-  if [ $i -eq $((len - 1)) ]; then
-    [ -n "$result" ] && result="${result}/${parts[i]}" || result="${parts[i]}"
-  else
-    first_char="${parts[i]:0:1}"
-    [ -n "$result" ] && result="${result}/${first_char}" || result="${first_char}"
-  fi
-done
-
-output=$(printf "\033[2m%s\033[0m" "$result")
-
-# Git branch
+# Git branch + status
 if git rev-parse --git-dir >/dev/null 2>&1; then
-  branch=$(git branch 2>/dev/null | grep '^*' | sed 's/\* //')
-  output="${output} | $(printf "\033[0;32m%s\033[0m" "$branch")"
+  branch=$(git branch --show-current 2>/dev/null)
+  [ -n "$branch" ] && output="${output} | $(printf "\033[0;32m%s\033[0m" "$branch")"
 
-  # Git status counts (staged, modified, added)
   status=$(git --no-optional-locks status --porcelain 2>/dev/null)
-
   if [ -n "$status" ]; then
     staged=$(echo "$status" | grep -c '^[AMDRC]')
     modified=$(echo "$status" | grep -c '^ M')
     added=$(echo "$status" | grep -c '^??')
 
-    [ "$staged" -gt 0 ] && output="${output} | S: $(printf "\033[2;33m%s\033[0m" "$staged")"
-    [ "$modified" -gt 0 ] && output="${output} | M: $(printf "\033[2;33m%s\033[0m" "$modified")"
-    [ "$added" -gt 0 ] && output="${output} | A: $(printf "\033[2;33m%s\033[0m" "$added")"
+    git_status=""
+    [ "$staged" -gt 0 ] && git_status+="S:${staged} "
+    [ "$modified" -gt 0 ] && git_status+="M:${modified} "
+    [ "$added" -gt 0 ] && git_status+="?:${added}"
+    [ -n "$git_status" ] && output="${output} $(printf "\033[2;33m%s\033[0m" "${git_status% }")"
   fi
 fi
 
 # Model name
-model_name=$(get_model_name)
 [ -n "$model_name" ] && [ "$model_name" != "null" ] && output="${output} | ${model_name}"
 
-# Token usage
-transcript_path=$(get_transcript_path)
-
-if [ -f "$transcript_path" ]; then
-  token_info=$(jq -r '[.messages[] | select(.type == "system_warning" and (.content | tostring | contains("Token usage:"))) | .content] | last' "$transcript_path" 2>/dev/null)
-
-  if [ -n "$token_info" ] && [ "$token_info" != "null" ]; then
-    if [[ "$token_info" =~ Token\ usage:\ ([0-9]+)/([0-9]+) ]]; then
-      used="${BASH_REMATCH[1]}"
-      total="${BASH_REMATCH[2]}"
-
-      [ "$used" -ge 1000 ] && used_display="$((used / 1000))k" || used_display="$used"
-      [ "$total" -ge 1000 ] && total_display="$((total / 1000))k" || total_display="$total"
-
-      output="${output} | Tokens: ${used_display}/${total_display}"
-    fi
+# Context percentage with color coding
+if [ "$context_size" -gt 0 ] 2>/dev/null; then
+  pct=${context_pct%.*}  # truncate decimal
+  if [ "$pct" -ge 80 ]; then
+    color="\033[0;31m"  # red
+  elif [ "$pct" -ge 50 ]; then
+    color="\033[0;33m"  # yellow
+  else
+    color="\033[0;32m"  # green
   fi
+  output="${output} | $(printf "${color}%d%%\033[0m" "$pct")"
 fi
 
 # Cost
-cost=$(get_total_cost)
-if [ -n "$cost" ] && [ "$cost" != "null" ] && [ "$cost" != "0" ]; then
+if [ -n "$cost" ] && [ "$cost" != "0" ] 2>/dev/null; then
   cost_display=$(printf "%.4f" "$cost")
   output="${output} | \$${cost_display}"
 fi
