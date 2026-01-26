@@ -36,7 +36,12 @@
       "WebFetch(domain:esm.dev)",
       "WebFetch(domain:esm.is)",
       "WebFetch(domain:vuejs.org)",
-      "WebFetch(domain:oxc.rs)"
+      "WebFetch(domain:*.vuejs.org)",
+      "WebFetch(domain:nuxt.com)",
+      "WebFetch(domain:ui.nuxt.com)",
+      "WebFetch(domain:vite.dev)",
+      "WebFetch(domain:oxc.rs)",
+      "WebSearch"
     ],
     "deny": []
   },
