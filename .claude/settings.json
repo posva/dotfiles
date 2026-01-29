@@ -36,6 +36,8 @@
       "Bash(docker:*)",
       "Bash(python3:*)",
       "Bash(agent-browser:*)",
+      "Bash(trash:*)",
+      "Bash(wc:*)",
       "Update(*:*)",
       "Update(*)",
       "Write(*)",
