@@ -4,7 +4,7 @@
 input=$(cat)
 
 # Extract all values in single jq call (IFS=tab because model name has spaces)
-IFS=$'\t' read -r cwd model_name cost context_pct context_size <<< "$(echo "$input" | jq -r '[
+IFS=$'\t' read -r cwd model_name cost context_pct context_size <<<"$(echo "$input" | jq -r '[
   .workspace.current_dir,
   .model.display_name,
   (.cost.total_cost_usd // 0),
@@ -51,15 +51,15 @@ fi
 
 # Context percentage with color coding
 if [ "$context_size" -gt 0 ] 2>/dev/null; then
-  pct=${context_pct%.*}  # truncate decimal
+  pct=${context_pct%.*} # truncate decimal
   if [ "$pct" -ge 80 ]; then
-    color="\033[0;31m"  # red
+    color="\033[0;31m" # red
   elif [ "$pct" -ge 50 ]; then
-    color="\033[0;33m"  # yellow
+    color="\033[0;33m" # yellow
   else
-    color="\033[0;32m"  # green
+    color="\033[0;32m" # green
   fi
-  output="${output} | $(printf "${color}%d%%\033[0m" "$pct")"
+  output="${output} | $(printf "⛁ ${color}%d%%\033[0m" "$pct")"
 fi
 
 # Cost
