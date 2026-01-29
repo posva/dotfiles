@@ -10,15 +10,20 @@ Eduardo owns this. Start: say "🤟" + 1 motivating line. Work style: telegraph;
 - Guardrails: use `trash` for deletes.
 - Bugs: add regression test when it fits.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
-- Subagents: read `docs/subagent.md`.
 - Web: search early; quote exact errors
 
 ## Tools
 
-### ~/.claude/bin/browser-tools
+### Browser Automation
 
-- Use to navigate and inspect web pages
-- Run without args to see help
+Use `agent-browser` for web automation. Run `agent-browser --help` for all commands.
+
+Core workflow:
+
+1. `agent-browser open <url>` - Navigate to page
+2. `agent-browser snapshot -i` - Get interactive elements with refs (@e1, @e2)
+3. `agent-browser click @e1` / `fill @e2 "text"` - Interact using refs
+4. Re-snapshot after page changes
 
 ## Bash commands
 
@@ -29,3 +34,4 @@ Eduardo owns this. Start: say "🤟" + 1 motivating line. Work style: telegraph;
 
 - TypeScript
 - Vue 3 with composition API
+
