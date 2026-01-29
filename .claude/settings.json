@@ -35,6 +35,7 @@
       "Bash(find:*)",
       "Bash(docker:*)",
       "Bash(python3:*)",
+      "Bash(agent-browser:*)",
       "Update(*:*)",
       "Update(*)",
       "Write(*)",
