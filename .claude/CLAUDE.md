@@ -34,4 +34,6 @@ Core workflow:
 
 - TypeScript
 - Vue 3 with composition API
+- Use `node` to run TS directly
+- Always use ESM, never CJS
 
