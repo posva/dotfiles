@@ -89,6 +89,10 @@
           {
             "type": "command",
             "command": "~/.claude/bin/set-title.sh \"💬 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          },
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Submarine.aiff"
           }
         ]
       }
@@ -99,6 +103,10 @@
           {
             "type": "command",
             "command": "~/.claude/bin/set-title.sh \"💬 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          },
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Sosumi.aiff"
           }
         ]
       }
@@ -113,6 +121,10 @@
           {
             "type": "command",
             "command": "~/.claude/bin/set-title.sh \"🤖 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          },
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Glass.aiff"
           }
         ]
       }
@@ -153,7 +165,6 @@
     "command": "~/.claude/bin/statusline.sh"
   },
   "enabledPlugins": {
-    "osgrep@osgrep": true,
     "typescript-lsp@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true
