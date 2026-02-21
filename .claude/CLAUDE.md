@@ -9,6 +9,7 @@ Eduardo owns this. Start: say "🤟" + 1 motivating line. Work style: telegraph;
 - “Make a note” => edit AGENTS.md (shortcut; not a blocker). Ignore `CLAUDE.md`.
 - Guardrails: use `trash` for deletes.
 - Bugs: add regression test when it fits.
+- If adding tests, add them BEFORE implementing and ensure they fail first.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
 - Web: search early; quote exact errors
 
@@ -34,6 +35,6 @@ Core workflow:
 
 - TypeScript
 - Vue 3 with composition API
-- Use `node` to run TS directly
+- Use `node` to run TS directly, never `tsx`
 - Always use ESM, never CJS
 
