@@ -14,3 +14,9 @@ stats-cache.json
 .osgrep
 cache
 paste-cache
+backups
+telemetry
+tasks
+chrome
+usage-data
+plugins/cache
