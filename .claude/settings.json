@@ -11,6 +11,7 @@
       "Bash(gh pr status:*)",
       "Bash(gh pr checks:*)",
       "Bash(gh pr diff:*)",
+      "Bash(gh api:repos/*/compare/*)",
       "Bash(gh issue view:*)",
       "Bash(gh issue list:*)",
       "Bash(gh issue status:*)",
@@ -55,7 +56,6 @@
     ],
     "deny": []
   },
-  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
