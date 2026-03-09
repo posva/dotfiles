@@ -74,7 +74,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -Eiq '\\.(ts|mts|tsx|js|mjs|jsx|json|css|html|md|vue)$'; then pnpm oxfmt  \"$file_path\"; fi; }"
+            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -Eiq '\\.(ts|mts|tsx|js|mjs|jsx|json|css|html|md|vue)$'; then pnpm oxfmt --no-error-on-unmatched-pattern  \"$file_path\"; fi; }"
           }
         ]
       }
