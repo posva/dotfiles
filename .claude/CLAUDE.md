@@ -12,6 +12,7 @@ Eduardo owns this. Start: say "🤟" + 1 motivating line. Work style: telegraph;
 - If adding tests, add them BEFORE implementing and ensure they fail first.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
 - Web: search early; quote exact errors
+- When downloading assets, apply headers to look like a human
 
 ## Tools
 
