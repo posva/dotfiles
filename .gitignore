@@ -35,3 +35,4 @@ __backup-*/
 .config/nodemon.json
 .config/goose/mcp-hermit
 .config/swiftpm
+.config/spotify-player
