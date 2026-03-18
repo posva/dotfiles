@@ -4,7 +4,7 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Remap cmd + {/} to Previous/Next Tab on Chrome",
+                        "description": "Remap cmd + {/} to Previous/Next Tab",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -14,7 +14,8 @@
                                             "^com\\.microsoft\\.edge",
                                             "^org\\.mozilla\\.nightly",
                                             "^org\\.mozilla\\.firefox",
-                                            "^com\\.apple\\.Safari"
+                                            "^com\\.apple\\.Safari",
+                                            "^notion\\.id"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -39,7 +40,8 @@
                                             "^com\\.microsoft\\.edge",
                                             "^org\\.mozilla\\.nightly",
                                             "^org\\.mozilla\\.firefox",
-                                            "^com\\.apple\\.Safari"
+                                            "^com\\.apple\\.Safari",
+                                            "^notion\\.id"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
