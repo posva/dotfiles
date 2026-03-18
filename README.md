@@ -106,6 +106,16 @@ gpg --armor --export KEY | pbcopy
   `./install.sh -h` to get a full list of options
 - Profit!
 
+## Manual Settings
+
+Some settings can't be automated via `defaults write` and must be set manually.
+
+### Trackpad: Mission Control with 4 fingers only
+
+In **System Settings > Trackpad > More Gestures**, set "Mission Control" to use 4 fingers:
+
+![Trackpad Mission Control setting](screenshots/trackpad-more-gestures.png)
+
 ## TODO
 
 - Test if the new symlink with `~/.config` works
