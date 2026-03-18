@@ -36,7 +36,8 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 # Allows tabbing through buttons in UI
 defaults write NSGlobalDomain AppleKeyboardUIMode -int "2"
 # Zooms on screen with ctrl + scroll
-defaults read com.apple.universalaccess closeViewScrollWheelToggle -bool true
+# FIXME: requires enabling accessibility
+# defaults read com.apple.universalaccess closeViewScrollWheelToggle -bool true
 defaults write -g com.apple.swipescrolldirection -bool false
 defaults write com.apple.AppleMultitouchTrackpad "TrackpadThreeFingerDrag" -bool "true"
 
@@ -75,6 +76,32 @@ defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 81 "{
         type = 'standard';
     };
 }"
+
+# Select previous input source (⌃⌥Space)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60 "{
+    enabled = 1;
+    value = {
+        parameters = (32, 49, 786432);
+        type = 'standard';
+    };
+}"
+
+# Select next input source (disabled)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 61 "{
+    enabled = 0;
+    value = {
+        parameters = (32, 49, 786432);
+        type = 'standard';
+    };
+}"
+
+# Input Sources: U.S. + SCIM Pinyin (ITABC)
+defaults write com.apple.HIToolbox AppleEnabledInputSources -array \
+  '<dict><key>InputSourceKind</key><string>Keyboard Layout</string><key>KeyboardLayout ID</key><integer>0</integer><key>KeyboardLayout Name</key><string>U.S.</string></dict>' \
+  '<dict><key>Bundle ID</key><string>com.apple.CharacterPaletteIM</string><key>InputSourceKind</key><string>Non Keyboard Input Method</string></dict>' \
+  '<dict><key>Bundle ID</key><string>com.apple.PressAndHold</string><key>InputSourceKind</key><string>Non Keyboard Input Method</string></dict>' \
+  '<dict><key>Bundle ID</key><string>com.apple.inputmethod.SCIM</string><key>InputSourceKind</key><string>Keyboard Input Method</string></dict>' \
+  '<dict><key>Bundle ID</key><string>com.apple.inputmethod.SCIM</string><key>Input Mode</key><string>com.apple.inputmethod.SCIM.ITABC</string><key>InputSourceKind</key><string>Input Mode</string></dict>'
 
 # Restart affected apps
 killall SystemUIServer
