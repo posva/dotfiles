@@ -348,6 +348,7 @@ install_modern_cmd
 install_nvim
 brew install ghostty
 brew install tmux
+brew install lazygit
 
 # TODO: install lazy vim
 # TODO: symlink nvim config
