@@ -37,6 +37,9 @@
 	email = posva13@gmail.com
 	signingkey = 5CFCEAB47F7E9844
 
+[include]
+	path = ~/.gitconfig.local
+
 [i18n]
 	logoutputencoding = utf8
 	commitencoding = utf8
