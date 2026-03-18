@@ -11,8 +11,8 @@ defaults write com.apple.screencapture "location" -string "${HOME}/Desktop"
 
 # Lock Screen
 defaults -currentHost write com.apple.screensaver idleTime -int 300 # in seconds
-pmset displaysleep 10                                               # in minutes
-pmset disksleep 10                                                  # in minutes
+sudo pmset displaysleep 10                                          # in minutes
+sudo pmset disksleep 10                                             # in minutes
 
 # Safari
 defaults write com.apple.Safari "ShowFullURLInSmartSearchField" -bool "true"
