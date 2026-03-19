@@ -1,164 +1,164 @@
 {
-    "profiles": [
+  "profiles": [
+    {
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Remap cmd + {/} to Previous/Next Tab",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.google\\.Chrome",
+                      "^com\\.microsoft\\.edge",
+                      "^org\\.mozilla\\.nightly",
+                      "^org\\.mozilla\\.firefox",
+                      "^com\\.apple\\.Safari",
+                      "^notion\\.id"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "4",
+                  "modifiers": { "mandatory": ["command"] }
+                },
+                "to_if_alone": [
+                  {
+                    "key_code": "tab",
+                    "modifiers": ["control"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.google\\.Chrome",
+                      "^com\\.microsoft\\.edge",
+                      "^org\\.mozilla\\.nightly",
+                      "^org\\.mozilla\\.firefox",
+                      "^com\\.apple\\.Safari",
+                      "^notion\\.id"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "3",
+                  "modifiers": { "mandatory": ["command"] }
+                },
+                "to_if_alone": [
+                  {
+                    "key_code": "tab",
+                    "modifiers": ["control", "left_shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Change caps_lock to left_control if pressed with other keys, change caps_lock to escape if pressed alone.",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "caps_lock",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "left_control" }],
+                "to_if_alone": [{ "key_code": "escape" }],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Change left_command to F12 if pressed alone.",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "left_command",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "left_command" }],
+                "to_if_alone": [{ "key_code": "f12", "modifiers": ["fn"] }],
+                "type": "basic"
+              }
+            ]
+          }
+        ]
+      },
+      "devices": [
         {
-            "complex_modifications": {
-                "rules": [
-                    {
-                        "description": "Remap cmd + {/} to Previous/Next Tab",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.google\\.Chrome",
-                                            "^com\\.microsoft\\.edge",
-                                            "^org\\.mozilla\\.nightly",
-                                            "^org\\.mozilla\\.firefox",
-                                            "^com\\.apple\\.Safari",
-                                            "^notion\\.id"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "4",
-                                    "modifiers": { "mandatory": ["command"] }
-                                },
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "tab",
-                                        "modifiers": ["control"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.google\\.Chrome",
-                                            "^com\\.microsoft\\.edge",
-                                            "^org\\.mozilla\\.nightly",
-                                            "^org\\.mozilla\\.firefox",
-                                            "^com\\.apple\\.Safari",
-                                            "^notion\\.id"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "3",
-                                    "modifiers": { "mandatory": ["command"] }
-                                },
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "tab",
-                                        "modifiers": ["control", "left_shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Change caps_lock to left_control if pressed with other keys, change caps_lock to escape if pressed alone.",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "left_control" }],
-                                "to_if_alone": [{ "key_code": "escape" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Change left_command to F12 if pressed alone.",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "left_command",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "left_command" }],
-                                "to_if_alone": [{ "key_code": "f12", "modifiers": ["fn"] }],
-                                "type": "basic"
-                            }
-                        ]
-                    }
-                ]
+          "identifiers": {
+            "is_keyboard": true,
+            "product_id": 591,
+            "vendor_id": 1452
+          },
+          "simple_modifications": [
+            {
+              "from": { "apple_vendor_top_case_key_code": "keyboard_fn" },
+              "to": [{ "key_code": "right_option" }]
             },
-            "devices": [
-                {
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "product_id": 591,
-                        "vendor_id": 1452
-                    },
-                    "simple_modifications": [
-                        {
-                            "from": { "apple_vendor_top_case_key_code": "keyboard_fn" },
-                            "to": [{ "key_code": "right_option" }]
-                        },
-                        {
-                            "from": { "key_code": "right_control" },
-                            "to": [{ "apple_vendor_top_case_key_code": "keyboard_fn" }]
-                        }
-                    ]
-                }
-            ],
-            "fn_function_keys": [
-                {
-                    "from": { "key_code": "f3" },
-                    "to": [{ "key_code": "mission_control" }]
-                },
-                {
-                    "from": { "key_code": "f4" },
-                    "to": [{ "key_code": "launchpad" }]
-                },
-                {
-                    "from": { "key_code": "f9" },
-                    "to": [{ "consumer_key_code": "fastforward" }]
-                }
-            ],
-            "name": "Keychron keyboard",
-            "selected": true,
-            "simple_modifications": [
-                {
-                    "from": { "key_code": "keypad_1" },
-                    "to": [{ "key_code": "keypad_7" }]
-                },
-                {
-                    "from": { "key_code": "keypad_2" },
-                    "to": [{ "key_code": "keypad_8" }]
-                },
-                {
-                    "from": { "key_code": "keypad_3" },
-                    "to": [{ "key_code": "keypad_9" }]
-                },
-                {
-                    "from": { "key_code": "keypad_7" },
-                    "to": [{ "key_code": "keypad_1" }]
-                },
-                {
-                    "from": { "key_code": "keypad_8" },
-                    "to": [{ "key_code": "keypad_2" }]
-                },
-                {
-                    "from": { "key_code": "keypad_9" },
-                    "to": [{ "key_code": "keypad_3" }]
-                }
-            ],
-            "virtual_hid_keyboard": {
-                "country_code": 0,
-                "keyboard_type_v2": "ansi"
+            {
+              "from": { "key_code": "right_control" },
+              "to": [{ "apple_vendor_top_case_key_code": "keyboard_fn" }]
             }
+          ]
+        }
+      ],
+      "fn_function_keys": [
+        {
+          "from": { "key_code": "f3" },
+          "to": [{ "key_code": "mission_control" }]
         },
         {
-            "name": "macbook",
-            "virtual_hid_keyboard": { "country_code": 0 }
+          "from": { "key_code": "f4" },
+          "to": [{ "key_code": "launchpad" }]
+        },
+        {
+          "from": { "key_code": "f9" },
+          "to": [{ "consumer_key_code": "fastforward" }]
         }
-    ]
+      ],
+      "name": "Keychron keyboard",
+      "selected": true,
+      "simple_modifications": [
+        {
+          "from": { "key_code": "keypad_1" },
+          "to": [{ "key_code": "keypad_7" }]
+        },
+        {
+          "from": { "key_code": "keypad_2" },
+          "to": [{ "key_code": "keypad_8" }]
+        },
+        {
+          "from": { "key_code": "keypad_3" },
+          "to": [{ "key_code": "keypad_9" }]
+        },
+        {
+          "from": { "key_code": "keypad_7" },
+          "to": [{ "key_code": "keypad_1" }]
+        },
+        {
+          "from": { "key_code": "keypad_8" },
+          "to": [{ "key_code": "keypad_2" }]
+        },
+        {
+          "from": { "key_code": "keypad_9" },
+          "to": [{ "key_code": "keypad_3" }]
+        }
+      ],
+      "virtual_hid_keyboard": {
+        "country_code": 0,
+        "keyboard_type_v2": "ansi"
+      }
+    },
+    {
+      "name": "macbook",
+      "virtual_hid_keyboard": { "country_code": 0 }
+    }
+  ]
 }
