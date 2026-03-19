@@ -1,0 +1,68 @@
+{
+  "actions": [
+    {
+      "key": "a",
+      "label": "Aerospace",
+      "iconPath": "macwindow.on.rectangle",
+      "type": "group",
+      "actions": [
+        {
+          "key": "m",
+          "label": "mode",
+          "type": "group",
+          "iconPath": "squareshape.controlhandles.on.squareshape.controlhandles",
+          "actions": [
+            {
+              "key": "r",
+              "label": "resize",
+              "type": "command",
+              "value": "aerospace mode resize",
+              "iconPath": "arrow.up.left.and.arrow.down.right"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "key": "s",
+          "type": "application",
+          "value": "/Applications/Safari.app",
+          "iconPath": "safari"
+        },
+        {
+          "key": "e",
+          "type": "application",
+          "value": "/Applications/Mail.app",
+          "iconPath": "envelope"
+        },
+        {
+          "key": "i",
+          "type": "application",
+          "value": "/System/Applications/Music.app",
+          "iconPath": "music.note"
+        },
+        {
+          "key": "m",
+          "type": "application",
+          "value": "/Applications/Messages.app",
+          "iconPath": "message"
+        }
+      ],
+      "key": "o",
+      "label": "Open",
+      "iconPath": "square.grid.2x2",
+      "type": "group"
+    },
+    {
+      "key": "r",
+      "label": "Reload Leader Key config",
+      "type": "command",
+      "value": "open 'leaderkey://config-reload'",
+      "iconPath": "gearshape.arrow.trianglehead.2.clockwise.rotate.90"
+    }
+  ],
+
+  "type": "group"
+}
