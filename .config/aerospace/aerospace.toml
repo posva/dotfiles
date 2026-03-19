@@ -1,0 +1,120 @@
+# AeroSpace config — Eduardo's setup
+# Docs: https://nikitabobko.github.io/AeroSpace/guide
+
+after-login-command = []
+after-startup-command = []
+start-at-login = true
+
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# Move mouse to focused window after switching monitors
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+[gaps]
+inner.horizontal = 8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 8
+outer.top = [{ monitor.main = 8 }, 8]
+outer.right = 8
+
+# ===========================================================
+# Main mode
+# ===========================================================
+[mode.main.binding]
+
+# Focus (vi-style)
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# Move windows
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# Workspace switching
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+
+# Move window to workspace
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+
+# Send workspace to the next monitor (wrap around)
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+# Layout toggles
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+
+# AeroSpace fullscreen (not macOS native)
+alt-f = 'fullscreen'
+
+# Close window
+alt-shift-q = 'close'
+
+# Enter resize mode
+alt-r = 'mode resize'
+
+# Enter preset mode
+alt-p = 'mode preset'
+
+# ===========================================================
+# Resize mode
+# ===========================================================
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+enter = 'mode main'
+esc = 'mode main'
+
+# ===========================================================
+# Preset mode — quick layout presets
+# ===========================================================
+[mode.preset.binding]
+# d = dev: horizontal tiles (Edge left, Ghostty right)
+d = ['layout h_tiles', 'mode main']
+# f = focus: fullscreen current window
+f = ['fullscreen', 'mode main']
+# w = writing: vertical accordion (one window at a time)
+w = ['layout v_accordion', 'mode main']
+esc = 'mode main'
+
+# ===========================================================
+# Workspace → Monitor assignments
+# Run `aerospace list-monitors` to see monitor names/IDs
+# then update these assignments accordingly.
+# External (large) monitor → workspaces 1–3
+# MacBook built-in → workspaces 4–5
+# ===========================================================
+[workspace-to-monitor-force-assignment]
+1 = ['secondary', 'main']
+2 = ['secondary', 'main']
+3 = ['secondary', 'main']
+4 = 1
+5 = 1
+
+# ===========================================================
+# App → Workspace auto-assignment
+# Edge left, Ghostty right on workspace 1 (external monitor)
+# Open Edge first, then Ghostty — auto-splits to the right.
+# ===========================================================
+[[on-window-detected]]
+if.app-id = 'com.microsoft.edgemac'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace 1'
