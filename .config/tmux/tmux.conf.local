@@ -5,8 +5,7 @@
 #         Copyright 2012— Gregory Pakosz (@gpakosz).
 
 set-option -g default-terminal "$TERM"
-set-option -ga terminal-overrides "$TERM"
-set -ga terminal-features "*:hyperlinks"
+set-option -ga terminal-overrides
 
 # -- bindings ------------------------------------------------------------------
 
