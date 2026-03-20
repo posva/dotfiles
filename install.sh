@@ -89,8 +89,7 @@ dir=~/dotfiles
 olddir=~/dotfiles/__backup
 # array of files to symlink in homedir
 files=($(find rc-files -maxdepth 1 -type f | tr '\n' ' '))
-# add .config to the array
-files+=".config"
+folders=(".config" ".claude")
 
 if ! source ${dir}/task-logger.sh/task-logger.sh 2>/dev/null; then
   echo "ERROR: install git submodules: git submodules init && git submodules update"
@@ -126,20 +125,23 @@ check_install_dir() {
   cd $dir || crash "Cannot access $dir"
 }
 
-# create old_dotfiles in homedir
-_backup_dir() {
+_backup_and_symlink() {
   mkdir -p $olddir || return 1
-  for f in "${files[@]}"; do
-    file="$(basename "$f")"
-    echo "Checking $file"
-    if [ -f ~/."$file" -o -d ~/."$file" ]; then
-      echo "Backing up $file"
-      mv -f ~/."$file" "$olddir" || return 1
+  for f in "${files[@]}" "${folders[@]}"; do
+    local name dest
+    name="$(basename "$f")"
+    dest=~/."$name"
+    if [ -f "$dest" -o -d "$dest" ]; then
+      echo "Backing up $name"
+      mv -f "$dest" "$olddir/" || return 1
     fi
+    echo "Linking $f"
+    ln -fs "${dir}/${f}" "$dest" || return 1
   done
 }
-backup_dir() {
-  check_option backup && return 0
+
+backup_and_symlink() {
+  check_option link && check_option backup && return 0
   local i tmp
   i=0
   tmp="$olddir"
@@ -147,21 +149,8 @@ backup_dir() {
     ((i++))
     olddir="${tmp}-$i"
   done
-  working -n "Backing up files to $olddir"
-  log_cmd $0 _backup_dir || crash "Backup failed, aborting"
-}
-
-_symlinks() {
-  for file in "${files[@]}"; do
-    echo "Linking $file"
-    ln -fs "${dir}/${file}" ~/."$(basename "$file")" || return 1
-  done
-}
-
-symlink() {
-  check_option link && return 0
-  working -n "Symlinking dotfiles"
-  log_cmd symlink _symlinks || fail "Symlink failed. Check logs at $LOG_DIR/symlink.err"
+  working -n "Backing up and symlinking dotfiles"
+  log_cmd symlink _backup_and_symlink || crash "Symlink failed. Check logs at $LOG_DIR/symlink.err"
 }
 
 ####### Functions #######
@@ -321,13 +310,17 @@ symlink_karabiner() {
   log_cmd karabiner _symlink_karabiner || ko
 }
 
+symlink_tmux_conf_local() {
+  working -n "Symlinking tmux.conf.local"
+  ln -fs ~/.config/tmux/tmux.conf.local ~/.tmux.conf.local || ko
+}
+
 ##### Call everything #####
 
 important "Logs are at $LOG_DIR"
 
 check_install_dir
-backup_dir
-symlink
+backup_and_symlink
 
 install_brew
 
@@ -363,6 +356,7 @@ install_node
 brew install --cask alfred coconutbaterry discord keycastr iterm2 imageoptim spotify vlc notion rectangle karabiner-elements font-jetbrains-mono-nerd-font gstreamer-runtime lm-studio
 
 symlink_karabiner
+symlink_tmux_conf_local
 
 # TODO: add when needed
 # Use pyenv? instead of everything else
