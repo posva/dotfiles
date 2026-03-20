@@ -33,6 +33,7 @@ defaults write com.apple.TimeMachine "DoNotOfferNewDisksForBackup" -bool "true"
 defaults write -g InitialKeyRepeat -int 25
 defaults write -g KeyRepeat -int 1
 defaults write -g ApplePressAndHoldEnabled -bool false
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadThreeFingerDrag" -bool "true"
 # Allows tabbing through buttons in UI
 defaults write NSGlobalDomain AppleKeyboardUIMode -int "2"
 # Zooms on screen with ctrl + scroll
