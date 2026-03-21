@@ -36,3 +36,4 @@ __backup-*/
 .config/goose/mcp-hermit
 .config/swiftpm
 .config/spotify-player
+.config/mole/mole.log
