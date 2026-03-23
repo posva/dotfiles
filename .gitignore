@@ -37,3 +37,4 @@ __backup-*/
 .config/swiftpm
 .config/spotify-player
 .config/mole/mole.log
+.claude/sessions
