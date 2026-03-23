@@ -7,6 +7,13 @@
       "type": "group",
       "actions": [
         {
+          "key": "a",
+          "label": "back and forth",
+          "type": "command",
+          "value": "aerospace workspace-back-and-forth",
+          "iconPath": "arrow.uturn.left"
+        },
+        {
           "key": "f",
           "label": "fullscreen",
           "type": "command",
