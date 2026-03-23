@@ -5,7 +5,7 @@
 #         Copyright 2012— Gregory Pakosz (@gpakosz).
 
 set-option -g default-terminal "$TERM"
-set-option -ga terminal-overrides
+#set-option -ga terminal-overrides
 
 # -- bindings ------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ tmux_conf_new_session_retain_current_path=false
 #   - true
 #   - false (default)
 #   - disabled (do not modify new-window bindings)
-tmux_conf_new_window_retain_current_path=false
+tmux_conf_new_window_retain_current_path=true
 
 # new window tries to reconnect ssh sessions, possible values are:
 #   - true
