@@ -7,6 +7,113 @@
       "type": "group",
       "actions": [
         {
+          "key": "f",
+          "label": "fullscreen",
+          "type": "command",
+          "value": "aerospace fullscreen",
+          "iconPath": "arrow.up.left.and.arrow.down.right.and.arrow.up.right.and.arrow.down.left"
+        },
+        {
+          "key": "n",
+          "label": "next workspace",
+          "type": "command",
+          "value": "aerospace workspace --no-stdin next --wrap-around",
+          "iconPath": "chevron.right.2"
+        },
+        {
+          "key": "p",
+          "label": "prev workspace",
+          "type": "command",
+          "value": "aerospace workspace --no-stdin prev --wrap-around",
+          "iconPath": "chevron.left.2"
+        },
+        {
+          "key": "h",
+          "label": "focus left",
+          "type": "command",
+          "value": "aerospace focus left",
+          "iconPath": "arrow.left"
+        },
+        {
+          "key": "j",
+          "label": "focus down",
+          "type": "command",
+          "value": "aerospace focus down",
+          "iconPath": "arrow.down"
+        },
+        {
+          "key": "k",
+          "label": "focus up",
+          "type": "command",
+          "value": "aerospace focus up",
+          "iconPath": "arrow.up"
+        },
+        {
+          "key": "l",
+          "label": "focus right",
+          "type": "command",
+          "value": "aerospace focus right",
+          "iconPath": "arrow.right"
+        },
+        {
+          "key": "t",
+          "label": "layout",
+          "type": "group",
+          "iconPath": "rectangle.split.2x1",
+          "actions": [
+            {
+              "key": "h",
+              "label": "horizontal split",
+              "type": "command",
+              "value": "aerospace layout h_tiles",
+              "iconPath": "rectangle.split.2x1"
+            },
+            {
+              "key": "v",
+              "label": "vertical split",
+              "type": "command",
+              "value": "aerospace layout v_tiles",
+              "iconPath": "rectangle.split.1x2"
+            },
+            {
+              "key": "t",
+              "label": "toggle h/v",
+              "type": "command",
+              "value": "aerospace layout horizontal vertical",
+              "iconPath": "rectangle.2.swap"
+            }
+          ]
+        },
+        {
+          "key": "w",
+          "label": "workspace",
+          "type": "group",
+          "iconPath": "paperplane",
+          "actions": [
+            {
+              "key": "e",
+              "label": "workspace 1",
+              "type": "command",
+              "value": "aerospace move-node-to-workspace 1",
+              "iconPath": "1.circle"
+            },
+            {
+              "key": "u",
+              "label": "workspace 2",
+              "type": "command",
+              "value": "aerospace move-node-to-workspace 2",
+              "iconPath": "2.circle"
+            },
+            {
+              "key": "d",
+              "label": "workspace 3",
+              "type": "command",
+              "value": "aerospace move-node-to-workspace 3",
+              "iconPath": "3.circle"
+            }
+          ]
+        },
+        {
           "key": "m",
           "label": "mode",
           "type": "group",
