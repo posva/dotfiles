@@ -151,3 +151,7 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = 'com.apple.Passwords'
 run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.runningwithcrayons.Alfred-Preferences'
+run = 'layout floating'
