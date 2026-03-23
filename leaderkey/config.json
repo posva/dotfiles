@@ -56,6 +56,13 @@
       "type": "group"
     },
     {
+      "key": "c",
+      "label": "Clipboard History",
+      "type": "command",
+      "value": "osascript -e 'tell application \"System Events\" to key code 103 using {control down, option down, command down}'",
+      "iconPath": "clipboard"
+    },
+    {
       "key": "r",
       "label": "Reload Leader Key config",
       "type": "command",
