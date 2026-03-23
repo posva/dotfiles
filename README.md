@@ -28,7 +28,18 @@ git submodule update --init --recursive
   - Install [ChatGPT](https://alfred.app/workflows/alfredapp/openai/)
   - Install [Switch appearance](https://alfred.app/workflows/alfredapp/switch-appearance/)
   - Install [UTF Search](https://alfred.app/workflows/adamkiss/utf-search/)
+- Install [Karabiner-Elements](https://karabiner-elements.pqrs.org/) manually (requires sudo)
 - Install setapp
+
+- TODO:
+  - symlink `.claude`
+  - symlink `~/.config/` as a folder, backup before
+  - symlink `~/.config/tmux/tmux.conf.local` to `~/.tumx.conf.local`
+  - Install volta and then with volta install node lts
+  - install `npm install --global corepack@latest`
+  - then corepack enable
+  - tell to login with `gh auth login`
+  - install cask leader-key
 
 ## Change computer name
 

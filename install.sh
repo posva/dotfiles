@@ -277,7 +277,10 @@ install_pip() {
 }
 
 install_modern_cmd() {
-  brew install catimg git-delta dust bat fd fzf zoxide tree chafa gh ripgrep
+  for pkg in catimg git-delta dust bat fd fzf zoxide tree chafa gh ripgrep; do
+    working -n "Installing $pkg"
+    log_cmd "brew-$pkg" brew install "$pkg" || fail "Failed to install $pkg. Check logs at $LOG_DIR/brew-$pkg.err"
+  done
 }
 
 install_node_volta() {
@@ -339,9 +342,10 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 install_modern_cmd
 
 install_nvim
-brew install ghostty
-brew install tmux
-brew install lazygit
+for pkg in ghostty tmux lazygit; do
+  working -n "Installing $pkg"
+  log_cmd "brew-$pkg" brew install "$pkg" || fail "Failed to install $pkg. Check logs at $LOG_DIR/brew-$pkg.err"
+done
 
 # TODO: install lazy vim
 # TODO: symlink nvim config
@@ -353,7 +357,10 @@ install_node
 
 # Install apps
 
-brew install --cask alfred coconutbaterry discord keycastr iterm2 imageoptim spotify vlc notion rectangle karabiner-elements font-jetbrains-mono-nerd-font gstreamer-runtime lm-studio
+for pkg in alfred coconutbattery discord keycastr iterm2 imageoptim spotify vlc notion rectangle font-jetbrains-mono-nerd-font font-lxgw-wenkai lm-studio; do
+  working -n "Installing cask $pkg"
+  log_cmd "brew-$pkg" brew install --cask "$pkg" || fail "Failed to install $pkg. Check logs at $LOG_DIR/brew-$pkg.err"
+done
 
 symlink_karabiner
 symlink_tmux_conf_local
