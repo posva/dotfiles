@@ -11,6 +11,7 @@ font-feature = -liga
 font-feature = -dlig
 font-thicken = true
 # font-family = "JetBrainsMono Nerd Font Mono"
+font-codepoint-map = U+4E00-U+9FFF,U+3400-U+4DBF,U+3000-U+303F,U+FF00-U+FFEF=LXGW WenKai Mono
 macos-titlebar-style = transparent
 macos-icon = custom-style
 macos-icon-ghost-color = #9EDF9C
