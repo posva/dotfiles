@@ -30,6 +30,8 @@ defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false"
 defaults write com.apple.TimeMachine "DoNotOfferNewDisksForBackup" -bool "true"
 
 # Keyboard & Trackpad (Requires restart)
+# Disable globe key switching keyboards (0=Nothing, 1=Input Source, 2=Emoji, 3=Dictation)
+defaults write com.apple.HIToolbox AppleFnUsageType -int 0
 defaults write -g InitialKeyRepeat -int 25
 defaults write -g KeyRepeat -int 1
 defaults write -g ApplePressAndHoldEnabled -bool false
