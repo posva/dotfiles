@@ -76,6 +76,7 @@
           },
           {
             "description": "Change left_command to F12 if pressed alone.",
+            "enabled": false,
             "manipulators": [
               {
                 "from": {
@@ -83,7 +84,12 @@
                   "modifiers": { "optional": ["any"] }
                 },
                 "to": [{ "key_code": "left_command" }],
-                "to_if_alone": [{ "key_code": "f12", "modifiers": ["fn", "left_command"] }],
+                "to_if_alone": [
+                  {
+                    "key_code": "f12",
+                    "modifiers": ["fn", "left_command"]
+                  }
+                ],
                 "type": "basic"
               }
             ]
@@ -162,3 +168,4 @@
     }
   ]
 }
+
