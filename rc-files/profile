@@ -7,5 +7,8 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/posva/.lmstudio/bin"
 
+# opencode
+export PATH="$PATH:/Users/posva/.opencode/bin"
+
 export PATH="$PATH:$HOME/.local/bin"
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
