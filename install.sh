@@ -327,7 +327,7 @@ backup_and_symlink
 
 install_brew
 
-# breew installations
+# brew installations
 
 # No need to install zsh because OSX has it
 # install_zsh
