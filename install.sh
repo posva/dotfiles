@@ -88,7 +88,7 @@ done
 dir=~/dotfiles
 olddir=~/dotfiles/__backup
 # array of files to symlink in homedir
-files=($(find rc-files -maxdepth 1 -type f | tr '\n' ' '))
+files=($(find rc-files -maxdepth 1 -name '.*' -type f | tr '\n' ' '))
 folders=(".config" ".claude")
 
 if ! source ${dir}/task-logger.sh/task-logger.sh 2>/dev/null; then
@@ -130,7 +130,7 @@ _backup_and_symlink() {
   for f in "${files[@]}" "${folders[@]}"; do
     local name dest
     name="$(basename "$f")"
-    dest=~/."$name"
+    dest=~/"$name"
     if [ -f "$dest" -o -d "$dest" ]; then
       echo "Backing up $name"
       mv -f "$dest" "$olddir/" || return 1
