@@ -131,7 +131,7 @@ _backup_and_symlink() {
     local name dest
     name="$(basename "$f")"
     dest=~/"$name"
-    if [ -f "$dest" -o -d "$dest" ]; then
+    if [ -f "$dest" -o -d "$dest" -o -L "$dest" ]; then
       echo "Backing up $name"
       mv -f "$dest" "$olddir/" || return 1
     fi
@@ -156,12 +156,11 @@ backup_and_symlink() {
 ####### Functions #######
 
 # Install Homebrew only for OSX
-# TODO: is this going to allow installing from
 install_brew() {
   if [[ "$OSX" ]]; then
     if [[ ! -x $(which brew) ]]; then
       # we need to input the password, so it's better to install like this
-      curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
   fi
 }
@@ -282,6 +281,10 @@ install_pip() {
 }
 
 install_rustup() {
+  check_option rustup && return 0
+  if command -v rustup &>/dev/null; then
+    return 0
+  fi
   working -n "Installing rustup"
   # we don't use log_cmd because installation is interactive
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -304,7 +307,7 @@ install_node_volta() {
 install_node() {
   if [[ ! -x $(which node) ]]; then
     working -n "Installing node"
-    log_cmd node "$INSTALL" volta install node@lts || ko
+    log_cmd node volta install node@lts || ko
   fi
 }
 
@@ -312,6 +315,7 @@ install_node_globals() {
   volta install @antfu/ni fkill
 }
 
+# tmux reads ~/.tmux.conf.local from $HOME, not from .config
 symlink_tmux_conf_local() {
   working -n "Symlinking tmux.conf.local"
   ln -fs ~/.config/tmux/tmux.conf.local ~/.tmux.conf.local || ko
@@ -345,7 +349,7 @@ done
 
 install_node_volta
 install_node
-# install_node_globals
+install_node_globals
 
 # Install apps
 
