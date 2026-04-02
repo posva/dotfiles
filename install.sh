@@ -179,6 +179,11 @@ _install_prezto() {
 }
 
 install_prezto() {
+  check_option prezto && return 0
+  if [[ ! -n "$ZSH_VERSION" ]]; then
+    fail "prezto requires zsh but current shell is not zsh"
+    return 1
+  fi
   if [[ ! -d "${HOME}/.zprezto" ]]; then
     working -n "Cloning prezto"
     log_cmd clone_prezto  _clone_prezto || ko
@@ -276,6 +281,12 @@ install_pip() {
   fi
 }
 
+install_rustup() {
+  working -n "Installing rustup"
+  # we don't use log_cmd because installation is interactive
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+}
+
 install_modern_cmd() {
   for pkg in catimg git-delta dust bat fd fzf zoxide tree chafa gh ripgrep; do
     working -n "Installing $pkg"
@@ -301,18 +312,6 @@ install_node_globals() {
   volta install @antfu/ni fkill
 }
 
-_symlink_karabiner() {
-  if [[ "$OSX" ]]; then
-    mkdir -p ~/.config
-    ln -fs "$dir/karabiner-config" ~/.config/karabiner
-  fi
-}
-
-symlink_karabiner() {
-  working -n "Symlinking karabiner config"
-  log_cmd karabiner _symlink_karabiner || ko
-}
-
 symlink_tmux_conf_local() {
   working -n "Symlinking tmux.conf.local"
   ln -fs ~/.config/tmux/tmux.conf.local ~/.tmux.conf.local || ko
@@ -327,17 +326,10 @@ backup_and_symlink
 
 install_brew
 
-# brew installations
+# must be done with zsh, included by default in osx
+install_prezto
 
-# No need to install zsh because OSX has it
-# install_zsh
-# must be done with zsh
-# install_prezto
-
-
-# rustup
-# https://www.rust-lang.org/tools/install
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+install_rustup
 
 install_modern_cmd
 
@@ -362,7 +354,6 @@ for pkg in alfred coconutbattery discord keycastr iterm2 imageoptim spotify vlc 
   log_cmd "brew-$pkg" brew install --cask "$pkg" || fail "Failed to install $pkg. Check logs at $LOG_DIR/brew-$pkg.err"
 done
 
-symlink_karabiner
 symlink_tmux_conf_local
 
 # TODO: add when needed
