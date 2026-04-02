@@ -5,6 +5,7 @@
 # auto set the pull and push rmeote
 	set-rem = "! git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)"
 	oneline = log --pretty=oneline --abbrev-commit --graph --decorate
+  zip = "!f() { root=$(git rev-parse --show-toplevel); name=$(basename \"$root\"); git archive --format=zip -o \"$root/$name.zip\" HEAD; }; f"
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
