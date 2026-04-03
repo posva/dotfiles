@@ -352,8 +352,8 @@ install_node
 install_node_globals
 
 # Install apps
-
-for pkg in alfred coconutbattery discord keycastr iterm2 imageoptim spotify vlc notion rectangle font-jetbrains-mono-nerd-font font-lxgw-wenkai lm-studio; do
+# TODO: clean up, coconut battery requires a password
+for pkg in alfred coconutbattery discord keycastr imageoptim spotify vlc notion rectangle font-jetbrains-mono-nerd-font font-lxgw-wenkai lm-studio; do
   working -n "Installing cask $pkg"
   log_cmd "brew-$pkg" brew install --cask "$pkg" || fail "Failed to install $pkg. Check logs at $LOG_DIR/brew-$pkg.err"
 done
