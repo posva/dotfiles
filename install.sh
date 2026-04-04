@@ -103,6 +103,8 @@ INSTALL="sudo apt-get install -y"
 if [[ "$(uname)" = "Darwin" ]]; then
   OSX="YES"
   INSTALL="brew install"
+  _brew_formulae=$(brew list --formula -1 2>/dev/null)
+  _brew_casks=$(brew list --cask -1 2>/dev/null)
 fi
 
 fail() {
@@ -114,6 +116,23 @@ crash() {
   ko
   bad "$@"
   exit 1
+}
+
+# Install a brew formula or cask if not already installed
+# Usage: brew_install [--cask] <pkg>
+brew_install() {
+  local cask=""
+  if [[ "$1" == "--cask" ]]; then
+    cask="--cask"
+    shift
+  fi
+  local pkg="$1"
+  working -n "Installing${cask:+ cask} $pkg"
+  if <<< "$_brew_formulae" grep -qx "$pkg" || <<< "$_brew_casks" grep -qx "$pkg"; then
+    good " skipped"
+    return 0
+  fi
+  log_cmd "brew-$pkg" brew install $cask "$pkg" || fail "Failed to install $pkg. Check logs at $LOG_DIR/brew-$pkg.err"
 }
 
 ####### Verifications and backup #######
@@ -193,11 +212,6 @@ install_prezto() {
   fi
 }
 
-install_nvim() {
-  if [[ ! -x $(which nvim) ]]; then
-    brew install nvim
-  fi
-}
 
 install_font() {
   if [[ "$OSX" ]]; then
@@ -290,12 +304,6 @@ install_rustup() {
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 }
 
-install_modern_cmd() {
-  for pkg in catimg git-delta dust bat fd fzf zoxide tree chafa gh ripgrep; do
-    working -n "Installing $pkg"
-    log_cmd "brew-$pkg" brew install "$pkg" || fail "Failed to install $pkg. Check logs at $LOG_DIR/brew-$pkg.err"
-  done
-}
 
 install_node_volta() {
   if [[ ! -x $(which volta) ]]; then
@@ -335,28 +343,22 @@ install_prezto
 
 install_rustup
 
-install_modern_cmd
+# Brew formulae
+for pkg in catimg git-delta dust bat fd fzf zoxide tree chafa gh ripgrep nvim tmux lazygit; do
+  brew_install "$pkg"
+done
 
-install_nvim
-for pkg in ghostty tmux lazygit; do
-  working -n "Installing $pkg"
-  log_cmd "brew-$pkg" brew install "$pkg" || fail "Failed to install $pkg. Check logs at $LOG_DIR/brew-$pkg.err"
+# Brew casks
+for pkg in ghostty alfred coconutbattery discord keycastr iterm2 imageoptim spotify vlc notion rectangle font-jetbrains-mono-nerd-font font-lxgw-wenkai lm-studio; do
+  brew_install --cask "$pkg"
 done
 
 # TODO: install lazy vim
 # TODO: symlink nvim config
-# Symlink move configs to a .config folder and symlink to ~/.config folder
 
 install_node_volta
 install_node
 install_node_globals
-
-# Install apps
-# TODO: clean up, coconut battery requires a password
-for pkg in alfred coconutbattery discord keycastr imageoptim spotify vlc notion rectangle font-jetbrains-mono-nerd-font font-lxgw-wenkai lm-studio; do
-  working -n "Installing cask $pkg"
-  log_cmd "brew-$pkg" brew install --cask "$pkg" || fail "Failed to install $pkg. Check logs at $LOG_DIR/brew-$pkg.err"
-done
 
 symlink_tmux_conf_local
 
