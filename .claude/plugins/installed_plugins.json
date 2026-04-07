@@ -8,8 +8,59 @@
         "version": "0.4.3",
         "installedAt": "2026-01-01T15:49:46.734Z",
         "lastUpdated": "2026-01-01T15:49:46.734Z",
-        "gitCommitSha": "51b5302db8d7b53ca58dbf791f5ad65e532dbed5",
-        "isLocal": true
+        "gitCommitSha": "51b5302db8d7b53ca58dbf791f5ad65e532dbed5"
+      }
+    ],
+    "typescript-lsp@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/posva/dotfiles",
+        "installPath": "/Users/posva/.claude/plugins/cache/claude-plugins-official/typescript-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-03-18T15:42:21.358Z",
+        "lastUpdated": "2026-03-18T15:42:21.358Z",
+        "gitCommitSha": "6b70f99f769f58b9b642dc8a271936b17862cf8c"
+      }
+    ],
+    "code-simplifier@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/posva/dotfiles",
+        "installPath": "/Users/posva/.claude/plugins/cache/claude-plugins-official/code-simplifier/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-03-18T15:42:21.358Z",
+        "lastUpdated": "2026-03-18T15:42:21.358Z",
+        "gitCommitSha": "6b70f99f769f58b9b642dc8a271936b17862cf8c"
+      }
+    ],
+    "rust-analyzer-lsp@claude-plugins-official": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/posva/dotfiles",
+        "installPath": "/Users/posva/.claude/plugins/cache/claude-plugins-official/rust-analyzer-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-03-18T15:42:21.358Z",
+        "lastUpdated": "2026-03-18T15:42:21.358Z",
+        "gitCommitSha": "6b70f99f769f58b9b642dc8a271936b17862cf8c"
+      }
+    ],
+    "vercel-plugin@vercel-vercel-plugin": [
+      {
+        "scope": "user",
+        "installPath": "/Users/posva/.claude/plugins/cache/vercel-vercel-plugin/vercel-plugin/0.24.0",
+        "version": "0.24.0",
+        "installedAt": "2026-03-29T19:51:19.429Z",
+        "lastUpdated": "2026-03-29T19:51:19.429Z",
+        "gitCommitSha": "2e79fc9698b0f25253a238f4ac5ab6d3265d266d"
+      }
+    ],
+    "clangd-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/posva/.claude/plugins/cache/claude-plugins-official/clangd-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-03-30T14:21:55.289Z",
+        "lastUpdated": "2026-03-30T14:21:55.289Z"
       }
     ]
   }

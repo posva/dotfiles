@@ -5,7 +5,7 @@
       "repo": "anthropics/claude-plugins-official"
     },
     "installLocation": "/Users/posva/.claude/plugins/marketplaces/claude-plugins-official",
-    "lastUpdated": "2026-01-21T22:42:45.870Z"
+    "lastUpdated": "2026-04-04T07:12:14.536Z"
   },
   "osgrep": {
     "source": {
@@ -13,6 +13,14 @@
       "repo": "Ryandonofrio3/osgrep"
     },
     "installLocation": "/Users/posva/.claude/plugins/marketplaces/osgrep",
-    "lastUpdated": "2026-01-01T15:49:46.099Z"
+    "lastUpdated": "2026-03-18T15:41:53.453Z"
+  },
+  "vercel-vercel-plugin": {
+    "source": {
+      "source": "directory",
+      "path": "/Users/posva/.cache/plugins/github.com-vercel-vercel-plugin"
+    },
+    "installLocation": "/Users/posva/.cache/plugins/github.com-vercel-vercel-plugin",
+    "lastUpdated": "2026-03-29T19:51:18.896Z"
   }
 }

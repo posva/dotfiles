@@ -167,6 +167,16 @@
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "vercel-plugin@vercel-vercel-plugin": false,
+    "clangd-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "vercel-vercel-plugin": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/posva/.cache/plugins/github.com-vercel-vercel-plugin"
+      }
+    }
   }
 }
