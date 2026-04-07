@@ -20,3 +20,7 @@ tasks
 chrome
 usage-data
 plugins/cache
+plugins/install-counts-cache.json
+vercel-plugin-device-id
+vercel-plugin-telemetry-preference
+session-env
