@@ -39,9 +39,6 @@
       "Bash(agent-browser:*)",
       "Bash(trash:*)",
       "Bash(wc:*)",
-      "Update(*:*)",
-      "Update(*)",
-      "Write(*)",
       "WebFetch(domain:github.blog)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:esm.dev)",
@@ -52,10 +49,20 @@
       "WebFetch(domain:ui.nuxt.com)",
       "WebFetch(domain:vite.dev)",
       "WebFetch(domain:oxc.rs)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:docs.brew.sh)",
+      "Bash(aerospace workspace:*)",
+      "Bash(aerospace join-with:*)",
+      "Bash(aerospace layout:*)",
+      "Bash(aerospace move-node-to-workspace:*)",
+      "Bash(aerospace fullscreen:*)",
+      "Bash(aerospace list-workspaces:*)",
+      "Bash(aerospace list-windows:*)"
     ],
-    "deny": []
+    "deny": [],
+    "defaultMode": "default"
   },
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
