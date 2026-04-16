@@ -93,6 +93,26 @@
                 "type": "basic"
               }
             ]
+          },
+          {
+            "description": "Hold left_command + tap right_command to shift+command+space",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "right_command",
+                  "modifiers": {
+                    "mandatory": ["left_command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "spacebar",
+                    "modifiers": ["left_shift", "left_command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
           }
         ]
       },
