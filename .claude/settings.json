@@ -60,9 +60,9 @@
       "Bash(aerospace list-windows:*)"
     ],
     "deny": [],
-    "defaultMode": "default"
+    "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -91,13 +91,21 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/bin/set-title.sh \"💬 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+            "command": "~/.claude/bin/set-title.sh title \"💬 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh progress 4"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh notify \"Claude Code\" \"$(basename \"$CLAUDE_PROJECT_DIR\") needs attention\""
           },
           {
             "type": "command",
             "command": "afplay /System/Library/Sounds/Submarine.aiff",
-            "async": true,
-            "timeout": 5
+            "timeout": 5,
+            "async": true
           }
         ]
       }
@@ -107,13 +115,21 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/bin/set-title.sh \"💬 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+            "command": "~/.claude/bin/set-title.sh title \"💬 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh progress 4"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh notify \"Claude Code\" \"$(basename \"$CLAUDE_PROJECT_DIR\") wants permission\""
           },
           {
             "type": "command",
             "command": "afplay /System/Library/Sounds/Sosumi.aiff",
-            "async": true,
-            "timeout": 5
+            "timeout": 5,
+            "async": true
           }
         ]
       }
@@ -123,13 +139,17 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/bin/set-title.sh \"🤖 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+            "command": "~/.claude/bin/set-title.sh title \"🤖 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh progress 0"
           },
           {
             "type": "command",
             "command": "afplay /System/Library/Sounds/Glass.aiff",
-            "async": true,
-            "timeout": 5
+            "timeout": 5,
+            "async": true
           }
         ]
       }
@@ -139,7 +159,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/bin/set-title.sh \"⚡ $(basename \"$CLAUDE_PROJECT_DIR\")\""
+            "command": "~/.claude/bin/set-title.sh title \"⚡ $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh progress 3"
           }
         ]
       }
@@ -149,7 +173,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/bin/set-title.sh \"🤖 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+            "command": "~/.claude/bin/set-title.sh title \"🤖 $(basename \"$CLAUDE_PROJECT_DIR\")\""
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/bin/set-title.sh progress 0"
           }
         ]
       }
@@ -159,7 +187,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -n \"$TMUX\" ]; then tmux set-window-option automatic-rename on; else ~/.claude/bin/set-title.sh \"$(basename \"$PWD\")\"; fi"
+            "command": "~/.claude/bin/set-title.sh progress 0"
+          },
+          {
+            "type": "command",
+            "command": "if [ -n \"$TMUX\" ]; then tmux set-window-option automatic-rename on; else ~/.claude/bin/set-title.sh title \"$(basename \"$PWD\")\"; fi"
           }
         ]
       }
@@ -183,5 +215,9 @@
         "path": "/Users/posva/.cache/plugins/github.com-vercel-vercel-plugin"
       }
     }
-  }
+  },
+  "effortLevel": "high",
+  "editorMode": "vim",
+  "autoCompactEnabled": false,
+  "skipAutoPermissionPrompt": true
 }
