@@ -38,3 +38,4 @@ __backup-*/
 .config/spotify-player
 .config/mole/mole.log
 .claude/sessions
+.config/tanstack
