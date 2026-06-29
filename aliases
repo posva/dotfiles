@@ -33,7 +33,8 @@ alias gm='git merge'
 alias gmt='git mergetool --no-prompt'
 
 alias gp='git push'
-alias gpf='git push --force'
+alias gpf='git push --force-with-lease --force-if-includes'
+alias gpff='git push --force'
 alias gpoat='git push origin --all && git push origin --tags'
 
 alias gr='git remote'
