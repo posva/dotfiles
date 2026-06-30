@@ -202,3 +202,15 @@ function update_readme_sponsors() {
 
   pnpm exec prettier --write README.md
 }
+
+# Lightweight GNU-style `timeout` (macOS lacks coreutils' timeout).
+# Usage: timeout 40 node ./e2e.mjs   (supports s/m/h suffix: 40, 40s, 2m, 1h)
+timeout() {
+  perl -e '
+    my $d = shift or die "usage: timeout DURATION CMD...\n";
+    $d =~ /^(\d+)([smh]?)$/ or die "timeout: invalid duration: $d\n";
+    my %mult = (""=>1, s=>1, m=>60, h=>3600);
+    alarm $1 * $mult{$2};
+    exec @ARGV or die "timeout: cannot run $ARGV[0]: $!\n";
+  ' "$@"
+}
