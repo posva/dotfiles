@@ -218,6 +218,6 @@
   },
   "effortLevel": "high",
   "editorMode": "vim",
-  "autoCompactEnabled": false,
+  "autoCompactEnabled": true,
   "skipAutoPermissionPrompt": true
 }
