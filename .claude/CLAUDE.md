@@ -34,8 +34,8 @@ Core workflow:
 
 ## Code style
 
+- Comments: short, only for what code can't show (constraints, non-obvious why); when they add nothing, write none.
 - TypeScript
 - Vue 3 with composition API
 - Use `node` to run TS directly, never `tsx`
 - Always use ESM, never CJS
-
