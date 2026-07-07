@@ -25,6 +25,15 @@ mouse-hide-while-typing = true
 
 keybind = ctrl+enter=text:gst\n
 keybind = shift+enter=text:\n
+# shift+space would send CSI-u `ESC[32;2u`, which zsh vi-mode reads as
+# ESC + vi commands (`u` = undo → wipes the line when typing `: ` fast)
+keybind = shift+space=text:\x20
+
+# Multiplexing = Ghostty's native macOS shortcuts (no custom binds, no Leader Key):
+#   cmd+d split right · cmd+shift+d split down · cmd+t new tab
+#   cmd+opt+arrows move between splits · cmd+shift+[ / ] prev/next tab
+#   cmd+shift+enter zoom split · cmd+w close · cmd+1..8 goto tab
+# Sessions = zmx (persistence): detach ctrl+\, reattach with `zs`.
 
 # custom-shader = ./shaders/cursor-blaze.glsl
 # custom-shader = ./shaders/inside-the-matrix.glsl
