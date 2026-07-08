@@ -217,6 +217,7 @@
     }
   },
   "effortLevel": "high",
+  "tui": "fullscreen",
   "editorMode": "vim",
   "autoCompactEnabled": true,
   "skipAutoPermissionPrompt": true
