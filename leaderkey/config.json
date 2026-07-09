@@ -170,6 +170,28 @@
       "type": "group"
     },
     {
+      "key": "z",
+      "label": "zmx sessions",
+      "iconPath": "rectangle.stack",
+      "type": "group",
+      "actions": [
+        {
+          "key": "z",
+          "label": "pick / new session",
+          "type": "command",
+          "value": "/Applications/Ghostty.app/Contents/MacOS/ghostty -e \"$HOME/.config/zsh/bin/zmx-pick\"",
+          "iconPath": "magnifyingglass"
+        },
+        {
+          "key": "m",
+          "label": "main session",
+          "type": "command",
+          "value": "/Applications/Ghostty.app/Contents/MacOS/ghostty -e zmx attach main",
+          "iconPath": "1.circle"
+        }
+      ]
+    },
+    {
       "key": "r",
       "label": "Reload Leader Key config",
       "type": "command",
@@ -177,6 +199,5 @@
       "iconPath": "gearshape.arrow.trianglehead.2.clockwise.rotate.90"
     }
   ],
-
   "type": "group"
 }
