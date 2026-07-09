@@ -392,6 +392,17 @@ bind p previous-window #!important
 bind | split-window -h #!important
 bind - split-window -v #!important
 
+# forward CSI-u encoded keys to apps — partial kitty keyboard protocol support:
+# disambiguated modifier combos (Shift+Enter, Ctrl+., …) reach apps, but key
+# *release* events don't; tmux doesn't implement that part of the protocol
+# (https://github.com/tmux/tmux/issues/3335).
+# 'always' (not 'on') is required: apps like OpenTUI request the encoding via
+# the kitty push (CSI > u), which tmux ignores with 'on'.
+set -s extended-keys always
+set -s extended-keys-format csi-u
+# the outer terminal (Ghostty) understands extended keys
+set -as terminal-features 'xterm-ghostty:extkeys'
+
 # replace C-b by C-a instead of using both prefixes
 # set -gu prefix2
 # unbind C-a
