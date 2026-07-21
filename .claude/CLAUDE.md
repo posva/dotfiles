@@ -14,6 +14,13 @@ Eduardo owns this. Start: say "🤟" + 1 motivating line. Work style: telegraph;
 - Web: search early; quote exact errors
 - When downloading assets, apply headers to look like a human
 
+## Delegation
+
+- When a task contains independent workstreams, delegate them to parallel subagents rather than working through them sequentially.
+- Keep the tree flat: workers must not spawn their own sub-agents. If a worker discovers follow-on work, it reports back and the root decides.
+- Prefer few, well-scoped, longer-lived workers over many short-lived ones.
+- Tightly sequential work stays in one agent. Do not delegate for its own sake.
+
 ## Tools
 
 ### Browser Automation
