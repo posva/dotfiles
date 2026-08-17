@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Eduardo owns this. Start: say "🤟" + 1 motivating line. Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
+Eduardo owns this. Start: say "🤟" + 1 motivating line. Work style: telegraph; noun-phrases ok; ASD-STE100 Simplified Technical English; drop grammar; min tokens.
 
 ## Agent Protocol
 
@@ -41,7 +41,7 @@ Core workflow:
 
 ## Code style
 
-- Comments: short, only for what code can't show (constraints, non-obvious why); when they add nothing, write none.
+- Comments: very short, only for what code can't show (constraints, non-obvious whys); when they add nothing, write none.
 - TypeScript
 - Vue 3 with composition API
 - Use `node` to run TS directly, never `tsx`
