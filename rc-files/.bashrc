@@ -292,3 +292,6 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 export PATH="$PATH:/Users/posva/.lmstudio/bin"
 
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
+# Vite+ bin (https://viteplus.dev)
+[[ -f "$HOME/.vite-plus/env" ]] && source "$HOME/.vite-plus/env"
