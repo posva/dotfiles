@@ -75,9 +75,10 @@ alias gfm='git log --diff-filter=M --'
 alias gpr='gh pr checkout $(gh pr list | fzf | cut -f 1)'
 
 # gw [branch]: cd into the branch's worktree, creating it if needed
+# worktrees live in <repo>/.posva/worktrees (git-excluded)
 # no arg: pick (or type a new name) with fzf
 function git_create_worktree() {
-  local branch=$1 out dir root target
+  local branch=$1 out dir gitdir root target
 
   git rev-parse --git-dir >/dev/null 2>&1 || { echo "not a git repo"; return 1 }
 
@@ -97,9 +98,14 @@ function git_create_worktree() {
     return
   fi
 
-  root=$(git rev-parse --path-format=absolute --git-common-dir)
-  root=${root%/.git}
-  target="${root:h}/${root:t}-worktrees/${branch//\//-}"
+  gitdir=$(git rev-parse --path-format=absolute --git-common-dir)
+  root=${gitdir%/.git}
+  target="$root/.posva/worktrees/${branch//\//-}"
+
+  # ignore worktrees without touching the repo's .gitignore
+  mkdir -p "$gitdir/info"
+  grep -qxF '.posva/' "$gitdir/info/exclude" 2>/dev/null \
+    || echo '.posva/' >>"$gitdir/info/exclude"
 
   if git show-ref --verify --quiet "refs/heads/$branch"; then
     git worktree add "$target" "$branch"
