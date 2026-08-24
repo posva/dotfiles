@@ -74,6 +74,88 @@ alias gfm='git log --diff-filter=M --'
 # checkouts a specific GitHub PR
 alias gpr='gh pr checkout $(gh pr list | fzf | cut -f 1)'
 
+# gw [branch]: cd into the branch's worktree, creating it if needed
+# no arg: pick (or type a new name) with fzf
+function git_create_worktree() {
+  local branch=$1 out dir root target
+
+  git rev-parse --git-dir >/dev/null 2>&1 || { echo "not a git repo"; return 1 }
+
+  if [[ -z "$branch" ]]; then
+    out=$(git branch --all --format='%(refname:short)' | sed 's#^origin/##' | sort -u \
+      | fzf --prompt='worktree> ' --height=~50% --print-query)
+    (( $? == 130 )) && return 1
+    branch=${${(f)out}[-1]}
+  fi
+  [[ -z "$branch" ]] && return 1
+
+  dir=$(git worktree list --porcelain | awk -v b="refs/heads/$branch" '
+    $1 == "worktree" { d = $2 }
+    $1 == "branch" && $2 == b { print d; exit }')
+  if [[ -n "$dir" ]]; then
+    cd "$dir"
+    return
+  fi
+
+  root=$(git rev-parse --path-format=absolute --git-common-dir)
+  root=${root%/.git}
+  target="${root:h}/${root:t}-worktrees/${branch//\//-}"
+
+  if git show-ref --verify --quiet "refs/heads/$branch"; then
+    git worktree add "$target" "$branch"
+  elif git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    git worktree add -b "$branch" "$target" "origin/$branch"
+  else
+    git worktree add -b "$branch" "$target"
+  fi && cd "$target"
+}
+alias gw=git_create_worktree
+
+# gwd [branch]: delete the branch's worktree
+# no arg: inside a worktree deletes it, otherwise pick with fzf
+# prompts if the worktree has changes (only 'y' confirms)
+function git_delete_worktree() {
+  local branch=$1 dir main force reply
+
+  git rev-parse --git-dir >/dev/null 2>&1 || { echo "not a git repo"; return 1 }
+
+  main=$(git rev-parse --path-format=absolute --git-common-dir)
+  main=${main%/.git}
+
+  if [[ -z "$branch" ]]; then
+    if [[ "$(git rev-parse --show-toplevel)" != "$main" ]]; then
+      dir=$(git rev-parse --show-toplevel)
+    else
+      branch=$(git worktree list --porcelain | awk '
+        $1 == "worktree" { n++ }
+        $1 == "branch" && n > 1 { sub("refs/heads/", "", $2); print $2 }' \
+        | fzf --prompt='delete worktree> ' --height=~50%)
+      [[ -z "$branch" ]] && return 1
+    fi
+  fi
+
+  if [[ -z "$dir" ]]; then
+    dir=$(git worktree list --porcelain | awk -v b="refs/heads/$branch" '
+      $1 == "worktree" { d = $2 }
+      $1 == "branch" && $2 == b { print d; exit }')
+    [[ -z "$dir" ]] && { echo "no worktree for '$branch'"; return 1 }
+  fi
+  [[ "$dir" == "$main" ]] && { echo "refusing to remove main worktree"; return 1 }
+
+  if [[ -n "$(git -C "$dir" status --porcelain)" ]]; then
+    read -r "reply?worktree '$dir' has changes, delete anyway? [y/N] "
+    [[ "$reply" == y ]] || return 1
+    force=--force
+  fi
+
+  [[ "${PWD:A}" == "$dir" || "${PWD:A}" == "$dir"/* ]] && cd "$main"
+  git worktree remove ${force:+--force} "$dir"
+}
+alias gwd=git_delete_worktree
+
+# completions for gw/gwd, picked up by prezto's compinit (runs after this file)
+fpath=("$HOME/dotfiles/zsh-completions" $fpath)
+
 # Remove bad git aliases
 unalias gs 2>/dev/null
 

@@ -1,0 +1,7 @@
+#compdef git_delete_worktree gwd
+
+local -a branches
+branches=(${(f)"$(git worktree list --porcelain 2>/dev/null | awk '
+  $1 == "worktree" { n++ }
+  $1 == "branch" && n > 1 { sub("refs/heads/", "", $2); print $2 }')"})
+_describe 'worktree branch' branches

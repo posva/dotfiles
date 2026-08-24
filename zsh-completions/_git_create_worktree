@@ -1,0 +1,5 @@
+#compdef git_create_worktree gw
+
+local -a branches
+branches=(${(f)"$(git branch --all --format='%(refname:short)' 2>/dev/null | sed 's#^origin/##' | sort -u)"})
+_describe 'branch' branches
