@@ -79,6 +79,7 @@ alias gpr='gh pr checkout $(gh pr list | fzf | cut -f 1)'
 # no arg: pick (or type a new name) with fzf
 function git_create_worktree() {
   local branch=$1 out dir gitdir root target
+  local -a lines
 
   git rev-parse --git-dir >/dev/null 2>&1 || { echo "not a git repo"; return 1 }
 
@@ -86,9 +87,12 @@ function git_create_worktree() {
     out=$(git branch --all --format='%(refname:short)' | sed 's#^origin/##' | sort -u \
       | fzf --prompt='worktree> ' --height=~50% --print-query)
     (( $? == 130 )) && return 1
-    branch=${${(f)out}[-1]}
+    # last line: the selection, or the typed query when nothing matched
+    lines=(${(f)out})
+    (( ${#lines} )) || return 1
+    git_create_worktree "${lines[-1]}"
+    return
   fi
-  [[ -z "$branch" ]] && return 1
 
   dir=$(git worktree list --porcelain | awk -v b="refs/heads/$branch" '
     $1 == "worktree" { d = $2 }
