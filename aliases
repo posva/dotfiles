@@ -74,6 +74,13 @@ alias gfm='git log --diff-filter=M --'
 # checkouts a specific GitHub PR
 alias gpr='gh pr checkout $(gh pr list | fzf | cut -f 1)'
 
+# colored log helper: _wt_log <color> <message>
+# colors: info=blue ok=green warn=yellow err=red
+function _wt_log() {
+  local -A colors=(info blue ok green warn yellow err red)
+  print -P "%F{${colors[$1]}}==>%f $2"
+}
+
 # gw [branch]: cd into the branch's worktree, creating it if needed
 # worktrees live in <repo>/.posva/worktrees (git-excluded)
 # no arg: pick (or type a new name) with fzf
@@ -81,7 +88,7 @@ function git_create_worktree() {
   local branch=$1 out dir gitdir root target
   local -a lines
 
-  git rev-parse --git-dir >/dev/null 2>&1 || { echo "not a git repo"; return 1 }
+  git rev-parse --git-dir >/dev/null 2>&1 || { _wt_log err "not a git repo"; return 1 }
 
   if [[ -z "$branch" ]]; then
     out=$(git branch --all --format='%(refname:short)' | sed 's#^origin/##' | sort -u \
@@ -98,6 +105,7 @@ function git_create_worktree() {
     $1 == "worktree" { d = $2 }
     $1 == "branch" && $2 == b { print d; exit }')
   if [[ -n "$dir" ]]; then
+    _wt_log info "worktree exists, switching: $dir"
     cd "$dir"
     return
   fi
@@ -112,12 +120,15 @@ function git_create_worktree() {
     || echo '.posva/' >>"$gitdir/info/exclude"
 
   if git show-ref --verify --quiet "refs/heads/$branch"; then
+    _wt_log info "creating worktree for existing branch '$branch' at $target"
     git worktree add "$target" "$branch"
   elif git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    _wt_log info "creating worktree for '$branch' tracking origin/$branch at $target"
     git worktree add -b "$branch" "$target" "origin/$branch"
   else
+    _wt_log info "creating worktree with new branch '$branch' at $target"
     git worktree add -b "$branch" "$target"
-  fi && cd "$target"
+  fi && { _wt_log ok "ready: $target"; cd "$target" }
 }
 alias gw=git_create_worktree
 
@@ -127,7 +138,7 @@ alias gw=git_create_worktree
 function git_delete_worktree() {
   local branch=$1 dir main force reply
 
-  git rev-parse --git-dir >/dev/null 2>&1 || { echo "not a git repo"; return 1 }
+  git rev-parse --git-dir >/dev/null 2>&1 || { _wt_log err "not a git repo"; return 1 }
 
   main=$(git rev-parse --path-format=absolute --git-common-dir)
   main=${main%/.git}
@@ -148,9 +159,9 @@ function git_delete_worktree() {
     dir=$(git worktree list --porcelain | awk -v b="refs/heads/$branch" '
       $1 == "worktree" { d = $2 }
       $1 == "branch" && $2 == b { print d; exit }')
-    [[ -z "$dir" ]] && { echo "no worktree for '$branch'"; return 1 }
+    [[ -z "$dir" ]] && { _wt_log err "no worktree for '$branch'"; return 1 }
   fi
-  [[ "$dir" == "$main" ]] && { echo "refusing to remove main worktree"; return 1 }
+  [[ "$dir" == "$main" ]] && { _wt_log err "refusing to remove main worktree"; return 1 }
 
   if [[ -n "$(git -C "$dir" status --porcelain)" ]]; then
     read -r "reply?worktree '$dir' has changes, delete anyway? [y/N] "
@@ -159,7 +170,8 @@ function git_delete_worktree() {
   fi
 
   [[ "${PWD:A}" == "$dir" || "${PWD:A}" == "$dir"/* ]] && cd "$main"
-  git worktree remove ${force:+--force} "$dir"
+  _wt_log info "removing worktree $dir"
+  git worktree remove ${force:+--force} "$dir" && _wt_log ok "removed $dir"
 }
 alias gwd=git_delete_worktree
 
