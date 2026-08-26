@@ -15,11 +15,11 @@ git submodule update --init --recursive
   - restart
   - add dvorak layout keyboard
 - Install [hombrew](https://brew.sh)
-- Install [Volta](https://volta.sh)
+- Install [mise](https://mise.jdx.dev)
 - Run the `install.sh` script
 - Install brew clis
 - Install brew packages
-- Install node with volta and other globals
+- Install node with mise and other globals
 - Install prezto
 - Install Alfred
   - Configure alfred to open with ⌘ + ␣
@@ -35,7 +35,7 @@ git submodule update --init --recursive
   - symlink `.claude`
   - symlink `~/.config/` as a folder, backup before
   - symlink `~/.config/tmux/tmux.conf.local` to `~/.tumx.conf.local`
-  - Install volta and then with volta install node lts
+  - Install mise and then with mise use -g node@lts
   - install `npm install --global corepack@latest`
   - then corepack enable
   - tell to login with `gh auth login`

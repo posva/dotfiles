@@ -305,9 +305,9 @@ install_rustup() {
 }
 
 
-install_node_volta() {
-  if [[ ! -x $(which volta) ]]; then
-    curl https://get.volta.sh | bash
+install_mise() {
+  if [[ ! -x $(which mise) ]]; then
+    brew_install mise
   fi
 }
 
@@ -315,12 +315,22 @@ install_node_volta() {
 install_node() {
   if [[ ! -x $(which node) ]]; then
     working -n "Installing node"
-    log_cmd node volta install node@lts || ko
+    log_cmd node mise use -g node@lts || ko
   fi
 }
 
-install_node_globals() {
-  volta install @antfu/ni fkill
+install_node_globals_with_mise() {
+  mise use -g npm:@antfu/ni npm:fkill-cli
+}
+
+install_mise_completions() {
+  if [[ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]]; then
+    crash "prezto must be installed before mise completions"
+  fi
+  local completions_dir="${ZDOTDIR:-$HOME}/.zprezto/modules/completion/external/src"
+  mkdir -p "$completions_dir"
+  working -n "Installing mise completions"
+  log_cmd mise-completions bash -c "mise completion zsh > '$completions_dir/_mise'" || ko
 }
 
 # tmux reads ~/.tmux.conf.local from $HOME, not from .config
@@ -356,9 +366,10 @@ done
 # TODO: install lazy vim
 # TODO: symlink nvim config
 
-install_node_volta
-install_node
-install_node_globals
+#install_mise
+#install_mise_completions
+#install_node
+#install_node_globals_with_mise
 
 symlink_tmux_conf_local
 

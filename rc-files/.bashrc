@@ -285,8 +285,7 @@ export NVM_DIR="$HOME/.nvm"
 if [ -f "$HOME/.deno/env" ]; then
   . "$HOME/.deno/env"
 fi
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+eval "$(mise activate bash)"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/posva/.lmstudio/bin"
