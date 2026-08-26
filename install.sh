@@ -333,6 +333,19 @@ install_mise_completions() {
   log_cmd mise-completions bash -c "mise completion zsh > '$completions_dir/_mise'" || ko
 }
 
+install_viteplus() {
+  check_option viteplus && return 0
+  if [[ ! -x $(which vp) ]]; then
+    working -n "Installing Vite+"
+    # we don't use log_cmd because installation is interactive
+    curl -fsSL https://vite.plus | bash
+  fi
+}
+
+install_globals_with_viteplus() {
+  vp install -g @antfu/ni fkill-cli
+}
+
 # tmux reads ~/.tmux.conf.local from $HOME, not from .config
 symlink_tmux_conf_local() {
   working -n "Symlinking tmux.conf.local"
@@ -370,6 +383,9 @@ done
 #install_mise_completions
 #install_node
 #install_node_globals_with_mise
+
+install_viteplus
+install_globals_with_viteplus
 
 symlink_tmux_conf_local
 
