@@ -1,6 +1,15 @@
 -- Options are automatically loaded before lazy.nvim startup
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
+
+-- Neovim started from the macOS GUI does not inherit the interactive shell
+-- environment where `mise activate` updates PATH. Mise's shims resolve the
+-- configured tool version without tying this config to a specific Node path.
+local mise_shims = vim.fs.joinpath(vim.env.HOME, ".local", "share", "mise", "shims")
+if vim.fn.isdirectory(mise_shims) == 1 then
+  vim.env.PATH = mise_shims .. ":" .. vim.env.PATH
+end
+
 vim.opt.winbar = "%=%m %f"
 
 vim.opt.conceallevel = 0
