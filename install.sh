@@ -320,7 +320,7 @@ install_node() {
 }
 
 install_node_globals_with_mise() {
-  mise use -g npm:@antfu/ni npm:fkill-cli npm:agent-browser
+  mise use -g npm:@antfu/ni npm:fkill-cli npm:agent-browser npm:@openai/codex npm:portless
 }
 
 install_mise_completions() {
