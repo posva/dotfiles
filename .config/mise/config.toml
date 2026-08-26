@@ -1,0 +1,10 @@
+[tools]
+node = "latest"
+"npm:@antfu/ni" = "latest"
+"npm:@openai/codex" = "latest"
+"npm:agent-browser" = "latest"
+"npm:fkill-cli" = "latest"
+"npm:portless" = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node", "bun", "deno"]
