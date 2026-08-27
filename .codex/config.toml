@@ -1,0 +1,20 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+service_tier = "default"
+approvals_reviewer = "auto_review"
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+"gpt-5.6-sol" = 4
+
+[tui]
+notifications = ["approval-requested"]
+notification_method = "bel"
+notification_condition = "always"
+status_line = ["model", "estimated-thread-cost", "context-used", "current-dir", "git-branch"]
+
+[hooks.state]
+
+[hooks.state."/Users/posva/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:0adfe387252636f64423840525b19539ff0a475c3d2668ffe365ce4513ed2068"
+enabled = true

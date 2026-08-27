@@ -1,0 +1,10 @@
+# Codex keeps credentials, history, databases, caches, and other local state
+# in this directory. Ignore everything unless it is explicitly safe to share.
+*
+
+!.gitignore
+!config.toml
+!hooks.json
+!rules/
+rules/*
+!rules/default.rules

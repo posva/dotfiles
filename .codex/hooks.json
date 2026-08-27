@@ -1,0 +1,17 @@
+{
+  "description": "Sound notifications matching the global Claude Code hooks.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/afplay /System/Library/Sounds/Glass.aiff",
+            "timeout": 5,
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -89,7 +89,7 @@ dir=~/dotfiles
 olddir=~/dotfiles/__backup
 # array of files to symlink in homedir
 files=($(find rc-files -maxdepth 1 -name '.*' -type f | tr '\n' ' '))
-folders=(".config" ".claude")
+folders=(".config" ".claude" ".codex")
 
 if ! source ${dir}/task-logger.sh/task-logger.sh 2>/dev/null; then
   echo "ERROR: install git submodules: git submodules init && git submodules update"
