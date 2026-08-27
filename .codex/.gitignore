@@ -1,10 +1,27 @@
-# Codex keeps credentials, history, databases, caches, and other local state
-# in this directory. Ignore everything unless it is explicitly safe to share.
-*
+# Keep this list explicit so new Codex state stays visible until classified.
 
-!.gitignore
-!config.toml
-!hooks.json
-!rules/
-rules/*
-!rules/default.rules
+# Credentials and local identity
+auth.json
+installation_id
+
+# History, sessions, and local databases
+history.jsonl
+sessions/
+memories/
+*.sqlite*
+thread-writer-locks/
+
+# Caches, logs, and temporary state
+.tmp/
+tmp/
+cache/
+editor/
+log/
+models_cache.json
+version.json
+.personality_migration
+.sandbox_migration
+
+# Downloaded plugins and generated skills
+plugins/
+skills/
