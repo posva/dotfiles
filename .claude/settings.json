@@ -62,7 +62,10 @@
     "deny": [],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "gpt-5.6-sol[1m]",
+  "modelOverrides": {
+    "gpt-5.6-sol[1m]": "openai/gpt-5.6-sol"
+  },
   "hooks": {
     "PreToolUse": [
       {
