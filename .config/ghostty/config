@@ -28,6 +28,8 @@ keybind = shift+enter=text:\n
 # shift+space would send CSI-u `ESC[32;2u`, which zsh vi-mode reads as
 # ESC + vi commands (`u` = undo → wipes the line when typing `: ` fast)
 keybind = shift+space=text:\x20
+# same story: shift+backspace sends `ESC[127;2u` → wipes the line via vi undo
+keybind = shift+backspace=text:\x7f
 
 # Multiplexing = Ghostty's native macOS shortcuts (no custom binds, no Leader Key):
 #   cmd+d split right · cmd+shift+d split down · cmd+t new tab
