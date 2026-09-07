@@ -346,7 +346,7 @@ install_mise_completions() {
 # tmux reads ~/.tmux.conf.local from $HOME, not from .config
 symlink_tmux_conf_local() {
   working -n "Symlinking tmux.conf.local"
-  ln -fs ~/.config/tmux/tmux.conf.local ~/.tmux.conf.local || ko
+  ln -fs ~/.config/tmux/tmux.conf.local ~/.tmux.conf.local && ok || ko
 }
 
 ##### Call everything #####
