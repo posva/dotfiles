@@ -1,8 +1,14 @@
 {
-  "includeCoAuthoredBy": false,
+  "apiKeyHelper": "security find-generic-password -a \"$USER\" -s \"ANTHROPIC_AUTH_TOKEN\" -w",
   "env": {
-    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
+    "ANTHROPIC_BASE_URL": "https://ai-gateway.vercel.sh/claude-code"
   },
+  "model": "gpt-5.6-sol[1m]",
+  "modelOverrides": {
+    "gpt-5.6-sol[1m]": "openai/gpt-5.6-sol"
+  },
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(mkdir:*)",

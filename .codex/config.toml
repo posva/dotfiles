@@ -2,19 +2,46 @@ model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 service_tier = "default"
 approvals_reviewer = "auto_review"
+model_provider = "vercel"
 
-[tui.model_availability_nux]
-"gpt-5.5" = 4
-"gpt-5.6-sol" = 4
+[model_providers.vercel]
+name = "Vercel AI Gateway"
+base_url = "https://ai-gateway.vercel.sh/codex/v1"
+wire_api = "responses"
 
-[tui]
-notifications = ["approval-requested"]
-notification_method = "bel"
-notification_condition = "always"
-status_line = ["model", "estimated-thread-cost", "context-used", "current-dir", "git-branch"]
+[model_providers.vercel.auth]
+command = "/usr/bin/security"
+args = [
+  "find-generic-password",
+  "-a",
+  "posva",
+  "-s",
+  "AI_GATEWAY_API_KEY",
+  "-w",
+]
+timeout_ms = 5000
+refresh_interval_ms = 300000
+
 
 [hooks.state]
 
 [hooks.state."/Users/posva/.codex/hooks.json:stop:0:0"]
 trusted_hash = "sha256:0adfe387252636f64423840525b19539ff0a475c3d2668ffe365ce4513ed2068"
+enabled = true
+
+[hooks.state."codex-cli-wakatime@wakatime:hooks/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:3019b5f39b02025bd4c40a156aef99bda28389107c16b8fa6ed6bc691a3928e4"
+enabled = true
+
+[hooks.state."codex-cli-wakatime@wakatime:hooks/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:3793f33bb324020d43751b6ce8548d7a1a2791fec8b4c76fc1dcc689f6671b7b"
+
+[hooks.state."codex-cli-wakatime@wakatime:hooks/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:84094d8aa7937a8545ef4d87ef03a0309f77bd2670fbc74560c922f3fe653dcc"
+
+[marketplaces.wakatime]
+source_type = "git"
+source = "https://github.com/wakatime/codex-cli-wakatime.git"
+
+[plugins."codex-cli-wakatime@wakatime"]
 enabled = true
