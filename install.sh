@@ -189,10 +189,19 @@ _clone_prezto() {
 }
 
 _install_prezto() {
-  local rcfile
+  local rcfile dest
   setopt EXTENDED_GLOB
   for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+    dest="${ZDOTDIR:-$HOME}/.${rcfile:t}"
+    if [[ -L "$dest" && "$(readlink "$dest")" == "$rcfile" ]]; then
+      continue
+    fi
+    if [[ -f "$dest" || -d "$dest" || -L "$dest" ]]; then
+      mkdir -p "$olddir" || return 1
+      echo "Backing up ${dest:t}"
+      mv -f "$dest" "$olddir/" || return 1
+    fi
+    ln -s "$rcfile" "$dest" || return 1
   done
 }
 
