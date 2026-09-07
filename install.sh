@@ -129,7 +129,7 @@ brew_install() {
   local pkg="$1"
   working -n "Installing${cask:+ cask} $pkg"
   if <<< "$_brew_formulae" grep -qx "$pkg" || <<< "$_brew_casks" grep -qx "$pkg"; then
-    good " skipped"
+    echo $'\e[34m → skipped'"${RESET_COLOR}"
     return 0
   fi
   log_cmd "brew-$pkg" brew install $cask "$pkg" || fail "Failed to install $pkg. Check logs at $LOG_DIR/brew-$pkg.err"
