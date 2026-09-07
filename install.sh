@@ -329,7 +329,8 @@ install_node() {
 }
 
 install_node_globals_with_mise() {
-  mise use -g npm:@antfu/ni npm:fkill-cli npm:agent-browser npm:@openai/codex npm:portless
+  working -n "Installing node globals"
+  log_cmd mise-globals mise use -g -y npm:@antfu/ni npm:fkill-cli npm:agent-browser npm:@openai/codex npm:portless || ko
 }
 
 install_mise_completions() {
