@@ -1,0 +1,7 @@
+1Password/
+arcade/
+homebrew/trust.json
+homebrew/trust.json.lock
+arcade/auth.json
+arcade/telemetry.json
+uv/
