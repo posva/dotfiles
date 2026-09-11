@@ -25,3 +25,6 @@ version.json
 # Downloaded plugins and generated skills
 plugins/
 skills/
+mcp-oauth-locks/file-store.lock
+session_index.jsonl
+sessions/
