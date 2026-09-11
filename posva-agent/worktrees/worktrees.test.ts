@@ -38,8 +38,36 @@ function fixture({ pnpm = true, project = true, failure = false, workspaceOnly =
     'source "$1"; export PATH="$2:/usr/bin:/bin"; git_create_worktree "$3"; result=$?; print -r -- "RESULT=$result" "LOCATION=$PWD" "STORE=$PNPM_CONFIG_VIRTUAL_STORE_TYPE"; exit $result',
     'test', aliases, bin, branch,
   ], { cwd: repo, encoding: 'utf8', env: { ...process.env, PNPM_CONFIG_VIRTUAL_STORE_TYPE: 'project', GW_TEST_LOG: log, GW_TEST_FAILURE: failure ? '7' : '0' } })
-  return { repo, log, run }
+  const pick = (output: string, status = 0) => {
+    writeFileSync(join(bin, 'fzf'), '#!/bin/sh\ncat >/dev/null\nprintf "%s" "$GW_TEST_PICK"\nexit "$GW_TEST_PICK_STATUS"\n', { mode: 0o755 })
+    return spawnSync('/bin/zsh', ['-f', '-c',
+      'source "$1"; export PATH="$2:/usr/bin:/bin"; git_create_worktree',
+      'test', aliases, bin,
+    ], { cwd: repo, encoding: 'utf8', env: { ...process.env, GW_TEST_PICK: output, GW_TEST_PICK_STATUS: String(status) } })
+  }
+  return { repo, log, run, pick }
 }
+
+test('picker accepts a branch name', () => {
+  const { repo, pick } = fixture({ project: false })
+  const result = pick('feature/picked\n')
+  assert.equal(result.status, 0, result.stderr)
+  assert.ok(existsSync(join(repo, '.posva/worktrees/feature-picked')))
+})
+
+for (const status of [1, 2, 130]) {
+  test(`picker exit ${status} does not create a worktree from its output`, () => {
+    const { repo, pick } = fixture({ project: false })
+    assert.notEqual(pick('feature/unwanted\n', status).status, 0)
+    assert.equal(existsSync(join(repo, '.posva/worktrees')), false)
+  })
+}
+
+test('empty picker output does not create a worktree', () => {
+  const { repo, pick } = fixture({ project: false })
+  assert.notEqual(pick('').status, 0)
+  assert.equal(existsSync(join(repo, '.posva/worktrees')), false)
+})
 
 test('new pnpm worktree installs with shared store and permits downloads', () => {
   const { repo, log, run } = fixture()

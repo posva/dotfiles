@@ -11,20 +11,16 @@ function _wt_log() {
 # worktrees live in <repo>/.posva/worktrees (git-excluded)
 # no arg: pick (or type a new name) with fzf
 function git_create_worktree() {
-  local branch=$1 out dir gitdir root target setup_result
-  local -a lines
+  local branch=$1 dir gitdir root target setup_result
 
   git rev-parse --git-dir >/dev/null 2>&1 || { _wt_log err "not a git repo"; return 1 }
 
   if [[ -z "$branch" ]]; then
-    out=$(git branch --all --format='%(refname:short)' | sed 's#^origin/##' | sort -u \
-      | fzf --prompt='worktree> ' --height=~50% --print-query)
-    (( $? == 130 )) && return 1
-    # last line: the selection, or the typed query when nothing matched
-    lines=(${(f)out})
-    (( ${#lines} )) || return 1
-    git_create_worktree "${lines[-1]}"
-    return
+    branch=$(git branch --all --format='%(refname:short)' | sed 's#^origin/##' | sort -u \
+      | fzf --prompt='worktree> ' --height=~50% --reverse --no-multi \
+        --bind='enter:accept-or-print-query' \
+        --header='enter: switch/create · esc: cancel') || return 1
+    [[ -n "$branch" ]] || return 1
   fi
 
   dir=$(git worktree list --porcelain | awk -v b="refs/heads/$branch" '
@@ -84,7 +80,8 @@ function git_delete_worktree() {
       branch=$(git worktree list --porcelain | awk '
         $1 == "worktree" { n++ }
         $1 == "branch" && n > 1 { sub("refs/heads/", "", $2); print $2 }' \
-        | fzf --prompt='delete worktree> ' --height=~50%)
+        | fzf --prompt='delete worktree> ' --height=~50% --reverse --no-multi \
+          --header='enter: delete · esc: cancel') || return 1
       [[ -z "$branch" ]] && return 1
     fi
   fi
