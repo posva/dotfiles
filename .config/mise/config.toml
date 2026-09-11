@@ -1,5 +1,6 @@
 [tools]
 node = "latest"
+pnpm = "12"
 "npm:@antfu/ni" = "latest"
 "npm:@openai/codex" = "latest"
 "npm:agent-browser" = "latest"
