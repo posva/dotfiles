@@ -28,3 +28,4 @@ skills/
 mcp-oauth-locks/file-store.lock
 session_index.jsonl
 sessions/
+shell_snapshots/
