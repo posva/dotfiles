@@ -8,6 +8,27 @@ import { spawnSync } from 'node:child_process'
 
 const aliases = fileURLToPath(new URL('../../aliases', import.meta.url))
 
+for (const command of ['gw', 'gwd']) {
+  for (const option of ['-h', '--help', '-x', '--unknown']) {
+    for (const args of [[option], ['feature/example', option]]) {
+      test(`${command} ${args.join(' ')} shows help before any work`, () => {
+        const root = realpathSync(mkdtempSync(join(tmpdir(), 'gw-help-test-')))
+        const result = spawnSync('/bin/zsh', ['-f', '-c',
+          'source "$1"; shift; function git() { print -u2 -- "unexpected git call"; return 99 }; function fzf() { print -u2 -- "unexpected fzf call"; return 99 }; command_name=$1; shift; eval "$command_name" \'"$@"\'',
+          'test', aliases, command, ...args,
+        ], { cwd: root, encoding: 'utf8' })
+        const help = option === '-h' || option === '--help'
+        assert.equal(result.status, help ? 0 : 2, result.stderr)
+        const output = result.stdout + result.stderr
+        assert.ok(output.includes(`Usage: ${command} [branch]`), output)
+        assert.match(output, /-h, --help/)
+        assert.doesNotMatch(output, /unexpected (git|fzf) call/)
+        if (!help) assert.ok(result.stderr.includes(`Unknown option: ${option}`), result.stderr)
+      })
+    }
+  }
+}
+
 function fixture({ pnpm = true, project = true, failure = false, workspaceOnly = false } = {}) {
   const root = realpathSync(mkdtempSync(join(tmpdir(), 'gw-test-')))
   const repo = join(root, 'repo with spaces')

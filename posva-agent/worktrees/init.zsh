@@ -7,11 +7,29 @@ function _wt_log() {
   print -P "%F{${colors[$1]}}==>%f $2"
 }
 
+function _wt_create_help() {
+  print -r -- 'Usage: gw [branch]
+
+Create or enter a branch worktree in <repo>/.posva/worktrees.
+Without a branch, select or type a branch name with fzf.
+New worktrees install pnpm dependencies when available.
+
+Options:
+  -h, --help  Show this help.'
+}
+
 # gw [branch]: cd into the branch's worktree, creating it if needed
 # worktrees live in <repo>/.posva/worktrees (git-excluded)
 # no arg: pick (or type a new name) with fzf
 function git_create_worktree() {
-  local branch=$1 dir gitdir root target setup_result
+  local branch=$1 dir gitdir root target setup_result arg
+
+  for arg in "$@"; do
+    case "$arg" in
+      -h|--help) _wt_create_help; return 0 ;;
+      -*) print -u2 -r -- "Unknown option: $arg"; _wt_create_help >&2; return 2 ;;
+    esac
+  done
 
   git rev-parse --git-dir >/dev/null 2>&1 || { _wt_log err "not a git repo"; return 1 }
 
@@ -62,11 +80,30 @@ function git_create_worktree() {
 }
 alias gw=git_create_worktree
 
+function _wt_delete_help() {
+  print -r -- 'Usage: gwd [branch]
+
+Remove the worktree for a branch.
+Without a branch, remove the current linked worktree or select one with fzf.
+Ask for confirmation if the worktree has changes.
+The main worktree cannot be removed.
+
+Options:
+  -h, --help  Show this help.'
+}
+
 # gwd [branch]: delete the branch's worktree
 # no arg: inside a worktree deletes it, otherwise pick with fzf
 # prompts if the worktree has changes (only 'y' confirms)
 function git_delete_worktree() {
-  local branch=$1 dir main force reply
+  local branch=$1 dir main force reply arg
+
+  for arg in "$@"; do
+    case "$arg" in
+      -h|--help) _wt_delete_help; return 0 ;;
+      -*) print -u2 -r -- "Unknown option: $arg"; _wt_delete_help >&2; return 2 ;;
+    esac
+  done
 
   git rev-parse --git-dir >/dev/null 2>&1 || { _wt_log err "not a git repo"; return 1 }
 
