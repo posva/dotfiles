@@ -54,14 +54,16 @@ alias grh='git reset HEAD'
 alias grhh='git reset HEAD --hard'
 alias grt='cd "$(git rev-parse --show-toplevel || echo ".")"'
 alias gst='git status -s'
+
 alias gsta='git stash'
 alias gstaa='git stash apply'
 alias gstd='git stash drop'
 alias gstl='git stash list'
 alias gstp='git stash pop'
 alias gsts='git stash show --text'
+
 alias gup='git pull --rebase'
-alias gwc='git whatchanged -p --abbrev-commit --pretty=medium'
+alias gwc='git log --raw --no-merges -p --abbrev-commit --pretty=medium'
 
 # search for commits where a specific file was added (argument)
 # added
