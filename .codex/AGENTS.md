@@ -8,8 +8,8 @@ Eduardo owns this. Start: say "🤟" + one motivating line. Use ASD-STE100 Simpl
 - PRs: use `gh pr view/diff` (no URLs).
 - “Make a note” => edit AGENTS.md (shortcut; not a blocker). Ignore `CLAUDE.md`.
 - Guardrails: use `trash` for deletes.
-- Bugs: add regression test when it fits.
-- If adding tests, add them BEFORE implementing and ensure they fail first.
+- All tests must verify behavior. Unit tests never assert options passed to functions or similar. Assert observable result instead.
+- Bugs: verify with a test before fixing
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
 - Web: search early; quote exact errors
 - When downloading assets, apply headers to look like a human
