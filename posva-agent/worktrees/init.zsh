@@ -47,6 +47,7 @@ function git_create_worktree() {
   if [[ -n "$dir" ]]; then
     _wt_log info "worktree exists, switching: $dir"
     cd "$dir"
+    git set-rem
     return
   fi
 
@@ -71,6 +72,7 @@ function git_create_worktree() {
   fi || return $?
 
   cd "$target" || return $?
+  git set-rem
   posva_worktree_setup || {
     setup_result=$?
     _wt_log err "setup failed; worktree kept at $target. Run posva_worktree_setup to retry."
