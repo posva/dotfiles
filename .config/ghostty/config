@@ -1,5 +1,9 @@
 clipboard-trim-trailing-spaces = false
 shell-integration-features = no-title
+working-directory = home
+window-inherit-working-directory = false
+tab-inherit-working-directory = true
+split-inherit-working-directory = true
 window-colorspace = display-p3
 window-padding-x = 0
 window-padding-y = 0
@@ -30,6 +34,8 @@ keybind = shift+enter=text:\n
 keybind = shift+space=text:\x20
 # same story: shift+backspace sends `ESC[127;2u` → wipes the line via vi undo
 keybind = shift+backspace=text:\x7f
+# Keep Ctrl+D as shell EOF when extended key encoding is active.
+keybind = ctrl+d=text:\x04
 # Programmer Dvorak maps physical Digit3 and Digit4 to { and }.
 keybind = cmd+digit_3=unbind
 keybind = cmd+digit_4=unbind
