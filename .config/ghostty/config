@@ -40,7 +40,9 @@ keybind = cmd+}=next_tab
 #   cmd+d split right · cmd+shift+d split down · cmd+t new tab
 #   cmd+opt+arrows move between splits · cmd+{ / } prev/next tab
 #   cmd+shift+enter zoom split · cmd+w close · cmd+1..8 goto tab
-# Sessions = zmx (persistence): detach ctrl+\, reattach with `zs`.
+# Sessions = zmx (persistence): names come from the working directory.
+window-save-state = always
+command = /Users/posva/.config/zsh/bin/ghostty-zmx
 
 # custom-shader = ./shaders/cursor-blaze.glsl
 # custom-shader = ./shaders/inside-the-matrix.glsl

@@ -3,6 +3,28 @@
 # across detach/quit. Detach a session with ctrl+\ , reattach with `zs`/`za`.
 command -v zmx >/dev/null || return
 
+# Keep the allocator aligned after cd.
+if [[ -n $ZMX_SESSION && $ZMX_SESSION != *[^a-zA-Z0-9._-]* ]]; then
+  typeset -g _ZMX_TRACKED_DIRECTORY=
+
+  _zmx_track_directory() {
+    local directory=${PWD:A}
+    [[ $directory == $_ZMX_TRACKED_DIRECTORY ]] && return
+
+    local state_dir=${GHOSTTY_ZMX_STATE_DIR:-${TMPDIR:-/tmp}/ghostty-zmx-$UID}
+    local registry_dir=$state_dir/directories
+    local directory_hash=$(/sbin/md5 -qs "$directory") || return
+
+    [[ -d $registry_dir ]] || /bin/mkdir -p "$registry_dir" || return
+    print -rn -- "$$:$directory_hash" >| "$registry_dir/$ZMX_SESSION"
+    _ZMX_TRACKED_DIRECTORY=$directory
+  }
+
+  autoload -Uz add-zsh-hook
+  add-zsh-hook chpwd _zmx_track_directory
+  add-zsh-hook precmd _zmx_track_directory
+fi
+
 alias zl='zmx ls'          # list sessions
 alias za='zmx attach'      # attach/create by exact name
 alias zk='zmx kill'        # kill a session
