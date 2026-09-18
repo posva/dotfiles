@@ -25,7 +25,8 @@ Eduardo owns this. Start: say "🤟" + one motivating line. Use ASD-STE100 Simpl
 
 ### Browser Automation
 
-Use `agent-browser` for web automation. Run `agent-browser --help` for all commands.
+Use `agent-browser` for web automation and testing frontend. Don't use it to fetch content like docs
+Run `agent-browser --help` for all commands.
 
 Core workflow:
 
