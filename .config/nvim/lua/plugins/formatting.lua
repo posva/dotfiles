@@ -32,6 +32,7 @@ return {
     opts.formatters_by_ft.javascriptreact = web_formatters
     opts.formatters_by_ft.typescriptreact = web_formatters
     opts.formatters_by_ft.vue = web_formatters
+    opts.formatters_by_ft.svelte = { "oxfmt" }
     opts.formatters_by_ft.markdown = web_formatters
 
     -- opts.log_level = vim.log.levels.DEBUG

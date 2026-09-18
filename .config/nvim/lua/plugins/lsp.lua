@@ -37,6 +37,7 @@ return {
         "cssls",
         "html",
         "lua_ls",
+        "svelte",
         "vtsls",
         "vue_ls",
       },
