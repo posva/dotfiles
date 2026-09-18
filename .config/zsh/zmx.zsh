@@ -1,14 +1,27 @@
 # zmx — terminal session persistence (the tmux *session* replacement).
 # Splits & tabs live in Ghostty's leader (ctrl+b); zmx just keeps shells alive
 # across detach/quit. Detach a session with ctrl+\ , reattach with `zs`/`za`.
+
+if [[ -n ${GHOSTTY_ZMX_PLAIN:-} ]]; then
+  _ghostty_plain_report_directory() {
+    local directory=${PWD:A}
+    print -n -- $'\e]7;kitty-shell-cwd://'"${HOST:-localhost}$directory"$'\a'
+  }
+
+  autoload -Uz add-zsh-hook
+  add-zsh-hook chpwd _ghostty_plain_report_directory
+  add-zsh-hook precmd _ghostty_plain_report_directory
+fi
+
 command -v zmx >/dev/null || return
 
 # Keep the allocator aligned after cd.
-if [[ -n $ZMX_SESSION && $ZMX_SESSION != *[^a-zA-Z0-9._-]* ]]; then
+if [[ -n $ZMX_SESSION && $ZMX_SESSION != *[^a-zA-Z0-9._:-]* ]]; then
   typeset -g _ZMX_TRACKED_DIRECTORY=
 
   _zmx_track_directory() {
     local directory=${PWD:A}
+    print -n -- $'\e]7;kitty-shell-cwd://'"${HOST:-localhost}$directory"$'\a'
     [[ $directory == $_ZMX_TRACKED_DIRECTORY ]] && return
 
     local state_dir=${GHOSTTY_ZMX_STATE_DIR:-${TMPDIR:-/tmp}/ghostty-zmx-$UID}
@@ -34,9 +47,24 @@ zs() {
   emulate -L zsh
   local name=$1
   if [[ -z $name ]] && command -v fzf >/dev/null; then
-    name=$(zmx ls --short 2>/dev/null | fzf --prompt='zmx session> ' \
-      --print-query --reverse --height=40% \
-      --header='enter: attach/create · esc: cancel' | tail -1)
+    local output query key selected result
+    output=$(zmx ls --short 2>/dev/null | fzf --prompt='zmx session> ' \
+      --print-query --expect=ctrl-j --reverse --height=40% \
+      --header='enter: attach/create · shift-enter: force create · esc: cancel')
+    result=$?
+
+    query=$(print -r -- "$output" | /usr/bin/sed -n '1p')
+    key=$(print -r -- "$output" | /usr/bin/sed -n '2p')
+    selected=$(print -r -- "$output" | /usr/bin/sed -n '3p')
+
+    # Ghostty sends Shift+Enter as LF, which fzf reports as Ctrl+J.
+    if [[ $key == ctrl-j && -n $query ]]; then
+      name=$query
+    elif (( result == 0 )) && [[ -n $selected ]]; then
+      name=$selected
+    elif [[ -n $query ]]; then
+      name=$query
+    fi
   fi
   [[ -z $name ]] && return 0
   zmx attach "$name"

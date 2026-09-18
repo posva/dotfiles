@@ -1,0 +1,63 @@
+#!/bin/zsh -f
+
+emulate -L zsh
+setopt extended_glob
+
+fzf_bin=${GHOSTTY_ZMX_FZF_BIN:-/opt/homebrew/bin/fzf}
+choices_file=${GHOSTTY_ZMX_TAB_NAMES_FILE:-${XDG_STATE_HOME:-$HOME/.local/state}/ghostty-zmx/tab-names}
+choices_dir=${choices_file:h}
+
+[[ -x $fzf_bin ]] || exit 1
+/bin/mkdir -p "$choices_dir" || exit 1
+[[ -e $choices_file ]] || : >| "$choices_file"
+
+normalize() {
+  local value=${1:l}
+  value=${value//[^a-z0-9._-]/-}
+  value=${value//-##/-}
+  while [[ $value == -* ]]; do value=${value#-}; done
+  while [[ $value == *- ]]; do value=${value%-}; done
+  print -r -- "${value[1,20]}"
+}
+
+remove_choice() {
+  local choice=$1 temporary=$choices_file.$$
+  /usr/bin/awk -v choice="$choice" '$0 != choice' "$choices_file" >| "$temporary" || return 1
+  /bin/mv -f "$temporary" "$choices_file"
+}
+
+while true; do
+  output=$(/usr/bin/sort -u "$choices_file" | "$fzf_bin" \
+    --print-query --expect=ctrl-x,ctrl-j --reverse --height=40% \
+    --prompt='tab name> ' \
+    --header='enter: select/create · shift-enter: force create · ctrl-x: delete · esc: cancel')
+  result=$?
+
+  query=$(print -r -- "$output" | /usr/bin/sed -n '1p')
+  key=$(print -r -- "$output" | /usr/bin/sed -n '2p')
+  selected=$(print -r -- "$output" | /usr/bin/sed -n '3p')
+
+  if [[ $key == ctrl-x ]]; then
+    [[ -n $selected ]] && remove_choice "$selected"
+    continue
+  fi
+
+  choice=
+  # Ghostty sends Shift+Enter as LF, which fzf reports as Ctrl+J.
+  if [[ $key == ctrl-j && -n $query ]]; then
+    choice=$query
+  elif (( result == 0 )) && [[ -n $selected ]]; then
+    choice=$selected
+  elif [[ -n $query ]]; then
+    choice=$query
+  else
+    exit 130
+  fi
+
+  choice=$(normalize "$choice")
+  [[ -n $choice ]] || continue
+
+  /usr/bin/grep -Fxq "$choice" "$choices_file" || print -r -- "$choice" >> "$choices_file"
+  print -r -- "$choice"
+  exit 0
+done

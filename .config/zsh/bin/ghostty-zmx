@@ -1,46 +1,445 @@
-#!/bin/zsh
+#!/bin/zsh -f
 
 emulate -L zsh
+setopt extended_glob
+unsetopt bg_nice
 
-script_dir=${0:A:h}
+[[ -n ${TMUX:-} ]] && exec "${SHELL:-/bin/zsh}" -l
 
-fallback() {
-  print -u2 -- 'ghostty-zmx: could not identify this pane; opening the session picker'
-  if [[ -x $script_dir/zmx-pick ]]; then
-    exec "$script_dir/zmx-pick"
+zmx_bin=${GHOSTTY_ZMX_BIN:-/opt/homebrew/bin/zmx}
+zoxide_bin=${GHOSTTY_ZMX_ZOXIDE_BIN:-/opt/homebrew/bin/zoxide}
+osascript_bin=${GHOSTTY_ZMX_OSASCRIPT_BIN:-/usr/bin/osascript}
+tab_name_bin=${GHOSTTY_ZMX_TAB_NAME_BIN:-${0:A:h}/ghostty-zmx-tab-name}
+typeset lock_fd=
+
+release_lock() {
+  if [[ -n $lock_fd ]]; then
+    zsystem flock -u "$lock_fd" 2>/dev/null
+    lock_fd=
   fi
-  exec "${SHELL:-/bin/zsh}" -l
 }
 
-command -v zmx >/dev/null || fallback
+fallback() {
+  local reason=${1:-unknown error}
+  release_lock
+  print -u2 -- "ghostty-zmx: $reason; starting a regular shell"
+  exec env -u ZMX_SESSION "${SHELL:-/bin/zsh}" -l
+}
 
-probe="ghostty-zmx-probe-$(/usr/bin/uuidgen)"
-print -n -- $'\e]2;'"$probe"$'\e\\'
+[[ -x $zmx_bin ]] || fallback 'zmx is unavailable'
+[[ -x /sbin/md5 ]] || fallback 'md5 is unavailable'
+zmodload zsh/system 2>/dev/null || fallback 'zsh file locking is unavailable'
 
-surface_id=$(
-  /usr/bin/osascript - "$probe" 2>/dev/null <<'APPLESCRIPT'
+state_dir=${GHOSTTY_ZMX_STATE_DIR:-${TMPDIR:-/tmp}/ghostty-zmx-$UID}
+registry_dir=$state_dir/directories
+claims_dir=$state_dir/claims
+windows_dir=$state_dir/windows
+tabs_dir=$state_dir/tabs
+surfaces_dir=$state_dir/surfaces
+/bin/mkdir -p "$registry_dir" "$claims_dir" "$windows_dir" "$tabs_dir" "$surfaces_dir" || fallback 'state directory creation failed'
+
+has_detached_session() {
+  local target_directory=$1 target_hash=$2
+  local sessions line field name pid clients start_dir cached cached_pid cached_hash
+
+  sessions=$("$zmx_bin" list 2>/dev/null) || return 1
+  for line in ${(f)sessions}; do
+    name=
+    pid=
+    clients=1
+    start_dir=
+    for field in ${(ps:\t:)line}; do
+      case $field in
+        name=*) name=${field#name=} ;;
+        pid=*) pid=${field#pid=} ;;
+        clients=*) clients=${field#clients=} ;;
+        start_dir=*) start_dir=${field#start_dir=} ;;
+      esac
+    done
+
+    [[ -n $name && $name != *[^a-zA-Z0-9._:-]* ]] || continue
+    [[ $clients == 0 ]] || continue
+
+    cached=
+    [[ -r $registry_dir/$name ]] && cached=$(<"$registry_dir/$name")
+    cached_pid=${cached%%:*}
+    cached_hash=${cached#*:}
+    if [[ $cached == *:* && $cached_pid == $pid && $cached_pid == <-> ]]; then
+      [[ $cached_hash == $target_hash ]] && return 0
+    elif [[ $start_dir == $target_directory ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+find_active_session() {
+  local target_directory=$1 target_hash=$2
+  local sessions line field name pid clients start_dir cached cached_pid cached_hash
+
+  sessions=$("$zmx_bin" list 2>/dev/null) || return 1
+  for line in ${(f)sessions}; do
+    name=
+    pid=
+    clients=0
+    start_dir=
+    for field in ${(ps:\t:)line}; do
+      case $field in
+        name=*) name=${field#name=} ;;
+        pid=*) pid=${field#pid=} ;;
+        clients=*) clients=${field#clients=} ;;
+        start_dir=*) start_dir=${field#start_dir=} ;;
+      esac
+    done
+
+    [[ -n $name && $name != *[^a-zA-Z0-9._:-]* ]] || continue
+    [[ $clients == <-> ]] && (( clients > 0 )) || continue
+
+    cached=
+    [[ -r $registry_dir/$name ]] && cached=$(<"$registry_dir/$name")
+    cached_pid=${cached%%:*}
+    cached_hash=${cached#*:}
+    if [[ $cached == *:* && $cached_pid == $pid && $cached_pid == <-> ]]; then
+      if [[ $cached_hash == $target_hash ]]; then
+        REPLY=$name
+        return 0
+      fi
+    elif [[ $start_dir == $target_directory ]]; then
+      REPLY=$name
+      return 0
+    fi
+  done
+  return 1
+}
+
+slugify() {
+  local value=${1:l}
+  value=${value//[^a-z0-9._-]/-}
+  value=${value//-##/-}
+  while [[ $value == -* ]]; do value=${value#-}; done
+  while [[ $value == *- ]]; do value=${value%-}; done
+  REPLY=${value[1,32]}
+  [[ -n $REPLY && $REPLY != (.|..) ]] || REPLY=root
+}
+
+load_surface_context() {
+  [[ -x $osascript_bin ]] || return 1
+
+  local probe="ghostty-zmx-window-$$-$RANDOM" result
+  print -n -- $'\e]2;'"$probe"$'\e\\'
+  result=$(
+    "$osascript_bin" - "$probe" 2>/dev/null <<'APPLESCRIPT'
 on run argv
   set probeTitle to item 1 of argv
 
   repeat 40 times
     tell application "Ghostty"
-      repeat with candidate in terminals
-        if name of candidate is probeTitle then return id of candidate
+      repeat with candidateWindow in windows
+        repeat with candidateTab in tabs of candidateWindow
+          repeat with candidate in terminals of candidateTab
+            if name of candidate is probeTitle then
+              set surfaceKind to "split"
+              if (count of tabs of candidateWindow) is 1 and (count of terminals of candidateTab) is 1 then
+                set surfaceKind to "window"
+              else if (count of terminals of candidateTab) is 1 then
+                set surfaceKind to "tab"
+              end if
+              return (id of candidateWindow) & "|" & (id of candidateTab) & "|" & (id of candidate) & "|" & surfaceKind
+            end if
+          end repeat
+        end repeat
       end repeat
     end tell
-    delay 0.05
+    delay 0.025
   end repeat
 
   return ""
 end run
 APPLESCRIPT
-)
+  )
+  [[ -n $result ]] || return 1
 
-compact_id=${surface_id//-/}
-if [[ ${#compact_id} != 32 || $compact_id == *[^[:xdigit:]]* ]]; then
-  fallback
+  local -a parts
+  parts=(${(s:|:)result})
+  (( ${#parts} == 4 )) || return 1
+  surface_window=$parts[1]
+  surface_tab=$parts[2]
+  surface_terminal=$parts[3]
+  surface_kind=$parts[4]
+}
+
+directory=${PWD:A}
+directory_hash=$(/sbin/md5 -qs "$directory") || fallback 'directory hashing failed'
+
+typeset surface_window= surface_tab= surface_terminal= surface_kind=unknown
+typeset mode= mode_source= preferred_session= window_group= tab_base=
+typeset requested_base= record= selected= label= active_session=
+integer fresh_window=0 fresh_tab=0 strict_base=0
+
+if [[ $1 != --resolve ]] && load_surface_context; then
+  if [[ -r $surfaces_dir/$surface_terminal ]]; then
+    record=$(<"$surfaces_dir/$surface_terminal")
+    if [[ $record == plain ]]; then
+      mode=plain
+      mode_source=surface
+    elif [[ $record == zmx\|* ]]; then
+      local -a parts
+      parts=(${(s:|:)record})
+      preferred_session=$parts[2]
+      window_group=$parts[3]
+      tab_base=$parts[4]
+      mode=zmx
+      mode_source=surface
+    fi
+  fi
+
+  if [[ -z $mode && -r $tabs_dir/$surface_tab ]]; then
+    record=$(<"$tabs_dir/$surface_tab")
+    if [[ $record == plain ]]; then
+      mode=plain
+    elif [[ $record == zmx\|* ]]; then
+      local -a parts
+      parts=(${(s:|:)record})
+      window_group=$parts[2]
+      tab_base=$parts[3]
+      mode=zmx
+    fi
+    mode_source=tab
+  fi
+
+  if [[ -z $mode && -r $windows_dir/$surface_window ]]; then
+    record=$(<"$windows_dir/$surface_window")
+    if [[ $record == plain ]]; then
+      mode=plain
+    elif [[ $record == zmx\|* ]]; then
+      window_group=${record#zmx|}
+      mode=zmx
+    fi
+    mode_source=window
+  fi
 fi
 
-session_name="ghostty-${surface_id:l}"
-print -n -- $'\e]2;'"zmx:${surface_id[1,8]}"$'\e\\'
-exec env -u ZMX_SESSION zmx attach "$session_name"
+plain_shell() {
+  if [[ $surface_kind != unknown ]]; then
+    print -rn -- plain >| "$windows_dir/$surface_window"
+    print -rn -- plain >| "$tabs_dir/$surface_tab"
+    print -rn -- plain >| "$surfaces_dir/$surface_terminal"
+  fi
+  print -n -- $'\e]2;\e\\'
+  exec env -u ZMX_SESSION GHOSTTY_ZMX_PLAIN=1 "${SHELL:-/bin/zsh}" -l
+}
+
+[[ $mode == plain ]] && plain_shell
+
+if [[ $surface_kind != unknown && -z $mode ]]; then
+  if [[ $surface_kind == window ]]; then
+    if has_detached_session "$directory" "$directory_hash"; then
+      mode=zmx
+    elif [[ -x $zoxide_bin ]]; then
+      print -n -- $'\e]2;choose project\e\\'
+      selected=$(PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" "$zoxide_bin" query --interactive --)
+      [[ -n $selected && -d $selected ]] || plain_shell
+      builtin cd -- "$selected"
+      directory=${PWD:A}
+      directory_hash=$(/sbin/md5 -qs "$directory") || fallback 'directory hashing failed'
+      slugify "${directory:t}"
+      requested_base=$REPLY
+      mode=zmx
+      fresh_window=1
+      strict_base=1
+    else
+      plain_shell
+    fi
+  elif find_active_session "$directory" "$directory_hash"; then
+    active_session=$REPLY
+    window_group=${active_session%%:*}
+    mode=zmx
+    mode_source=window
+  elif has_detached_session "$directory" "$directory_hash"; then
+    mode=zmx
+  else
+    plain_shell
+  fi
+fi
+
+if [[ $mode == zmx && $surface_kind == tab && $mode_source == window ]]; then
+  print -n -- $'\e]2;choose tab name\e\\'
+  label=$("$tab_name_bin") || exit 0
+  requested_base=${window_group}:$label
+  fresh_tab=1
+  strict_base=1
+elif [[ $mode == zmx && $surface_kind == split ]]; then
+  requested_base=${tab_base:-$window_group}
+  [[ -n $requested_base ]] && strict_base=1
+elif [[ $mode == zmx && -n $tab_base ]]; then
+  requested_base=$tab_base
+  strict_base=1
+fi
+
+if [[ -n $requested_base ]]; then
+  base=$requested_base
+else
+  slugify "${directory:t}"
+  base=$REPLY
+fi
+base=${base[1,32]}
+
+lock_file=$state_dir/allocation.lock
+[[ -e $lock_file ]] || : >| "$lock_file"
+zsystem flock -t 5 -f lock_fd "$lock_file" || fallback 'session allocation lock timed out'
+trap release_lock EXIT INT TERM HUP
+
+claim_is_active() {
+  local claim_file=$claims_dir/$1 claim_pid
+  if [[ -d $claim_file ]]; then
+    /bin/rmdir "$claim_file" 2>/dev/null
+    return 1
+  fi
+  [[ -r $claim_file ]] || return 1
+
+  claim_pid=$(<"$claim_file")
+  [[ $claim_pid == <-> ]] || return 1
+  kill -0 "$claim_pid" 2>/dev/null
+}
+
+typeset listing
+listing=$("$zmx_bin" list 2>/dev/null) || fallback 'zmx session listing failed'
+
+typeset -a session_names
+typeset -A session_pids session_clients session_start_dirs occupied
+typeset line field name pid clients start_dir suffix
+
+for line in ${(f)listing}; do
+  name=
+  pid=
+  clients=1
+  start_dir=
+
+  for field in ${(ps:\t:)line}; do
+    case $field in
+      name=*) name=${field#name=} ;;
+      pid=*) pid=${field#pid=} ;;
+      clients=*) clients=${field#clients=} ;;
+      start_dir=*) start_dir=${field#start_dir=} ;;
+    esac
+  done
+
+  [[ -n $name && $name != *[^a-zA-Z0-9._:-]* ]] || continue
+  session_names+=("$name")
+  session_pids[$name]=$pid
+  session_clients[$name]=$clients
+  session_start_dirs[$name]=$start_dir
+
+  if [[ $name == $base ]]; then
+    occupied[0]=1
+  elif [[ $name == ${base}-<-> ]]; then
+    suffix=${name#$base-}
+    occupied[$suffix]=1
+  fi
+done
+
+typeset chosen= cached cached_pid cached_hash claim_path registry_path
+integer chosen_rank=2147483647 candidate_rank
+
+if [[ -n $preferred_session && ${session_clients[$preferred_session]-} == 0 ]] &&
+    ! claim_is_active "$preferred_session"; then
+  chosen=$preferred_session
+  chosen_rank=0
+fi
+
+for name in "${session_names[@]}"; do
+  [[ -z $chosen ]] || break
+  [[ ${session_clients[$name]} == <-> ]] || continue
+  (( session_clients[$name] == 0 )) || continue
+  claim_is_active "$name" && continue
+  if (( strict_base )) && [[ $name != $base && $name != ${base}-<-> ]]; then
+    continue
+  fi
+
+  registry_path=$registry_dir/$name
+  cached=
+  [[ -r $registry_path ]] && cached=$(<"$registry_path")
+
+  cached_pid=${cached%%:*}
+  cached_hash=${cached#*:}
+  if [[ $cached == *:* && $cached_pid == ${session_pids[$name]} && $cached_pid == <-> ]]; then
+    [[ $cached_hash == $directory_hash ]] || continue
+  else
+    [[ ${session_start_dirs[$name]} == $directory ]] || continue
+  fi
+
+  candidate_rank=2147483647
+  if [[ $name == $base ]]; then
+    candidate_rank=0
+  elif [[ $name == ${base}-<-> ]]; then
+    suffix=${name#$base-}
+    (( suffix < 2147483647 )) && candidate_rank=$suffix
+  fi
+
+  if [[ -z $chosen || candidate_rank -lt chosen_rank ||
+        ( candidate_rank -eq chosen_rank && $name < $chosen ) ]]; then
+    chosen=$name
+    chosen_rank=$candidate_rank
+  fi
+done
+
+if [[ -z $chosen ]]; then
+  suffix=0
+  while true; do
+    if (( suffix == 0 )); then
+      name=$base
+    else
+      name=$base-$suffix
+    fi
+
+    if (( ! ${+occupied[$suffix]} )) && ! claim_is_active "$name"; then
+      chosen=$name
+      break
+    fi
+    (( suffix++ ))
+  done
+fi
+
+if [[ $1 == --resolve ]]; then
+  release_lock
+  trap - EXIT INT TERM HUP
+  print -r -- "$chosen"
+  exit 0
+fi
+
+claim_path=$claims_dir/$chosen
+print -r -- $$ >| "$claim_path"
+if [[ ${session_pids[$chosen]-} == <-> ]]; then
+  print -rn -- "${session_pids[$chosen]}:$directory_hash" >| "$registry_dir/$chosen"
+fi
+
+if [[ $surface_kind != unknown ]]; then
+  if (( fresh_window )); then
+    window_group=$chosen
+    tab_base=$chosen
+  elif (( fresh_tab )); then
+    tab_base=$chosen
+  else
+    [[ -n $window_group ]] || window_group=${chosen%%:*}
+    if [[ -z $tab_base ]]; then
+      if [[ $surface_kind == split && -n $requested_base ]]; then
+        tab_base=$requested_base
+      else
+        tab_base=$chosen
+      fi
+    fi
+  fi
+
+  print -rn -- "zmx|$window_group" >| "$windows_dir/$surface_window"
+  print -rn -- "zmx|$window_group|$tab_base" >| "$tabs_dir/$surface_tab"
+  print -rn -- "zmx|$chosen|$window_group|$tab_base" >| "$surfaces_dir/$surface_terminal"
+fi
+
+release_lock
+trap - EXIT INT TERM HUP
+
+print -n -- $'\e]2;'"zmx:$chosen"$'\e\\'
+exec env -u ZMX_SESSION \
+  GHOSTTY_ZMX_GROUP="$window_group" \
+  GHOSTTY_ZMX_TAB_BASE="$tab_base" \
+  "$zmx_bin" attach "$chosen"

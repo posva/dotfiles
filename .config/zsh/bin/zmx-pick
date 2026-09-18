@@ -3,10 +3,24 @@
 # command (e.g. from Leader Key): fuzzy-pick an existing session or type a new
 # name to create, then attach. `exec` so the shell becomes the session.
 emulate -L zsh
-local sel
-sel=$(zmx ls --short 2>/dev/null | fzf --prompt='zmx session> ' \
-  --print-query --reverse --height=100% \
-  --header='enter: attach/create · esc: new shell') || sel=''
-sel=${sel##*$'\n'}
+local output query key selected sel
+output=$(zmx ls --short 2>/dev/null | fzf --prompt='zmx session> ' \
+  --print-query --expect=ctrl-j --reverse --height=100% \
+  --header='enter: attach/create · shift-enter: force create · esc: new shell')
+local result=$?
+
+query=$(print -r -- "$output" | sed -n '1p')
+key=$(print -r -- "$output" | sed -n '2p')
+selected=$(print -r -- "$output" | sed -n '3p')
+
+# Ghostty sends Shift+Enter as LF, which fzf reports as Ctrl+J.
+if [[ $key == ctrl-j && -n $query ]]; then
+  sel=$query
+elif (( result == 0 )) && [[ -n $selected ]]; then
+  sel=$selected
+elif [[ -n $query ]]; then
+  sel=$query
+fi
+
 [[ -z $sel ]] && exec "${SHELL:-/bin/zsh}" -l
 exec zmx attach "$sel"
