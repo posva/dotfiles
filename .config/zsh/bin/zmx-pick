@@ -1,0 +1,12 @@
+#!/bin/zsh
+# Standalone zmx session picker — meant to be run as a fresh Ghostty window's
+# command (e.g. from Leader Key): fuzzy-pick an existing session or type a new
+# name to create, then attach. `exec` so the shell becomes the session.
+emulate -L zsh
+local sel
+sel=$(zmx ls --short 2>/dev/null | fzf --prompt='zmx session> ' \
+  --print-query --reverse --height=100% \
+  --header='enter: attach/create · esc: new shell') || sel=''
+sel=${sel##*$'\n'}
+[[ -z $sel ]] && exec "${SHELL:-/bin/zsh}" -l
+exec zmx attach "$sel"

@@ -1,0 +1,46 @@
+#!/bin/zsh
+
+emulate -L zsh
+
+script_dir=${0:A:h}
+
+fallback() {
+  print -u2 -- 'ghostty-zmx: could not identify this pane; opening the session picker'
+  if [[ -x $script_dir/zmx-pick ]]; then
+    exec "$script_dir/zmx-pick"
+  fi
+  exec "${SHELL:-/bin/zsh}" -l
+}
+
+command -v zmx >/dev/null || fallback
+
+probe="ghostty-zmx-probe-$(/usr/bin/uuidgen)"
+print -n -- $'\e]2;'"$probe"$'\e\\'
+
+surface_id=$(
+  /usr/bin/osascript - "$probe" 2>/dev/null <<'APPLESCRIPT'
+on run argv
+  set probeTitle to item 1 of argv
+
+  repeat 40 times
+    tell application "Ghostty"
+      repeat with candidate in terminals
+        if name of candidate is probeTitle then return id of candidate
+      end repeat
+    end tell
+    delay 0.05
+  end repeat
+
+  return ""
+end run
+APPLESCRIPT
+)
+
+compact_id=${surface_id//-/}
+if [[ ${#compact_id} != 32 || $compact_id == *[^[:xdigit:]]* ]]; then
+  fallback
+fi
+
+session_name="ghostty-${surface_id:l}"
+print -n -- $'\e]2;'"zmx:${surface_id[1,8]}"$'\e\\'
+exec env -u ZMX_SESSION zmx attach "$session_name"
