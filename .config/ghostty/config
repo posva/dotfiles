@@ -30,10 +30,15 @@ keybind = shift+enter=text:\n
 keybind = shift+space=text:\x20
 # same story: shift+backspace sends `ESC[127;2u` → wipes the line via vi undo
 keybind = shift+backspace=text:\x7f
+# Programmer Dvorak maps physical Digit3 and Digit4 to { and }.
+keybind = cmd+digit_3=unbind
+keybind = cmd+digit_4=unbind
+keybind = cmd+{=previous_tab
+keybind = cmd+}=next_tab
 
 # Multiplexing = Ghostty's native macOS shortcuts (no custom binds, no Leader Key):
 #   cmd+d split right · cmd+shift+d split down · cmd+t new tab
-#   cmd+opt+arrows move between splits · cmd+shift+[ / ] prev/next tab
+#   cmd+opt+arrows move between splits · cmd+{ / } prev/next tab
 #   cmd+shift+enter zoom split · cmd+w close · cmd+1..8 goto tab
 # Sessions = zmx (persistence): detach ctrl+\, reattach with `zs`.
 
