@@ -7,6 +7,24 @@ function _wt_log() {
   print -P "%F{${colors[$1]}}==>%f $2"
 }
 
+function _wt_track_origin() {
+  local branch remote merge
+  branch=$(git branch --show-current) || return $?
+  [[ -n "$branch" ]] || return 0
+
+  if git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    git branch --set-upstream-to="origin/$branch" "$branch" >/dev/null
+    return
+  fi
+
+  remote=$(git config --get "branch.$branch.remote")
+  merge=$(git config --get "branch.$branch.merge")
+  if [[ "$remote" == origin && "$merge" == "refs/heads/$branch" ]]; then
+    git branch --unset-upstream "$branch" || return $?
+  fi
+  _wt_log warn "remote branch origin/$branch is missing; using local branch without upstream"
+}
+
 function _wt_create_help() {
   print -r -- 'Usage: gw [branch]
 
@@ -46,9 +64,9 @@ function git_create_worktree() {
     $1 == "branch" && $2 == b { print d; exit }')
   if [[ -n "$dir" ]]; then
     _wt_log info "worktree exists, switching: $dir"
-    cd "$dir"
-    git set-rem
-    return
+    cd "$dir" || return $?
+    _wt_track_origin
+    return $?
   fi
 
   gitdir=$(git rev-parse --path-format=absolute --git-common-dir)
@@ -72,7 +90,7 @@ function git_create_worktree() {
   fi || return $?
 
   cd "$target" || return $?
-  git set-rem
+  _wt_track_origin || return $?
   posva_worktree_setup || {
     setup_result=$?
     _wt_log err "setup failed; worktree kept at $target. Run posva_worktree_setup to retry."

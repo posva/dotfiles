@@ -102,6 +102,38 @@ test('new pnpm worktree installs with shared store and permits downloads', () =>
   assert.equal(readFileSync(log, 'utf8').split('\n').length, 4)
 })
 
+test('existing worktree enters a local branch when its remote branch is missing', () => {
+  const { repo, run } = fixture({ project: false })
+  assert.equal(run('feature/stale').status, 0)
+  const worktree = join(repo, '.posva/worktrees/feature-stale')
+  const git = (...args: string[]) => spawnSync('/usr/bin/git', args, { cwd: worktree, encoding: 'utf8' })
+  assert.equal(git('config', 'branch.feature/stale.remote', 'origin').status, 0)
+  assert.equal(git('config', 'branch.feature/stale.merge', 'refs/heads/feature/stale').status, 0)
+
+  const result = run('feature/stale')
+
+  assert.equal(result.status, 0, result.stderr)
+  assert.match(result.stdout, /remote branch origin\/feature\/stale is missing; using local branch without upstream/)
+  assert.match(result.stdout, new RegExp(`LOCATION=${worktree}`))
+  assert.doesNotMatch(git('status', '--short', '--branch').stdout, /\[gone\]/)
+})
+
+test('existing worktree tracks its matching remote branch when it exists', () => {
+  const { repo, run } = fixture({ project: false })
+  assert.equal(run('feature/tracked').status, 0)
+  const worktree = join(repo, '.posva/worktrees/feature-tracked')
+  const git = (...args: string[]) => spawnSync('/usr/bin/git', args, { cwd: worktree, encoding: 'utf8' })
+  assert.equal(git('config', 'remote.origin.url', 'git@example.com:owner/repo.git').status, 0)
+  assert.equal(git('config', 'remote.origin.fetch', '+refs/heads/*:refs/remotes/origin/*').status, 0)
+  assert.equal(git('update-ref', 'refs/remotes/origin/feature/tracked', 'HEAD').status, 0)
+
+  const result = run('feature/tracked')
+
+  assert.equal(result.status, 0, result.stderr)
+  assert.equal(git('rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{upstream}').stdout.trim(), 'origin/feature/tracked')
+  assert.doesNotMatch(result.stdout, /remote branch .* is missing/)
+})
+
 test('failed install keeps the worktree and reports failure', () => {
   const { repo, run } = fixture({ failure: true })
   const result = run('failed')
