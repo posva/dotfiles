@@ -92,6 +92,8 @@ alias la='ls -A'
 alias ..='cd ..'
 alias ...='cd ../..'
 
+alias pwdcopy='pwd | pbcopy'
+
 # npm run alias
 alias r='nr'
 # alias c='windsurf'
