@@ -25,27 +25,37 @@ function _wt_track_origin() {
   _wt_log warn "remote branch origin/$branch is missing; using local branch without upstream"
 }
 
+function _wt_ignore_worktrees() {
+  local gitdir=$1
+  mkdir -p "$gitdir/info" || return $?
+  grep -qxF '.posva/' "$gitdir/info/exclude" 2>/dev/null \
+    || print -r -- '.posva/' >>"$gitdir/info/exclude"
+}
+
 function _wt_create_help() {
-  print -r -- 'Usage: gw [branch]
+  print -r -- 'Usage: gw [-n|--no-install] [branch]
 
 Create or enter a branch worktree in <repo>/.posva/worktrees.
 Without a branch, select or type a branch name with fzf.
 New worktrees install pnpm dependencies when available.
 
 Options:
-  -h, --help  Show this help.'
+  -n, --no-install  Skip pnpm installation for a new worktree.
+  -h, --help        Show this help.'
 }
 
 # gw [branch]: cd into the branch's worktree, creating it if needed
 # worktrees live in <repo>/.posva/worktrees (git-excluded)
 # no arg: pick (or type a new name) with fzf
 function git_create_worktree() {
-  local branch=$1 dir gitdir root target setup_result arg
+  local branch dir gitdir root target setup_result arg skip_install=0
 
   for arg in "$@"; do
     case "$arg" in
       -h|--help) _wt_create_help; return 0 ;;
+      -n|--no-install) skip_install=1 ;;
       -*) print -u2 -r -- "Unknown option: $arg"; _wt_create_help >&2; return 2 ;;
+      *) [[ -n "$branch" ]] || branch=$arg ;;
     esac
   done
 
@@ -73,10 +83,7 @@ function git_create_worktree() {
   root=${gitdir%/.git}
   target="$root/.posva/worktrees/${branch//\//-}"
 
-  # ignore worktrees without touching the repo's .gitignore
-  mkdir -p "$gitdir/info"
-  grep -qxF '.posva/' "$gitdir/info/exclude" 2>/dev/null \
-    || echo '.posva/' >>"$gitdir/info/exclude"
+  _wt_ignore_worktrees "$gitdir" || return $?
 
   if git show-ref --verify --quiet "refs/heads/$branch"; then
     _wt_log info "creating worktree for existing branch '$branch' at $target"
@@ -91,14 +98,37 @@ function git_create_worktree() {
 
   cd "$target" || return $?
   _wt_track_origin || return $?
-  posva_worktree_setup || {
-    setup_result=$?
-    _wt_log err "setup failed; worktree kept at $target. Run posva_worktree_setup to retry."
-    return "$setup_result"
-  }
+  if (( ! skip_install )); then
+    posva_worktree_setup || {
+      setup_result=$?
+      _wt_log err "setup failed; worktree kept at $target. Run posva_worktree_setup to retry."
+      return "$setup_result"
+    }
+  fi
   _wt_log ok "ready: $target"
 }
 alias gw=git_create_worktree
+
+function git_pr_worktree() {
+  local listing selection number gitdir target
+
+  listing=$(gh pr list) || return $?
+  selection=$(print -r -- "$listing" | fzf) || return $?
+  number=${selection%%$'\t'*}
+  [[ "$number" =~ '^[0-9]+$' ]] || return 1
+
+  gitdir=$(git rev-parse --path-format=absolute --git-common-dir) || return $?
+  target="${gitdir%/.git}/.posva/worktrees/pr-$number"
+
+  if [[ -d "$target" ]]; then
+    cd "$target"
+    return $?
+  fi
+
+  _wt_ignore_worktrees "$gitdir" || return $?
+  gh pr checkout "$number" --worktree "$target" || return $?
+  cd "$target"
+}
 
 function _wt_delete_help() {
   print -r -- 'Usage: gwd [branch]

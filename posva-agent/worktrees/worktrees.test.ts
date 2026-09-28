@@ -20,7 +20,8 @@ for (const command of ['gw', 'gwd']) {
         const help = option === '-h' || option === '--help'
         assert.equal(result.status, help ? 0 : 2, result.stderr)
         const output = result.stdout + result.stderr
-        assert.ok(output.includes(`Usage: ${command} [branch]`), output)
+        const usage = command === 'gw' ? 'Usage: gw [-n|--no-install] [branch]' : 'Usage: gwd [branch]'
+        assert.ok(output.includes(usage), output)
         assert.match(output, /-h, --help/)
         assert.doesNotMatch(output, /unexpected (git|fzf) call/)
         if (!help) assert.ok(result.stderr.includes(`Unknown option: ${option}`), result.stderr)
@@ -55,19 +56,84 @@ function fixture({ pnpm = true, project = true, failure = false, workspaceOnly =
     writeFileSync(join(bin, 'pnpm'), '#!/bin/sh\nprintf "%s\\n" "$PWD" "$PNPM_CONFIG_VIRTUAL_STORE_TYPE" "$*" >> "$GW_TEST_LOG"\nexit "${GW_TEST_FAILURE:-0}"\n', { mode: 0o755 })
   }
   const log = join(root, 'install.log')
-  const run = (branch: string) => spawnSync('/bin/zsh', ['-f', '-c',
-    'source "$1"; export PATH="$2:/usr/bin:/bin"; git_create_worktree "$3"; result=$?; print -r -- "RESULT=$result" "LOCATION=$PWD" "STORE=$PNPM_CONFIG_VIRTUAL_STORE_TYPE"; exit $result',
-    'test', aliases, bin, branch,
+  const run = (...args: string[]) => spawnSync('/bin/zsh', ['-f', '-c',
+    'source "$1"; export PATH="$2:/usr/bin:/bin"; shift 2; git_create_worktree "$@"; result=$?; print -r -- "RESULT=$result" "LOCATION=$PWD" "STORE=$PNPM_CONFIG_VIRTUAL_STORE_TYPE"; exit $result',
+    'test', aliases, bin, ...args,
   ], { cwd: repo, encoding: 'utf8', env: { ...process.env, PNPM_CONFIG_VIRTUAL_STORE_TYPE: 'project', GW_TEST_LOG: log, GW_TEST_FAILURE: failure ? '7' : '0' } })
-  const pick = (output: string, status = 0) => {
+  const pick = (output: string, status = 0, ...args: string[]) => {
     writeFileSync(join(bin, 'fzf'), '#!/bin/sh\ncat >/dev/null\nprintf "%s" "$GW_TEST_PICK"\nexit "$GW_TEST_PICK_STATUS"\n', { mode: 0o755 })
     return spawnSync('/bin/zsh', ['-f', '-c',
-      'source "$1"; export PATH="$2:/usr/bin:/bin"; git_create_worktree',
-      'test', aliases, bin,
+      'source "$1"; export PATH="$2:/usr/bin:/bin"; shift 2; git_create_worktree "$@"',
+      'test', aliases, bin, ...args,
     ], { cwd: repo, encoding: 'utf8', env: { ...process.env, GW_TEST_PICK: output, GW_TEST_PICK_STATUS: String(status) } })
   }
-  return { repo, log, run, pick }
+  return { repo, bin, log, run, pick }
 }
+
+function prFixture() {
+  const { repo, bin, log } = fixture()
+  writeFileSync(join(bin, 'gh'), String.raw`#!/bin/sh
+if [ "$1" = pr ] && [ "$2" = list ]; then
+  printf '42\tFix a bug\tfeature/fix\n'
+  exit 0
+fi
+if [ "$1" = pr ] && [ "$2" = checkout ]; then
+  [ "$GW_TEST_CHECKOUT_STATUS" = 0 ] || exit "$GW_TEST_CHECKOUT_STATUS"
+  number=$3
+  shift 3
+  [ "$1" = --worktree ] || exit 2
+  target=$2
+  /usr/bin/git worktree add -b feature/fix "$target" || exit $?
+  printf '%s\n' "$number" > "$target/.pr-number"
+  exit 0
+fi
+exit 2
+`, { mode: 0o755 })
+  writeFileSync(join(bin, 'fzf'), String.raw`#!/bin/sh
+cat >/dev/null
+[ "$GW_TEST_PICK_STATUS" = 0 ] || exit "$GW_TEST_PICK_STATUS"
+printf '42\tFix a bug\tfeature/fix\n'
+`, { mode: 0o755 })
+  const run = (pickStatus = 0, checkoutStatus = 0) => spawnSync('/bin/zsh', ['-f', '-c',
+    'source "$1"; export PATH="$2:/usr/bin:/bin"; eval gpr; result=$?; print -r -- "LOCATION=$PWD"; exit $result',
+    'test', aliases, bin,
+  ], { cwd: repo, encoding: 'utf8', env: { ...process.env, GW_TEST_LOG: log, GW_TEST_PICK_STATUS: String(pickStatus), GW_TEST_CHECKOUT_STATUS: String(checkoutStatus) } })
+  return { repo, log, run }
+}
+
+test('gpr opens a selected PR in a worktree and reuses it', () => {
+  const { repo, log, run } = prFixture()
+  const target = join(repo, '.posva/worktrees/pr-42')
+  const result = run()
+  assert.equal(result.status, 0, result.stderr)
+  assert.ok(result.stdout.includes(`LOCATION=${target}`), result.stdout)
+  assert.equal(readFileSync(join(target, '.pr-number'), 'utf8'), '42\n')
+  assert.equal(spawnSync('/usr/bin/git', ['branch', '--show-current'], { cwd: repo, encoding: 'utf8' }).stdout.trim(), 'main')
+  assert.equal(spawnSync('/usr/bin/git', ['branch', '--show-current'], { cwd: target, encoding: 'utf8' }).stdout.trim(), 'feature/fix')
+  assert.equal(existsSync(log), false)
+  const second = run()
+  assert.equal(second.status, 0, second.stderr)
+  assert.ok(second.stdout.includes(`LOCATION=${target}`), second.stdout)
+  assert.equal(existsSync(log), false)
+})
+
+test('gpr leaves the current worktree alone when selection is canceled', () => {
+  const { repo, log, run } = prFixture()
+  const result = run(130)
+  assert.equal(result.status, 130)
+  assert.ok(result.stdout.includes(`LOCATION=${repo}`), result.stdout)
+  assert.equal(existsSync(join(repo, '.posva/worktrees/pr-42')), false)
+  assert.equal(existsSync(log), false)
+})
+
+test('gpr leaves the current worktree alone when PR checkout fails', () => {
+  const { repo, log, run } = prFixture()
+  const result = run(0, 7)
+  assert.equal(result.status, 7)
+  assert.ok(result.stdout.includes(`LOCATION=${repo}`), result.stdout)
+  assert.equal(existsSync(join(repo, '.posva/worktrees/pr-42')), false)
+  assert.equal(existsSync(log), false)
+})
 
 test('picker accepts a branch name', () => {
   const { repo, pick } = fixture({ project: false })
@@ -101,6 +167,33 @@ test('new pnpm worktree installs with shared store and permits downloads', () =>
   assert.equal(run('feature/warm').status, 0)
   assert.equal(readFileSync(log, 'utf8').split('\n').length, 4)
 })
+
+for (const args of [
+  ['--no-install', 'feature/skip'],
+  ['feature/skip', '--no-install'],
+  ['-n', 'feature/skip'],
+  ['feature/skip', '-n'],
+]) {
+  test(`gw ${args.join(' ')} creates a worktree without installing`, () => {
+    const { repo, log, run } = fixture({ failure: true })
+    const result = run(...args)
+    assert.equal(result.status, 0, result.stderr)
+    assert.ok(existsSync(join(repo, '.posva/worktrees/feature-skip/pnpm-lock.yaml')))
+    assert.equal(existsSync(log), false)
+    assert.match(result.stdout, /ready:/)
+    assert.match(result.stdout, /STORE=project/)
+  })
+}
+
+for (const option of ['-n', '--no-install']) {
+  test(`gw ${option} works with the branch picker`, () => {
+    const { repo, log, pick } = fixture()
+    const result = pick('feature/picked\n', 0, option)
+    assert.equal(result.status, 0, result.stderr)
+    assert.ok(existsSync(join(repo, '.posva/worktrees/feature-picked/pnpm-lock.yaml')))
+    assert.equal(existsSync(log), false)
+  })
+}
 
 test('existing worktree enters a local branch when its remote branch is missing', () => {
   const { repo, run } = fixture({ project: false })

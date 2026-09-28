@@ -73,8 +73,7 @@ alias gfd='git log --diff-filter=D --'
 # modified
 alias gfm='git log --diff-filter=M --'
 
-# checkouts a specific GitHub PR
-alias gpr='gh pr checkout $(gh pr list | fzf | cut -f 1)'
+alias gpr=git_pr_worktree
 
 source "${${(%):-%x}:A:h}/posva-agent/worktrees/init.zsh"
 
