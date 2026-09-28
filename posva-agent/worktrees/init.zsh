@@ -113,6 +113,7 @@ function git_pr_worktree() {
   local listing selection number gitdir target
 
   listing=$(gh pr list) || return $?
+  [[ -n "$listing" ]] || { print -u2 -r -- 'No open PRs found.'; return 1 }
   selection=$(print -r -- "$listing" | fzf) || return $?
   number=${selection%%$'\t'*}
   [[ "$number" =~ '^[0-9]+$' ]] || return 1

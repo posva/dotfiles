@@ -74,6 +74,7 @@ function prFixture() {
   const { repo, bin, log } = fixture()
   writeFileSync(join(bin, 'gh'), String.raw`#!/bin/sh
 if [ "$1" = pr ] && [ "$2" = list ]; then
+  [ "$GW_TEST_EMPTY_LIST" = 1 ] && exit 0
   printf '42\tFix a bug\tfeature/fix\n'
   exit 0
 fi
@@ -90,14 +91,15 @@ fi
 exit 2
 `, { mode: 0o755 })
   writeFileSync(join(bin, 'fzf'), String.raw`#!/bin/sh
-cat >/dev/null
+input=$(cat)
+[ -n "$input" ] || exit 1
 [ "$GW_TEST_PICK_STATUS" = 0 ] || exit "$GW_TEST_PICK_STATUS"
 printf '42\tFix a bug\tfeature/fix\n'
 `, { mode: 0o755 })
-  const run = (pickStatus = 0, checkoutStatus = 0) => spawnSync('/bin/zsh', ['-f', '-c',
+  const run = (pickStatus = 0, checkoutStatus = 0, emptyList = false) => spawnSync('/bin/zsh', ['-f', '-c',
     'source "$1"; export PATH="$2:/usr/bin:/bin"; eval gpr; result=$?; print -r -- "LOCATION=$PWD"; exit $result',
     'test', aliases, bin,
-  ], { cwd: repo, encoding: 'utf8', env: { ...process.env, GW_TEST_LOG: log, GW_TEST_PICK_STATUS: String(pickStatus), GW_TEST_CHECKOUT_STATUS: String(checkoutStatus) } })
+  ], { cwd: repo, encoding: 'utf8', env: { ...process.env, GW_TEST_LOG: log, GW_TEST_PICK_STATUS: String(pickStatus), GW_TEST_CHECKOUT_STATUS: String(checkoutStatus), GW_TEST_EMPTY_LIST: emptyList ? '1' : '0' } })
   return { repo, log, run }
 }
 
@@ -132,6 +134,16 @@ test('gpr leaves the current worktree alone when PR checkout fails', () => {
   assert.equal(result.status, 7)
   assert.ok(result.stdout.includes(`LOCATION=${repo}`), result.stdout)
   assert.equal(existsSync(join(repo, '.posva/worktrees/pr-42')), false)
+  assert.equal(existsSync(log), false)
+})
+
+test('gpr reports when there are no open PRs', () => {
+  const { repo, log, run } = prFixture()
+  const result = run(0, 0, true)
+  assert.equal(result.status, 1)
+  assert.match(result.stderr, /No open PRs found/)
+  assert.ok(result.stdout.includes(`LOCATION=${repo}`), result.stdout)
+  assert.equal(existsSync(join(repo, '.posva/worktrees')), false)
   assert.equal(existsSync(log), false)
 })
 

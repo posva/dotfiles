@@ -22,6 +22,7 @@ when nothing matches. Esc cancels.
 `gpr` lists open PRs, checks out the selected PR in
 `.posva/worktrees/pr-<number>` with `gh pr checkout --worktree`, and enters it.
 If the worktree already exists, `gpr` enters it.
+If no PRs are open, `gpr` shows an error.
 
 Run `gwd` from the main worktree to pick a worktree to remove. Enter selects it;
 Esc cancels. Inside a linked worktree, `gwd` removes that worktree.
