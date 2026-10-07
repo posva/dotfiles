@@ -176,6 +176,8 @@ function _wt_delete_help() {
   print -r -- 'Usage: gwd [branch]
 
 Remove the worktree for a branch.
+Then delete its local branch with git branch -d.
+Keep the branch if Git refuses deletion.
 Without a branch, remove the current linked worktree or select one with fzf.
 Ask for confirmation if the worktree has changes.
 The main worktree cannot be removed.
@@ -184,7 +186,7 @@ Options:
   -h, --help  Show this help.'
 }
 
-# gwd [branch]: delete the branch's worktree
+# gwd [branch]: remove the worktree and delete its merged branch
 # no arg: inside a worktree deletes it, otherwise pick with fzf
 # prompts if the worktree has changes (only 'y' confirms)
 function git_delete_worktree() {
@@ -223,14 +225,25 @@ function git_delete_worktree() {
   fi
   [[ "$dir" == "$main" ]] && { _wt_log err "refusing to remove main worktree"; return 1 }
 
+  branch=$(git -C "$dir" branch --show-current) || return $?
+
   if [[ -n "$(git -C "$dir" status --porcelain)" ]]; then
     read -r "reply?worktree '$dir' has changes, delete anyway? [y/N] "
     [[ "$reply" == y ]] || return 1
     force=--force
   fi
 
-  [[ "${PWD:A}" == "$dir" || "${PWD:A}" == "$dir"/* ]] && cd "$main"
+  if [[ "${PWD:A}" == "$dir" || "${PWD:A}" == "$dir"/* ]]; then
+    cd "$main" || return $?
+  fi
   _wt_log info "removing worktree $dir"
-  git worktree remove ${force:+--force} "$dir" && _wt_log ok "removed $dir"
+  git worktree remove ${force:+--force} "$dir" || return $?
+  _wt_log ok "removed $dir"
+  if [[ -n "$branch" ]]; then
+    git -C "$main" branch -d -- "$branch" || {
+      _wt_log warn "worktree removed; branch '$branch' kept because Git refused deletion"
+      return 1
+    }
+  fi
 }
 alias gwd=git_delete_worktree

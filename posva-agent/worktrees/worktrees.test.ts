@@ -148,6 +148,42 @@ printf '42\tFix a bug\tfeature/fix\n'
   return { repo, log, run, runGw, branchRun, forkPath, basePath }
 }
 
+for (const mode of ['named', 'current', 'subdirectory', 'picker', 'detached', 'unmerged', 'dirty', 'locked', 'main']) {
+  test(`gwd handles branch cleanup for a ${mode} worktree`, () => {
+    const { repo, bin, run } = fixture({ project: false })
+    assert.equal(run('feature/cleanup').status, 0)
+    const target = join(repo, '.posva/worktrees/feature-cleanup')
+    const git = (...args: string[]) => spawnSync('/usr/bin/git', args, { cwd: repo, encoding: 'utf8' })
+    if (mode === 'detached') assert.equal(git('-C', target, 'switch', '--detach').status, 0)
+    if (mode === 'locked') assert.equal(git('worktree', 'lock', target).status, 0)
+    if (mode === 'unmerged' || mode === 'dirty') {
+      writeFileSync(join(target, 'change.txt'), 'keep this change\n')
+      if (mode === 'unmerged') {
+        assert.equal(git('-C', target, 'add', '.').status, 0)
+        assert.equal(git('-C', target, '-c', 'user.name=Test', '-c', 'user.email=test@example.com', '-c', 'commit.gpgsign=false', 'commit', '-m', 'change').status, 0)
+      }
+    }
+    writeFileSync(join(bin, 'fzf'), '#!/bin/sh\ncat >/dev/null\nprintf "feature/cleanup\\n"\n', { mode: 0o755 })
+    const subdirectory = join(target, 'nested')
+    if (mode === 'subdirectory') mkdirSync(subdirectory)
+    const cwd = mode === 'subdirectory' ? subdirectory : ['current', 'detached'].includes(mode) ? target : repo
+    const args = ['current', 'subdirectory', 'picker', 'detached'].includes(mode) ? [] : [mode === 'main' ? 'main' : 'feature/cleanup']
+    const result = spawnSync('/bin/zsh', ['-f', '-c',
+      'source "$1"; export PATH="$2:/usr/bin:/bin"; shift 2; git_delete_worktree "$@"; result=$?; print -r -- "LOCATION=$PWD"; exit $result',
+      'test', aliases, bin, ...args,
+    ], { cwd, encoding: 'utf8', input: 'n\n' })
+    const retained = ['dirty', 'locked', 'main'].includes(mode)
+    assert.equal(existsSync(target), retained, result.stdout + result.stderr)
+    assert.equal(git('show-ref', '--verify', '--quiet', 'refs/heads/feature/cleanup').status === 0,
+      retained || ['unmerged', 'detached'].includes(mode), result.stdout + result.stderr)
+    assert.equal(result.status === 0, !retained && mode !== 'unmerged', result.stdout + result.stderr)
+    assert.ok(result.stdout.includes(`LOCATION=${repo}`), result.stdout)
+    assert.equal(git('branch', '--show-current').stdout.trim(), 'main')
+    if (mode === 'unmerged') assert.equal(git('show', 'feature/cleanup:change.txt').stdout, 'keep this change\n')
+    if (mode === 'dirty') assert.equal(readFileSync(join(target, 'change.txt'), 'utf8'), 'keep this change\n')
+  })
+}
+
 test('gpr installs dependencies, and gw finds the PR in a new shell', () => {
   const { repo, log, run, runGw } = prFixture()
   const target = join(repo, '.posva/worktrees/pr-42')
