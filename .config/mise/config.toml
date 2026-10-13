@@ -2,7 +2,7 @@
 node = "latest"
 pnpm = "12"
 "npm:@antfu/ni" = "latest"
-"npm:@openai/codex" = "latest"
+"npm:@openai/codex" = "0.162.1"
 "npm:agent-browser" = "latest"
 "npm:fkill-cli" = "latest"
 "npm:portless" = "latest"
