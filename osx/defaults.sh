@@ -106,6 +106,36 @@ defaults write com.apple.HIToolbox AppleEnabledInputSources -array \
   '<dict><key>Bundle ID</key><string>com.apple.inputmethod.SCIM</string><key>InputSourceKind</key><string>Keyboard Input Method</string></dict>' \
   '<dict><key>Bundle ID</key><string>com.apple.inputmethod.SCIM</string><key>Input Mode</key><string>com.apple.inputmethod.SCIM.ITABC</string><key>InputSourceKind</key><string>Input Mode</string></dict>'
 
+# Rex
+# Shortcuts: ~/.config/rex/init.lua. UI shortcuts take priority over Lua.
+# Hidden pane headers require the vertical sidebar on the left.
+# Imported Ghostty palettes: Alien Blood (dark), Catppuccin Latte (light).
+defaults write com.superlogical.rex Workspace.customThemes -data "$(xxd -p "${HOME}/dotfiles/.config/rex/themes.json" | tr -d '\n')"
+defaults write com.superlogical.rex Workspace.balancesSplitsOnCreation -bool false
+defaults write com.superlogical.rex Workspace.darkThemeID -string custom-F391B396-8EF3-412E-AB73-55BD5DF12FB1
+defaults write com.superlogical.rex Workspace.focusFollowsMouse -bool true
+defaults write com.superlogical.rex Workspace.interfaceStyle -string useTheme
+defaults write com.superlogical.rex Workspace.lightThemeID -string custom-FC70270A-B7CC-4EE1-84D9-9F69EF52BF26
+defaults write com.superlogical.rex Workspace.paneDensity -string compact
+defaults write com.superlogical.rex Workspace.prefersGeneratedTitles -bool true
+defaults write com.superlogical.rex Workspace.showsPaneHeaders -bool false
+defaults write com.superlogical.rex Workspace.sidebarPosition -string left
+defaults write com.superlogical.rex Workspace.tabIconCount -int 3
+defaults write com.superlogical.rex Workspace.tabIconTintMode -string off
+defaults write com.superlogical.rex Workspace.tabStyle -string horizontal
+defaults write com.superlogical.rex Workspace.tabsFillAvailableSpace -bool false
+defaults write com.superlogical.rex Workspace.terminalAllowsLigatures -bool false
+defaults write com.superlogical.rex Workspace.terminalCellHeightPercent -float 0.0
+defaults write com.superlogical.rex Workspace.terminalCursorBlinkIntervalMilliseconds -int 500
+defaults write com.superlogical.rex Workspace.terminalCursorBlinkUsesCustomInterval -bool false
+defaults write com.superlogical.rex Workspace.terminalFontName -string 'JetBrainsMonoNL Nerd Font Mono'
+defaults write com.superlogical.rex Workspace.terminalFontPointSize -float 16.0
+defaults write com.superlogical.rex Workspace.terminalFontSmoothing -bool true
+defaults write com.superlogical.rex Workspace.terminalImproveTextContrast -bool true
+defaults write com.superlogical.rex Workspace.terminalUseThemePalette -bool true
+defaults write com.superlogical.rex Workspace.terminalUsesDisplayP3 -bool true
+defaults write com.superlogical.rex rex.developer-mode-enabled -bool true
+
 # Restart affected apps
 killall SystemUIServer
 killall Safari
