@@ -1,13 +1,8 @@
-model = "gpt-6-astra"
-model_reasoning_effort = "low"
+# model = "openai/gpt-6-luna"
+# model_reasoning_effort = "low"
 service_tier = "default"
 approvals_reviewer = "auto_review"
 model_provider = "vercel"
-
-[model_providers.vercel]
-name = "Vercel AI Gateway"
-base_url = "https://ai-gateway.vercel.sh/codex/v1"
-wire_api = "responses"
 
 [model_providers.vercel.auth]
 command = "/usr/bin/security"
@@ -22,9 +17,16 @@ args = [
 timeout_ms = 5000
 refresh_interval_ms = 300000
 
-[tui.model_availability_nux]
-"gpt-5.5" = 4
-"gpt-5.6-sol" = 4
+[model_providers.kit.auth]
+command = "/usr/bin/security"
+args = [
+  "find-generic-password",
+  "-s",
+  "Vercel AI Gateway",
+  "-a",
+  "vercel-desktop-key",
+  "-w",
+]
 
 [tui]
 # Disable Astra stars in the text input.
@@ -66,3 +68,19 @@ source = "https://github.com/wakatime/codex-cli-wakatime.git"
 
 [plugins."codex-cli-wakatime@wakatime"]
 enabled = true
+
+# >>> kit >>>
+[model_providers.kit]
+name = "Vercel AI Gateway (Kit)"
+base_url = "https://ai-gateway.vercel.sh/codex/v1"
+wire_api = "responses"
+# <<< kit <<<
+
+# >>> vercel-ai-gateway >>>
+[model_providers.vercel]
+name = "Vercel AI Gateway"
+base_url = "https://ai-gateway.vercel.sh/codex/v1"
+# we use the auth command
+# env_key = "AI_GATEWAY_API_KEY"
+wire_api = "responses"
+# <<< vercel-ai-gateway <<<
