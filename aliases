@@ -92,7 +92,7 @@ alias la='ls -A'
 alias ..='cd ..'
 alias ...='cd ../..'
 
-alias pwdcopy='pwd | pbcopy'
+alias pwdcopy='printf %s "${${PWD%/}:-/}" | pbcopy'
 
 # npm run alias
 alias r='nr'
