@@ -30,3 +30,9 @@ vim.g.doge_enable_mappings = 0
 
 -- uncomment to get access to the latest git
 -- vim.g.lazyvim_blink_main = true
+
+-- eslint_d fixes on save (conform), the eslint LSP only gives diagnostics
+vim.g.lazyvim_eslint_auto_format = false
+
+-- LazyVim adds this on VeryLazy, too late for `nvim file.mdx`
+vim.filetype.add({ extension = { mdx = "markdown.mdx" } })
