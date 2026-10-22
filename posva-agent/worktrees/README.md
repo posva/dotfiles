@@ -19,6 +19,10 @@ a branch name.
 In the `gw` picker, Enter selects a branch or creates one from the typed name
 when nothing matches. Esc cancels.
 `gw` keeps an existing upstream that points to another remote or branch.
+If no worktree has the requested branch, `gw` also checks its usual folder
+in `.posva/worktrees`. If that folder is a registered worktree, `gw` enters it.
+It shows a ⚠ warning if the current branch differs from the requested name
+and keeps the current branch and upstream settings.
 
 `gpr` lists open PRs, checks out the selected PR in
 `.posva/worktrees/pr-<number>` with `gh pr checkout --worktree`, and enters it.

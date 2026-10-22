@@ -53,19 +53,21 @@ function _wt_branch_choices() {
 }
 
 function _wt_existing_dir() {
-  local branch=$1 root=$2 target
+  local branch=$1 root=$2 target="$2/.posva/worktrees/${1//\//-}" pr_alias=0
   if [[ "$branch" =~ '^pr/[0-9]+$' ]]; then
     target="$root/.posva/worktrees/pr-${branch#pr/}"
+    pr_alias=1
   fi
-  git worktree list --porcelain | awk -v branch="refs/heads/$branch" -v target="$target" '
+  git worktree list --porcelain | awk -v branch="refs/heads/$branch" -v target="$target" -v pr_alias="$pr_alias" '
     $1 == "worktree" {
       dir = substr($0, 10)
       if (target != "" && dir == target) target_dir = dir
     }
     $1 == "branch" && $2 == branch { branch_dir = dir }
     END {
-      if (target_dir != "") print target_dir
+      if (pr_alias && target_dir != "") print target_dir
       else if (branch_dir != "") print branch_dir
+      else if (target_dir != "") print target_dir
     }'
 }
 
@@ -97,7 +99,7 @@ Options:
 # worktrees live in <repo>/.posva/worktrees (git-excluded)
 # no arg: pick (or type a new name) with fzf
 function git_create_worktree() {
-  local branch dir gitdir root target arg skip_install=0
+  local branch dir gitdir root target actual arg skip_install=0
 
   for arg in "$@"; do
     case "$arg" in
@@ -124,6 +126,11 @@ function git_create_worktree() {
   if [[ -n "$dir" ]]; then
     _wt_log info "worktree exists, switching: $dir"
     cd "$dir" || return $?
+    actual=$(git branch --show-current) || return $?
+    if [[ "$actual" != "$branch" && ! "$branch" =~ '^pr/[0-9]+$' ]]; then
+      _wt_log warn "⚠ Requested '$branch', but this worktree is on '${actual:-detached HEAD}'"
+      return 0
+    fi
     _wt_track_origin
     return $?
   fi

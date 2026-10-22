@@ -307,6 +307,26 @@ test('gpr reports when there are no open PRs', () => {
   assert.equal(existsSync(log), false)
 })
 
+for (const requested of ['fix/bfcache-replace-state', 'fix-bfcache-replace-state']) {
+  test(`gw enters the existing folder and warns for ${requested}`, () => {
+    const { repo, run } = fixture({ project: false })
+    const target = join(repo, '.posva/worktrees/fix-bfcache-replace-state')
+    assert.equal(run('fix/bfcache-replace-state').status, 0)
+    const switched = spawnSync('/usr/bin/git', ['switch', '-c', 'fix/scroll-storage-memory-fallback'], { cwd: target, encoding: 'utf8' })
+    assert.equal(switched.status, 0, switched.stderr)
+    writeFileSync(join(target, 'keep.txt'), 'unfinished change\n')
+
+    const result = run(requested)
+
+    assert.equal(result.status, 0, result.stdout + result.stderr)
+    assert.ok(result.stdout.includes(`LOCATION=${target}`), result.stdout)
+    assert.ok(result.stdout.includes(`⚠ Requested '${requested}', but this worktree is on 'fix/scroll-storage-memory-fallback'`), result.stdout)
+    assert.equal(spawnSync('/usr/bin/git', ['branch', '--show-current'], { cwd: target, encoding: 'utf8' }).stdout.trim(), 'fix/scroll-storage-memory-fallback')
+    assert.equal(readFileSync(join(target, 'keep.txt'), 'utf8'), 'unfinished change\n')
+    assert.equal(existsSync(`${target}-2`), false)
+  })
+}
+
 test('picker accepts a branch name', () => {
   const { repo, pick } = fixture({ project: false })
   const result = pick('feature/picked\n')
