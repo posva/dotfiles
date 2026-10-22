@@ -1,17 +1,14 @@
 return {
   "petertriho/nvim-scrollbar",
+  -- TODO: Switch to main on 2026-11-16.
+  branch = "refactor/v2",
   dependencies = {
-    { "kevinhwang91/nvim-hlslens" },
     { "lewis6991/gitsigns.nvim" },
   },
   event = "VeryLazy",
   opts = {
-    handlers = {
-      cursor = true,
-      diagnostic = true,
+    providers = {
       gitsigns = true,
-      handle = true,
-      search = true,
     },
   },
 }
