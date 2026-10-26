@@ -1,12 +1,12 @@
 -- Appearance and terminal settings: ~/dotfiles/osx/defaults.sh.
 -- UI shortcuts take priority over these bindings.
+-- Number shortcuts conflict with bracket keys on this keyboard layout.
+for digit = 1, 9 do
+  rex.unbind("cmd+[Digit" .. digit .. "]", "client.tab.goto")
+end
+
 rex.bind("cmd+[Digit3]", "client.tab.previous")
 rex.bind("cmd+[Digit4]", "client.tab.next")
-
-rex.unbind("shift+cmd+[BracketLeft]", "client.tab.previous")
-rex.unbind("ctrl+shift+tab", "client.tab.previous")
-rex.unbind("shift+cmd+[BracketRight]", "client.tab.next")
-rex.unbind("ctrl+tab", "client.tab.next")
 
 local function send_text(key, text)
   rex.bind(key, function()
