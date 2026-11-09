@@ -26,8 +26,9 @@ function _wt_track_origin() {
 
   if [[ "$remote" == origin && "$merge" == "refs/heads/$branch" ]]; then
     git branch --unset-upstream "$branch" || return $?
+    _wt_log warn "remote branch origin/$branch is missing; using local branch without upstream"
   fi
-  _wt_log warn "remote branch origin/$branch is missing; using local branch without upstream"
+  return 0
 }
 
 function _wt_ignore_worktrees() {
@@ -38,9 +39,14 @@ function _wt_ignore_worktrees() {
 }
 
 function _wt_branch_choices() {
-  local root=$1
+  local root=$1 branch
   {
-    git branch --all --format='%(refname:short)' | sed 's#^origin/##'
+    git branch --all --format='%(refname:short)' | sed 's#^origin/##' | while IFS= read -r branch; do
+      if [[ "$branch" =~ '^pr-[0-9]+$' ]] && _wt_same_pr_alias "$branch" "pr/${branch#pr-}"; then
+        continue
+      fi
+      print -r -- "$branch"
+    done
     git worktree list --porcelain | awk -v prefix="$root/.posva/worktrees/pr-" '
       $1 == "worktree" {
         path = substr($0, 10)
@@ -50,6 +56,14 @@ function _wt_branch_choices() {
         }
       }'
   } | sort -u
+}
+
+function _wt_same_pr_alias() {
+  local requested=$1 actual=$2 requested_head actual_head
+  [[ "$requested" =~ '^pr-[0-9]+$' && "$actual" == "pr/${requested#pr-}" ]] || return 1
+  requested_head=$(git rev-parse --verify "refs/heads/$requested" 2>/dev/null) || return 1
+  actual_head=$(git rev-parse --verify "refs/heads/$actual" 2>/dev/null) || return 1
+  [[ "$requested_head" == "$actual_head" ]]
 }
 
 function _wt_existing_dir() {
@@ -127,7 +141,7 @@ function git_create_worktree() {
     _wt_log info "worktree exists, switching: $dir"
     cd "$dir" || return $?
     actual=$(git branch --show-current) || return $?
-    if [[ "$actual" != "$branch" && ! "$branch" =~ '^pr/[0-9]+$' ]]; then
+    if [[ "$actual" != "$branch" && ! "$branch" =~ '^pr/[0-9]+$' ]] && ! _wt_same_pr_alias "$branch" "$actual"; then
       _wt_log warn "⚠ Requested '$branch', but this worktree is on '${actual:-detached HEAD}'"
       return 0
     fi

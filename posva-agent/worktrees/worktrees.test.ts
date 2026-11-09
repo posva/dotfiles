@@ -458,3 +458,26 @@ test('failed worktree creation does not install or change directory', () => {
   assert.equal(existsSync(log), false)
   assert.doesNotMatch(result.stdout, /ready:/)
 })
+
+for (const divergent of [false, true]) {
+  test(`gw handles ${divergent ? 'different' : 'equivalent'} PR branch aliases`, () => {
+    const { repo, run } = fixture({ project: false })
+    assert.equal(run('pr/31').status, 0)
+    const branch = spawnSync('/usr/bin/git', ['branch', 'pr-31'], { cwd: repo, encoding: 'utf8' })
+    assert.equal(branch.status, 0, branch.stderr)
+    if (divergent) {
+      // A separate commit keeps both names meaningful.
+      const commit = spawnSync('/usr/bin/git', ['-c', 'user.name=Test', '-c', 'user.email=test@example.com', 'commit-tree', 'HEAD^{tree}', '-p', 'HEAD', '-m', 'other'], { cwd: repo, encoding: 'utf8' })
+      assert.equal(commit.status, 0, commit.stderr)
+      assert.equal(spawnSync('/usr/bin/git', ['update-ref', 'refs/heads/pr-31', commit.stdout.trim()], { cwd: repo }).status, 0)
+    }
+    const choices = spawnSync('/bin/zsh', ['-f', '-c', 'source "$1"; _wt_branch_choices "$2"', 'test', aliases, repo], { cwd: repo, encoding: 'utf8' })
+    assert.equal(choices.status, 0, choices.stderr)
+    assert.equal(choices.stdout.split('\n').includes('pr-31'), divergent, choices.stdout)
+    assert.ok(choices.stdout.split('\n').includes('pr/31'))
+    const result = run('pr-31')
+    assert.equal(result.status, 0, result.stderr)
+    assert.equal(result.stdout.includes('Requested'), divergent, result.stdout)
+    assert.doesNotMatch(run('pr/31').stdout, /remote branch .* is missing/)
+  })
+}
