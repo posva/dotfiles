@@ -3,6 +3,8 @@
 # Credentials and local identity
 auth.json
 installation_id
+/auth.lock
+/.hook-trust/
 
 # History, sessions, and local databases
 history.jsonl
@@ -10,6 +12,13 @@ sessions/
 memories/
 *.sqlite*
 thread-writer-locks/
+/sqlite/
+/ipc/
+/project-metadata-locks/
+/rollout-migrations/
+/tui-thread-reference-capabilities/
+/session_index.jsonl.lock
+/.sqlite-maintenance.lock
 
 # Caches, logs, and temporary state
 .tmp/
@@ -21,11 +30,22 @@ models_cache.json
 version.json
 .personality_migration
 .sandbox_migration
+/.*codex-global-state.json*
+/config.toml.bak*
+/app-server-control/
+/app-server-daemon/
+/computer-use/
+/visualizations/
+
+# Automation execution state
+/automations/.run-jitter-salt
+/automations/*/memory.md
 
 # Downloaded plugins and generated skills
 plugins/
 skills/
-mcp-oauth-locks/file-store.lock
+/packages/
+/vendor_imports/
+/mcp-oauth-locks/
 session_index.jsonl
-sessions/
 shell_snapshots/

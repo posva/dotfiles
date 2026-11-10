@@ -1,0 +1,14 @@
+version = 1
+id = "create-a-worktree-with-gw-upgrade-deps-in-groups-skip-ts-7-and-json-server-fo"
+kind = "cron"
+name = "Upgrade dependencies and open PR"
+prompt = "Delete any previous worktree created with this task.\nCreate a worktree with gw.\nUpgrade deps in groups, commit as you go. Skip TS 7 and json-server. For majors, check github for changelogs. Ensure all tests and build pass. If anything warns or fails, check changelogs and upgrade when viable.\nWhen done open a PR with a table of upgraded deps, the upgraded version, and notes if any for each. No need for a summary or else."
+status = "ACTIVE"
+rrule = "RRULE:FREQ=WEEKLY;BYHOUR=9;BYMINUTE=0;BYDAY=MO"
+model = "gpt-6.1-sol"
+reasoning_effort = "low"
+execution_environment = "local"
+target = { type = "project", project_id = "923e30e5-98b3-4238-af78-a6434ade556e" }
+cwds = ["/Users/posva/oss/vuejs/pinia-colada"]
+created_at = 1793361094474
+updated_at = 1793362100540

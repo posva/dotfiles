@@ -5,7 +5,9 @@ Eduardo owns this. Start: say "🤟" + one motivating line. Use ASD-STE100 Simpl
 ## Agent Protocol
 
 - Contact: Eduardo San Martin Morote (@posva, <posva13@gmail.com>).
-- PRs: use `gh pr view/diff` (no URLs).
+- PRs:
+  - use `gh pr view/diff` (no URLs).
+  - One line description when opening a PR. Use imperative mood.
 - “Make a note” => edit AGENTS.md (shortcut; not a blocker). Ignore `CLAUDE.md`.
 - Guardrails: use `trash` for deletes.
 - All tests must verify behavior. Unit tests never assert options passed to functions or similar. Assert observable result instead.
