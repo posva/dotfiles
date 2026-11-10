@@ -26,9 +26,25 @@ alias gcop='git checkout -p'
 alias gcount='git shortlog -sn'
 alias gcp='git cherry-pick'
 alias gd='git diff'
-alias gds="git diff -- . ':!*.test-d.ts' ':!*.spec.ts' ':!*.test.ts'"
-alias gdt="git diff -- '*.test-d.ts' '*.spec.ts' '*.test.ts'"
 alias gdc='git diff --cached'
+
+typeset -a git_diff_test_files=('*.test-d.ts' '*.spec.ts' '*.test.ts')
+typeset -a git_diff_test_exclusions=("${git_diff_test_files[@]/#/:!}")
+
+unalias gds gdt gdcs gdct 2>/dev/null || true
+function gds() {
+  git diff "$@" -- . "${git_diff_test_exclusions[@]}"
+}
+function gdt() {
+  git diff "$@" -- "${git_diff_test_files[@]}"
+}
+function gdcs() {
+  gds --cached "$@"
+}
+function gdct() {
+  gdt --cached "$@"
+}
+
 alias gl='git pull'
 alias glu='git submodule foreach git pull origin master'
 alias gm='git merge'
