@@ -77,6 +77,10 @@ alias gpr=git_pr_worktree
 
 source "${${(%):-%x}:A:h}/posva-agent/worktrees/init.zsh"
 
+rex-layout() {
+  /bin/bash "$HOME/dotfiles/.config/rex/rex-layout.sh" "$@"
+}
+
 # completions for gw/gwd, picked up by prezto's compinit (runs after this file)
 fpath=("$HOME/dotfiles/zsh-completions" $fpath)
 

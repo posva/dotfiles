@@ -1,0 +1,45 @@
+#!/bin/bash
+set -euo pipefail
+args=()
+session= block= cwd= window= direction=right ratio=50
+while (( $# )); do
+  case "$1" in
+    --autostart=false|--json) shift ;;
+    -s|--session) session=$2; shift 2 ;;
+    -b|--block) block=$2; shift 2 ;;
+    -c|--cwd) cwd=$2; shift 2 ;;
+    --window) window=$2; shift 2 ;;
+    --split) direction=$2; shift 2 ;;
+    --ratio) ratio=$2; shift 2 ;;
+    *) args+=("$1"); shift ;;
+  esac
+done
+case "${args[0]} ${args[1]:-}" in
+  'ls '|'session ls') jq '{sessions: [.sessions[] | {session_id,label}]}' "$REX_TEST_STATE"; exit ;;
+  'session inspect') jq --arg id "${args[2]}" '.sessions[] | select(.session_id == $id or .label == $id)' "$REX_TEST_STATE"; exit ;;
+  'block call')
+    [[ ${REX_TEST_FAIL:-} != 1 ]] || exit 1
+    jq --arg id "$block" '.sessions[].windows[].layers[].blocks[] | select(.block_id == $id) | {foreground: {cwd, argv0: "-zsh"}}' "$REX_TEST_STATE"; exit ;;
+esac
+filter=''
+case "${args[0]} ${args[1]:-}" in
+  new\ *)
+    filter='.next += 1 | ("session-" + (.next|tostring)) as $sid | ("window-" + (.next|tostring)) as $wid | ("block-" + (.next|tostring)) as $bid | .sessions += [{session_id: $sid, label: $label, active_window_id: $wid, windows: [new_window($wid; $bid; $window; $cwd)]}] | .result = {session_id: $sid, initial_windows: [{window_id: $wid, block_ids: [$bid]}]}' ;;
+  'window new')
+    filter='.next += 1 | ("window-" + (.next|tostring)) as $wid | ("block-" + (.next|tostring)) as $bid | (.sessions[] | select(.session_id == $session) | .windows) += [new_window($wid; $bid; $label; $cwd)] | .result = {window_id: $wid, block_ids: [$bid]}' ;;
+  split\ *)
+    filter='.next += 1 | ("block-" + (.next|tostring)) as $bid | (.sessions[] | select(.session_id == $session) | .windows[] | select(any(.layers[].blocks[]; .block_id == $block)) | .layers[0]) |= (.layout |= split_node($block; $bid; $direction; $ratio) | .blocks += [new_block($bid; $cwd)]) | .result = {block_ids: [$bid]}' ;;
+  focus\ *)
+    filter='(.sessions[] | select(.session_id == $session)) |= (if any(.windows[]; .window_id == $label) then .active_window_id = $label else (.windows[] | select(any(.layers[].blocks[]; .block_id == $label)) | .focused_block_id) = $label end) | .result = {}' ;;
+  *) printf 'Unsupported fake Rex command: %s\n' "${args[*]}" >&2; exit 1 ;;
+esac
+jq --arg session "$session" --arg block "$block" --arg cwd "$cwd" --arg window "$window" --arg label "${args[2]:-${args[1]:-}}" --arg direction "$direction" --argjson ratio "$ratio" '
+  def new_block($id; $cwd): {block_id: $id, creator_name: "com.superlogical.terminal", cwd: $cwd};
+  def new_window($wid; $bid; $label; $cwd): {window_id: $wid, label: $label, focused_block_id: $bid, layers: [{kind: "tiled", layout: {block_id: $bid}, blocks: [new_block($bid; $cwd)]}]};
+  def split_node($anchor; $new; $direction; $ratio):
+    if .block_id == $anchor then {split: {direction: (if $direction == "right" then "horizontal" else "vertical" end), ratio: (1 - $ratio / 100), before: ., after: {block_id: $new}}}
+    elif .split then .split.before |= split_node($anchor; $new; $direction; $ratio) | .split.after |= split_node($anchor; $new; $direction; $ratio)
+    else . end;
+'"$filter" "$REX_TEST_STATE" > "$REX_TEST_STATE.next"
+mv "$REX_TEST_STATE.next" "$REX_TEST_STATE"
+jq '.result' "$REX_TEST_STATE"
