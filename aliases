@@ -26,6 +26,7 @@ alias gcop='git checkout -p'
 alias gcount='git shortlog -sn'
 alias gcp='git cherry-pick'
 alias gd='git diff'
+alias gds="git diff -- . ':!*.test-d.ts' ':!*.spec.ts' ':!*.test.ts'"
 alias gdc='git diff --cached'
 alias gl='git pull'
 alias glu='git submodule foreach git pull origin master'
