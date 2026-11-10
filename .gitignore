@@ -39,3 +39,9 @@ __backup-*/
 .config/mole/mole.log
 .claude/sessions
 .config/tanstack
+**/.claude/settings.local.json
+/.tfswitch/
+/.tfswitch.toml
+/.tfswitchrc
+/.tfenv/
+/.tfm/
