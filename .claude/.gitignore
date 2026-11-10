@@ -27,6 +27,10 @@ settings.local.json
 daemon.log
 daemon/
 jobs/
+policy-limits.json
+policy-limits.json.*.json
+remote-settings.json
+settings.json.bak
 
 # Downloaded plugin state
 plugins/

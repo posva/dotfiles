@@ -215,13 +215,13 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "vercel-plugin@vercel-vercel-plugin": false,
     "clangd-lsp@claude-plugins-official": false,
-    "vercel@claude-plugins-official": true
+    "vercel@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "vercel-vercel-plugin": {
       "source": {
-        "source": "directory",
-        "path": "/Users/posva/.cache/plugins/github.com-vercel-vercel-plugin"
+        "source": "github",
+        "repo": "vercel/vercel-plugin"
       }
     }
   },
