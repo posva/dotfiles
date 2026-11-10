@@ -112,6 +112,8 @@ defaults write com.apple.HIToolbox AppleEnabledInputSources -array \
 # Imported Ghostty palettes: Alien Blood (dark), Catppuccin Latte (light).
 defaults write com.superlogical.rex Workspace.customThemes -data "$(xxd -p "${HOME}/dotfiles/.config/rex/themes.json" | tr -d '\n')"
 defaults write com.superlogical.rex Workspace.balancesSplitsOnCreation -bool false
+defaults write com.superlogical.rex Workspace.cursorShader -string comet
+defaults write com.superlogical.rex Workspace.cursorShadersEnabled -bool true
 defaults write com.superlogical.rex Workspace.darkThemeID -string custom-F391B396-8EF3-412E-AB73-55BD5DF12FB1
 defaults write com.superlogical.rex Workspace.focusFollowsMouse -bool true
 defaults write com.superlogical.rex Workspace.interfaceStyle -string useTheme

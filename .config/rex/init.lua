@@ -23,7 +23,6 @@ send_text("shift+space", " ")
 send_text("shift+backspace", "\127")
 send_text("ctrl+d", "\004")
 
--- Rex has no documented custom-shader API for Ghostty GLSL shaders.
--- Ghostty shader: ~/.config/ghostty/shaders/cursor-matrix.glsl
+-- Cursor shader settings: ~/dotfiles/osx/defaults.sh. See shaders.md.
 -- CJK font mapping remains in Ghostty; no Rex setting was found for it.
 -- U+4E00-9FFF, U+3400-4DBF, U+3000-303F, U+FF00-FFEF: LXGW WenKai Mono.
