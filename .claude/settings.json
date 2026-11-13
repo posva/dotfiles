@@ -229,5 +229,6 @@
   "tui": "fullscreen",
   "editorMode": "vim",
   "autoCompactEnabled": true,
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true
 }
