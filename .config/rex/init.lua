@@ -8,8 +8,8 @@ end
 rex.bind("cmd+[Digit3]", "client.tab.previous")
 rex.bind("cmd+[Digit4]", "client.tab.next")
 
-rex.bind("pageup", "client.scroll.page_up")
-rex.bind("pagedown", "client.scroll.page_down")
+rex.bind("shift+pageup", "client.scroll.page_up")
+rex.bind("shift+pagedown", "client.scroll.page_down")
 
 local function send_text(key, text)
   rex.bind(key, function()
@@ -19,6 +19,9 @@ local function send_text(key, text)
   end)
 end
 
+-- Send page keys directly, without the client's native key translation.
+send_text("pageup", "\27[5~")
+send_text("pagedown", "\27[6~")
 send_text("ctrl+enter", "gst\n")
 send_text("shift+enter", "\n")
 -- Send plain bytes to avoid extended key sequences in zsh vi mode.
