@@ -8,6 +8,9 @@ end
 rex.bind("cmd+[Digit3]", "client.tab.previous")
 rex.bind("cmd+[Digit4]", "client.tab.next")
 
+rex.bind("pageup", "client.scroll.page_up")
+rex.bind("pagedown", "client.scroll.page_down")
+
 local function send_text(key, text)
   rex.bind(key, function()
     local result, err = rex.block.call("com.superlogical.terminal", "write", { data = text })
