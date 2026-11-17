@@ -174,6 +174,24 @@ backup_and_symlink() {
 
 ####### Functions #######
 
+_install_worktree_commands() {
+  local destination="$HOME/.local/bin" command_dir="$dir/posva-agent/worktrees/bin" name target
+  mkdir -p "$destination" || return 1
+  for name in git_create_worktree git_delete_worktree; do
+    target="$destination/$name"
+    if [[ -L "$target" && "${target:A}" == "$command_dir/$name" ]]; then
+      continue
+    fi
+    ln -s "$command_dir/$name" "$target" || return 1
+  done
+}
+
+install_worktree_commands() {
+  check_option worktrees && return 0
+  working -n "Installing worktree commands"
+  log_cmd worktrees _install_worktree_commands || crash "Worktree command install failed. Check logs at $LOG_DIR/worktrees.err"
+}
+
 # Install Homebrew only for OSX
 install_brew() {
   if [[ "$OSX" ]]; then
@@ -355,6 +373,7 @@ important "Logs are at $LOG_DIR"
 
 check_install_dir
 backup_and_symlink
+install_worktree_commands
 
 install_brew
 

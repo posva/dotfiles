@@ -79,6 +79,42 @@ printf '%s\n' "$PNPM_CONFIG_VIRTUAL_STORE_TYPE" > node_modules/.store-type
   return { repo, bin, log, run, pick }
 }
 
+test('installed commands create and delete worktrees from Bash', () => {
+  const { repo } = fixture({ project: false })
+  const home = join(dirname(repo), 'home with spaces')
+  const bin = join(home, '.local/bin')
+  const dotfiles = dirname(aliases)
+  const installer = readFileSync(join(dotfiles, 'install.sh'), 'utf8')
+    .match(/^_install_worktree_commands\(\) \{[\s\S]*?^\}/m)?.[0]
+  assert.ok(installer)
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const install = spawnSync('/bin/zsh', ['-f', '-c', `${installer}\ndir=$1; _install_worktree_commands`, 'test', dotfiles], {
+      encoding: 'utf8', env: { ...process.env, HOME: home },
+    })
+    assert.equal(install.status, 0, install.stderr)
+  }
+  const run = (command: string) => spawnSync('/bin/bash', ['--noprofile', '--norc', '-c', command], {
+    cwd: repo,
+    encoding: 'utf8',
+    env: { ...process.env, PATH: `${bin}:/usr/bin:/bin` },
+  })
+  const target = join(repo, '.posva/worktrees/agent-example')
+  const created = run('git_create_worktree --no-install agent/example && pwd')
+  assert.equal(created.status, 0, created.stderr)
+  assert.ok(existsSync(join(target, 'README.md')))
+  assert.equal(created.stdout.trim().split('\n').at(-1), repo)
+  const removed = run('git_delete_worktree agent/example')
+  assert.equal(removed.status, 0, removed.stderr)
+  assert.equal(existsSync(target), false)
+  for (const command of ['git_create_worktree', 'git_delete_worktree']) {
+    const help = run(`${command} --help`)
+    assert.equal(help.status, 0, help.stderr)
+    assert.match(help.stdout, /Usage:/)
+    const invalid = run(`${command} --unknown`)
+    assert.equal(invalid.status, 2, invalid.stderr)
+  }
+})
+
 function prFixture({ failure = false, fork = false, remoteUrl = false } = {}) {
   const { repo, bin, log, run: branchRun } = fixture({ failure })
   const forkPath = join(dirname(repo), 'fork.git')

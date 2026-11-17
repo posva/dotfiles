@@ -1,5 +1,30 @@
 # Worktrees
 
+Install the full command names for agents and other shells:
+
+```sh
+zsh install.sh
+```
+
+This installs `git_create_worktree` and `git_delete_worktree` in `~/.local/bin`.
+Keep that directory on `PATH`. Use `--no-worktrees` to skip this step.
+
+Agents can use the full names with the same arguments as `gw` and `gwd`.
+Pass a branch name to avoid the interactive picker. An executable cannot change
+the caller's directory, so enter the worktree with `cd` after creation:
+
+```sh
+git_create_worktree -n feature/example
+cd .posva/worktrees/feature-example
+```
+
+This example starts at the main repository root. New worktree paths replace
+each `/` in the branch name with `-`. For an existing worktree, use the path
+shown by the command or `git worktree list`.
+
+The interactive aliases stay available. `gw` also changes the current shell's
+directory:
+
 ```sh
 gw my-branch   # Create or enter a worktree
 gw             # Pick a branch
