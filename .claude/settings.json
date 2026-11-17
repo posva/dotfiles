@@ -64,7 +64,6 @@
     "deny": [],
     "defaultMode": "auto"
   },
-  "model": "gpt-5.6-sol[1m]",
   "modelOverrides": {
     "gpt-5.6-sol[1m]": "openai/gpt-5.6-sol"
   },
@@ -226,6 +225,22 @@
     }
   },
   "effortLevel": "high",
+  "modelSettings": {
+    "claude-sonnet-5": {
+      "effortLevel": "medium"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "medium"
+    }
+  },
+  "promptSuggestionEnabled": false,
+  "pluginConfigs": {
+    "agents-md@builtin": {
+      "options": {
+        "instructionFiles": "claude-md-and-agents-md"
+      }
+    }
+  },
   "tui": "fullscreen",
   "editorMode": "vim",
   "autoCompactEnabled": true,
