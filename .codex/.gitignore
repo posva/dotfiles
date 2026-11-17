@@ -49,3 +49,4 @@ skills/
 /mcp-oauth-locks/
 session_index.jsonl
 shell_snapshots/
+auth.json.lock
