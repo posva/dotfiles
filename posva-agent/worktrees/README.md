@@ -90,3 +90,24 @@ If setup fails, fix the error and retry from the worktree root:
 ```sh
 posva_worktree_setup
 ```
+
+## Private agent instructions
+
+Put an `AGENTS.override.md` in the `overrides` directory next to
+`agent-overrides.sh`. For a repo at `~/projects/example-repo`, edit
+`overrides/projects/example-repo/AGENTS.override.md`. For repos outside your
+home directory, mirror the absolute path under `overrides/`.
+Copy an edited override if you have one. Otherwise, start with the repo's
+`AGENTS.md`.
+
+New worktrees created by `gw`, `git_create_worktree`, or `gpr` link the
+override and generate a `CLAUDE.local.md` import. This also works with
+`--no-install`. Setup preserves existing files and adds local Git exclusions.
+
+For other worktree creation commands, call the script from a repo-local
+`post-checkout` hook. Add this line to the hook if one already exists, before
+any final exit:
+
+```sh
+sh "$HOME/dotfiles/posva-agent/worktrees/agent-overrides.sh" "$@"
+```

@@ -87,6 +87,11 @@ function _wt_existing_dir() {
 
 function _wt_finish_new() {
   local skip_install=$1 setup_result
+  sh "${${(%):-%x}:A:h}/agent-overrides.sh" || {
+    setup_result=$?
+    _wt_log err "agent instruction setup failed; worktree kept at $PWD"
+    return "$setup_result"
+  }
   if (( ! skip_install )); then
     posva_worktree_setup || {
       setup_result=$?
