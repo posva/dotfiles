@@ -20,7 +20,7 @@
 [diff]
 	renames = true
 [push]
-	default = current
+	default = simple
 	autoSetupRemote = true
 [pull]
 	ff = only
@@ -87,3 +87,5 @@
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = !/opt/homebrew/bin/gh auth git-credential
+[branch]
+	autoSetupMerge = simple
